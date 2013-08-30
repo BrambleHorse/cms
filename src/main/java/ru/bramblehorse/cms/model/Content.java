@@ -9,7 +9,6 @@ package ru.bramblehorse.cms.model;
  */
 public class Content {
     private Integer id;
-    private String ownerPage;
 
     public Integer getId() {
         return id;
@@ -17,14 +16,6 @@ public class Content {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getOwnerPage() {
-        return ownerPage;
-    }
-
-    public void setOwnerPage(String ownerPage) {
-        this.ownerPage = ownerPage;
     }
 
 }

@@ -8,7 +8,7 @@ package ru.bramblehorse.cms.model;
  * To change this template use File | Settings | File Templates.
  */
 public class TextContent extends Content {
-    private StringBuffer text;
+   private StringBuffer text;
 
     public StringBuffer getText() {
         return text;
