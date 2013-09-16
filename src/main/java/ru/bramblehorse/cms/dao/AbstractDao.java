@@ -11,9 +11,9 @@ import java.util.List;
  */
 public interface AbstractDao<T> {
 
-    public T create(T entity);
+    public void create(T entity);
     public void delete(T entity);
-    public T edit (T entity);
+    public void edit(T entity);
     public T getById(Integer id);
     public List<T> getAll();
 

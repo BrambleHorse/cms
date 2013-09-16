@@ -3,44 +3,42 @@ package ru.bramblehorse.cms.dao.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import ru.bramblehorse.cms.dao.AbstractDao;
-import ru.bramblehorse.cms.model.TextContent;
+import ru.bramblehorse.cms.model.Category;
 
 import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
  * User: bramblehorse
- * Date: 30.08.13
- * Time: 21:55
+ * Date: 16.09.13
+ * Time: 22:02
  * To change this template use File | Settings | File Templates.
  */
-
-public class HibernateTextContentDao implements AbstractDao<TextContent> {
+public class HibernateCategoryDao implements AbstractDao<Category> {
     @Autowired
     HibernateTemplate ht;
 
     @Override
-    public void create(TextContent entity) {
+    public void create(Category entity) {
         ht.save(entity);
     }
 
     @Override
-    public void delete(TextContent entity) {
+    public void delete(Category entity) {
         ht.delete(entity);
     }
 
     @Override
-    public void edit(TextContent entity) {
-       ht.saveOrUpdate(entity);
+    public void edit(Category entity) {
+        ht.saveOrUpdate(entity);
     }
 
     @Override
-    public TextContent getById(Integer id) {
-        return ht.load(TextContent.class,id);
+    public Category getById(Integer id) {
+        return ht.load(Category.class,id);
     }
-
     @Override
-    public List<TextContent> getAll() {
-        return ht.loadAll(TextContent.class);
+    public List<Category> getAll() {
+        return ht.loadAll(Category.class);
     }
 }
