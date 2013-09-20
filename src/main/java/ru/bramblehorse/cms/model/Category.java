@@ -12,7 +12,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "categories")
-public class Category {
+public class Category  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_id")
@@ -20,7 +20,15 @@ public class Category {
     @Column(name = "category_name")
     private String name;
     @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "category")
-    private List<TextContent> textContents;
+    private List<Content> content;
+
+    public List<Content> getContent() {
+        return content;
+    }
+
+    public void setContent(List<Content> content) {
+        this.content = content;
+    }
 
     public Integer getId() {
         return id;

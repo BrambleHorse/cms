@@ -26,26 +26,26 @@ public class TextContentService implements AbstractService<TextContent> {
 
     @Override
     public void create(TextContent entity) {
-
+        textContentDao.create(entity);
     }
 
     @Override
     public void delete(TextContent entity) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        textContentDao.delete(entity);
     }
 
     @Override
     public void edit(TextContent entity) {
-
+        textContentDao.edit(entity);
     }
 
     @Override
     public TextContent getById(Integer id) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return textContentDao.getById(id);
     }
 
     @Override
     public List<TextContent> getAll() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return textContentDao.getAll();
     }
 }

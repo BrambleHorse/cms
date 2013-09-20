@@ -21,7 +21,18 @@
     <jsp:include page="header.jsp"/>
     <div class="sidebar">  </div>
     <div class="content">
-
+        <c:set var="contentLength" value="${fn:length(contentList)}"/>
+        <c:choose>
+            <c:when test="${contentLength > 0}">
+                <c:forEach items="${contentList}" var="content">
+                    <li>${content.text}</li>
+                    <li>${content.type}</li>
+                </c:forEach>
+            </c:when>
+            <c:otherwise>
+                <h2>There are no content.&nbsp;You can add content using admin page.</h2>
+            </c:otherwise>
+        </c:choose>
     </div>
     <div class="clear"></div>
     <div class="clear-footer"></div>
