@@ -4,6 +4,19 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 		  http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
          version="2.5">
+    <filter>
+        <filter-name>FormEncodingSetterFilter</filter-name>
+        <filter-class>ru.bramblehorse.cms.controller.FormEncodingSetterFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>FormEncodingSetterFilter</filter-name>
+        <url-pattern>/index</url-pattern>
+        <url-pattern>/admin</url-pattern>
+    </filter-mapping>
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
@@ -27,12 +40,20 @@
     <filter-mapping>
         <filter-name>hibernateFilter</filter-name>
         <url-pattern>/index</url-pattern>
-        <url-pattern>/index/*</url-pattern>
+        <url-pattern>/admin</url-pattern>
     </filter-mapping>
     <servlet>
         <servlet-name>mainServlet</servlet-name>
         <servlet-class>ru.bramblehorse.cms.controller.MainServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>adminServlet</servlet-name>
+        <servlet-class>ru.bramblehorse.cms.controller.AdminServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>adminServlet</servlet-name>
+        <url-pattern>/admin</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>mainServlet</servlet-name>
         <url-pattern>/index</url-pattern>

@@ -4,27 +4,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.transaction.annotation.Transactional;
 import ru.bramblehorse.cms.dao.AbstractDao;
-import ru.bramblehorse.cms.model.TextContent;
+import ru.bramblehorse.cms.model.TableContent;
 
 import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
  * User: bramblehorse
- * Date: 30.08.13
- * Time: 21:55
+ * Date: 21.09.13
+ * Time: 2:43
  * To change this template use File | Settings | File Templates.
  */
-
 @Transactional
-public class HibernateTextContentDao implements AbstractDao<TextContent> {
+public class HibernateTableContentDao  implements AbstractDao<TableContent> {
     @Autowired
     HibernateTemplate ht;
     @Transactional
     @Override
-    public void create(TextContent entity) {
+    public void create(TableContent entity) {
         ht.save(entity);
     }
+
     @Transactional
     @Override
     public void delete(Integer id) {
@@ -32,17 +32,17 @@ public class HibernateTextContentDao implements AbstractDao<TextContent> {
     }
     @Transactional
     @Override
-    public void edit(TextContent entity) {
-       ht.saveOrUpdate(entity);
+    public void edit(TableContent entity) {
+        ht.saveOrUpdate(entity);
     }
     @Transactional
     @Override
-    public TextContent getById(Integer id) {
-        return ht.load(TextContent.class,id);
+    public TableContent getById(Integer id) {
+        return ht.load(TableContent.class,id);
     }
     @Transactional
     @Override
-    public List<TextContent> getAll() {
-        return ht.loadAll(TextContent.class);
+    public List<TableContent> getAll() {
+        return ht.loadAll(TableContent.class);
     }
 }

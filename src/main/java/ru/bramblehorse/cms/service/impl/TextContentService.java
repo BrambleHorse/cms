@@ -30,8 +30,8 @@ public class TextContentService implements AbstractService<TextContent> {
     }
 
     @Override
-    public void delete(TextContent entity) {
-        textContentDao.delete(entity);
+    public void delete(Integer id) {
+        textContentDao.delete(id);
     }
 
     @Override

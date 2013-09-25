@@ -30,8 +30,8 @@ public class CategoryService implements AbstractService<Category> {
     }
 
     @Override
-    public void delete(Category entity) {
-        categoryDao.delete(entity);
+    public void delete(Integer id) {
+        categoryDao.delete(id);
     }
 
     @Override

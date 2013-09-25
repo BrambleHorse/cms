@@ -8,4 +8,5 @@ package ru.bramblehorse.cms.model;
  * To change this template use File | Settings | File Templates.
  */
 public class ImageContent extends Content {
+
 }

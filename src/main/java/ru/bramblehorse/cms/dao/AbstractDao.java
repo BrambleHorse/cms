@@ -12,7 +12,7 @@ import java.util.List;
 public interface AbstractDao<T> {
 
     public void create(T entity);
-    public void delete(T entity);
+    public void delete(Integer id);
     public void edit(T entity);
     public T getById(Integer id);
     public List<T> getAll();

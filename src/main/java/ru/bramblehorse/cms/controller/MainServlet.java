@@ -2,10 +2,7 @@ package ru.bramblehorse.cms.controller;
 
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.WebApplicationContext;
-import ru.bramblehorse.cms.model.Category;
-import ru.bramblehorse.cms.model.Content;
-import ru.bramblehorse.cms.model.ContentType;
-import ru.bramblehorse.cms.model.TextContent;
+import ru.bramblehorse.cms.model.*;
 import ru.bramblehorse.cms.service.AbstractService;
 
 import javax.servlet.RequestDispatcher;
@@ -15,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -27,37 +25,33 @@ import java.util.List;
 public class MainServlet extends HttpServlet {
     private WebApplicationContext context;
     private AbstractService<Category> categoryService;
-    private AbstractService<TextContent> textContentService;
+
+
 
     @Override
     public void init() throws ServletException {
         context = ContextLoaderListener.getCurrentWebApplicationContext();
         categoryService = (AbstractService<Category>)context.getBean("categoryService");
-        textContentService = (AbstractService<TextContent>) context.getBean("textContentService");
-       // insertMockValues();
+//        insertMockValues();
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Category> categoryList = categoryService.getAll();
-        req.setAttribute("categoryList",categoryList);
         String categoryId = req.getParameter("category");
+        Collections.sort(categoryList);
+        req.setAttribute("categoryList",categoryList);
+        if(categoryList != null) {
+            if((!categoryList.isEmpty()) && (categoryId == null || categoryId.isEmpty())) {
+                categoryId = String.valueOf(categoryList.get(0).getId());
+            }
+        }
         if(categoryId != null && !categoryId.isEmpty()) {
             List<Content> contentList = categoryService.getById(Integer.parseInt(categoryId)).getContent();
-            for(Content c : contentList) {
-                switch (c.getType()) {
-                    case TEXT:
-                        break;
-                    case TABLE:
-                        break;
-                    case IMAGE:
-                        break;
-                    default:
-                        break;
-                }
-            }
+            Collections.sort(contentList);
             req.setAttribute("contentList",contentList);
         }
+
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/index.jsp");
         rd.forward(req,resp);
     }
@@ -65,23 +59,37 @@ public class MainServlet extends HttpServlet {
    private void insertMockValues() {
       TextContent content1 = new TextContent();
       TextContent content2 = new TextContent();
+      TableContent table1 = new TableContent();
+      TableContent table2 = new TableContent();
+      table1.setHtmlTable("<tr><td>11111</td><td>2222</td></tr><tr><td>3333</td><td>4444</td></tr>");
+      table2.setHtmlTable("<tr><td>555</td><td>66666</td></tr><tr><td>77777</td><td>8888</td></tr>");
+   //   table1.setHtmlTable("Sheet 1");
+      table1.setContentPosition(1);
+     // table2.setHtmlTable("Sheet 2");
+      table2.setContentPosition(0);
       content1.setText("Content 1");
+      content1.setContentPosition(0);
       content2.setText("Content 2");
+      content2.setContentPosition(1);
       Category category1 = new Category();
       Category category2 = new Category();
       category1.setName("Главная");
       category2.setName("Бетон");
+      category1.setCategoryPosition(0);
+      category2.setCategoryPosition(1);
       List<Content> list1 = new ArrayList<Content>();
       List<Content> list2 = new ArrayList<Content>();
       list1.add(content1);
+      list1.add(table1);
       list2.add(content2);
+      list2.add(table2);
       category1.setContent(list1);
       category2.setContent(list2);
       content1.setCategory(category1);
       content2.setCategory(category2);
+      table1.setCategory(category1);
+      table2.setCategory(category2);
       categoryService.create(category1);
       categoryService.create(category2);
-      // textContentService.create(content1);
-      // textContentService.create(content2);
    }
 }

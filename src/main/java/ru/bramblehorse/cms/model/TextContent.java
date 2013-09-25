@@ -13,11 +13,14 @@ import javax.persistence.*;
 @Table(name = "text_content")
 @PrimaryKeyJoinColumn(name = "content_id", referencedColumnName = "content_id")
 public class TextContent extends Content {
-    @Column(name = "text", columnDefinition = "LONGTEXT")
+    @Column(name = "text",columnDefinition = "LONGTEXT")
     private String text;
+    public TextContent() {
+        this.type = ContentType.TEXT;
+    }
     @Override
     public ContentType getType() {
-        return ContentType.TEXT;
+        return type;
     }
 
     public String getText() {

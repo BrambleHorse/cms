@@ -10,4 +10,5 @@ import javax.servlet.http.HttpServlet;
  * To change this template use File | Settings | File Templates.
  */
 public class ImageUploadServlet extends HttpServlet{
+
 }
