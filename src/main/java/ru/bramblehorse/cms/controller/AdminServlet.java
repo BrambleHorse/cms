@@ -3,6 +3,7 @@ package ru.bramblehorse.cms.controller;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.WebApplicationContext;
 import ru.bramblehorse.cms.model.Category;
+import ru.bramblehorse.cms.model.Content;
 import ru.bramblehorse.cms.model.TableContent;
 import ru.bramblehorse.cms.model.TextContent;
 import ru.bramblehorse.cms.service.AbstractService;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -42,7 +44,7 @@ public class AdminServlet extends HttpServlet {
         String mode = req.getParameter("mode");
         String action = req.getParameter("action");
         if ("category".equals(mode)) {
-            if(action == null) {
+            if (action == null) {
                 List<Category> categoryList = categoryService.getAll();
                 req.setAttribute("categoryList", categoryList);
                 RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/categories.jsp");
@@ -54,9 +56,16 @@ public class AdminServlet extends HttpServlet {
                 rd.forward(req, resp);
                 return;
             }
+            if ("edit".equals(action)) {
+                String categoryId = req.getParameter("categoryId");
+                req.setAttribute("currentCategory",categoryService.getById(Integer.parseInt(categoryId)));
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/edit_category.jsp");
+                rd.forward(req, resp);
+                return;
+            }
             if ("delete".equals(action)) {
                 String categoryId = req.getParameter("categoryId");
-                if(categoryId != null){
+                if (categoryId != null) {
                     Integer idToDelete = Integer.parseInt(categoryId);
                     categoryService.delete(idToDelete);
                 }
@@ -65,6 +74,13 @@ public class AdminServlet extends HttpServlet {
                 return;
             }
             if ("content".equals(mode)) {
+               if(action == null) {
+                   String categoryId = req.getParameter("categoryId");
+                   List<Content> contentList = categoryService.getById(Integer.parseInt(categoryId)).getContent();
+                   Collections.sort(contentList);
+                   req.setAttribute("contentList", contentList);
+
+               }
 
             }
         }
@@ -80,7 +96,7 @@ public class AdminServlet extends HttpServlet {
             if ("create".equals(action)) {
                 String categoryName = req.getParameter("title");
                 String categoryPosition = req.getParameter("category_position");
-                Integer categoryPositionValue = null;
+                Integer categoryPositionValue;
                 try {
                     categoryPositionValue = Integer.parseInt(categoryPosition);
                 } catch (Exception e) {
@@ -102,11 +118,37 @@ public class AdminServlet extends HttpServlet {
                 rd.forward(req, resp);
                 return;
             }
-
             if ("edit".equals(action)) {
+                String categoryName = req.getParameter("title");
+                String categoryPosition = req.getParameter("category_position");
+                Integer categoryId = Integer.parseInt(req.getParameter("categoryId"));
+                Integer categoryPositionValue;
+                try {
+                    categoryPositionValue = Integer.parseInt(categoryPosition);
+                } catch (Exception e) {
+                    RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
+                    rd.forward(req, resp);
+                    return;
+                }
 
+                Category temp = new Category();
+                if (categoryName == null || categoryName.isEmpty()) {
+                    RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/new_category.jsp");
+                    rd.forward(req, resp);
+                    return;
+                }
+                temp.setName(categoryName);
+                temp.setId(categoryId);
+                if (categoryPositionValue != null)
+                    temp.setCategoryPosition(categoryPositionValue);
+                categoryService.edit(temp);
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
+                rd.forward(req, resp);
+                return;
             }
         }
+        if ("content".equals(mode)) {
 
+        }
     }
 }

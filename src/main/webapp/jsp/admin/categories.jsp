@@ -22,6 +22,7 @@
             <c:forEach items="${categoryList}" var="category">
                 <li><a href="${pageContext.request.contextPath}/index?category=${category.id}">${category.name}</a></li>
                 <li><a href="/admin?mode=category&action=edit&categoryId=${category.id}">Редактировать категорию</a></li>
+                <li><a href="/admin?mode=content&categoryId=${category.id}">Редактировать содержимое категории</a></li>
                 <li><a href="/admin?mode=category&action=delete&categoryId=${category.id}">Удалить категорию</a></li>
             </c:forEach>
         </c:when>
