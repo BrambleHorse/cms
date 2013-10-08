@@ -2,10 +2,7 @@ package ru.bramblehorse.cms.controller;
 
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.WebApplicationContext;
-import ru.bramblehorse.cms.model.Category;
-import ru.bramblehorse.cms.model.Content;
-import ru.bramblehorse.cms.model.TableContent;
-import ru.bramblehorse.cms.model.TextContent;
+import ru.bramblehorse.cms.model.*;
 import ru.bramblehorse.cms.service.AbstractService;
 
 import javax.servlet.RequestDispatcher;
@@ -45,43 +42,38 @@ public class AdminServlet extends HttpServlet {
         String action = req.getParameter("action");
         if ("category".equals(mode)) {
             if (action == null) {
-                List<Category> categoryList = categoryService.getAll();
-                req.setAttribute("categoryList", categoryList);
-                RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/categories.jsp");
-                rd.forward(req, resp);
-                return;
+               processGetNoActionCategory(req,resp);
+               return;
             }
             if ("create".equals(action)) {
-                RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/new_category.jsp");
-                rd.forward(req, resp);
+                processGetCreateCategory(req,resp);
                 return;
             }
             if ("edit".equals(action)) {
-                String categoryId = req.getParameter("categoryId");
-                req.setAttribute("currentCategory",categoryService.getById(Integer.parseInt(categoryId)));
-                RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/edit_category.jsp");
-                rd.forward(req, resp);
+                processGetEditCategory(req,resp);
                 return;
             }
             if ("delete".equals(action)) {
-                String categoryId = req.getParameter("categoryId");
-                if (categoryId != null) {
-                    Integer idToDelete = Integer.parseInt(categoryId);
-                    categoryService.delete(idToDelete);
-                }
-                RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
-                rd.forward(req, resp);
+                processGetDeleteCategory(req,resp);
                 return;
             }
-            if ("content".equals(mode)) {
-               if(action == null) {
-                   String categoryId = req.getParameter("categoryId");
-                   List<Content> contentList = categoryService.getById(Integer.parseInt(categoryId)).getContent();
-                   Collections.sort(contentList);
-                   req.setAttribute("contentList", contentList);
-
-               }
-
+        }
+        if ("content".equals(mode)) {
+            if(action == null) {
+                processGetNoActionContent(req,resp);
+                return;
+            }
+            if("create".equals(action)){
+                processGetCreateContent(req,resp);
+                return;
+            }
+            if("edit".equals(action)){
+                processGetEditContent(req,resp);
+                return;
+            }
+            if("delete".equals(action)) {
+                processGetDeleteContent(req, resp);
+                return;
             }
         }
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
@@ -148,7 +140,107 @@ public class AdminServlet extends HttpServlet {
             }
         }
         if ("content".equals(mode)) {
+            if("create".equals(action)){
+
+            }
+            if("edit".equals(action)){
+
+            }
 
         }
+    }
+    /**
+     *
+     */
+    private void processGetNoActionCategory(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        List<Category> categoryList = categoryService.getAll();
+        req.setAttribute("categoryList", categoryList);
+        RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/categories.jsp");
+        rd.forward(req, resp);
+    }
+    private void processGetCreateCategory(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException  {
+        RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/new_category.jsp");
+        rd.forward(req, resp);
+    }
+    private void processGetEditCategory(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException  {
+        String categoryId = req.getParameter("categoryId");
+        req.setAttribute("currentCategory",categoryService.getById(Integer.parseInt(categoryId)));
+        RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/edit_category.jsp");
+        rd.forward(req, resp);
+    }
+    private void processGetDeleteCategory(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException  {
+        String categoryId = req.getParameter("categoryId");
+        if (categoryId != null) {
+            Integer idToDelete = Integer.parseInt(categoryId);
+            categoryService.delete(idToDelete);
+        }
+        RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
+        rd.forward(req, resp);
+    }
+    private void processGetNoActionContent(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String categoryId = req.getParameter("categoryId");
+        List<Content> contentList = categoryService.getById(Integer.parseInt(categoryId)).getContent();
+        Collections.sort(contentList);
+        req.setAttribute("contentList", contentList);
+        req.setAttribute("categoryId", categoryId);
+        RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/content.jsp");
+        rd.forward(req, resp);
+    }
+    private void processGetCreateContent(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/new_content.jsp");
+        rd.forward(req, resp);
+    }
+    private void processGetEditContent(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String contentId = req.getParameter("contentId");
+        ContentType contentType = ContentType.getType(req.getParameter("type"));
+        switch (contentType) {
+            case TABLE:
+                TableContent tempTable = tableContentService.getById(Integer.parseInt(contentId));
+                req.setAttribute("content", tempTable);
+                break;
+            case TEXT:
+                TextContent tempText = textContentService.getById(Integer.parseInt(contentId));
+                req.setAttribute("content", tempText);
+                break;
+            default:
+                break;
+        }
+        RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/edit_content.jsp");
+        rd.forward(req, resp);
+    }
+    private void processGetDeleteContent(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String categoryId = req.getParameter("categoryId");
+        String contentId = req.getParameter("contentId");
+        String contentType = req.getParameter("contentType");
+        if (categoryId != null && contentId != null && contentType != null) {
+            Integer idToDelete = Integer.parseInt(contentId);
+            switch (ContentType.getType(contentType)) {
+                case TABLE:
+                    tableContentService.delete(idToDelete);
+                    break;
+                case TEXT:
+                    textContentService.delete(idToDelete);
+                    break;
+                default:
+                    break;
+            }
+        }
+        RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
+        rd.forward(req, resp);
+    }
+    /**
+     *
+     */
+    private void processPostCreateCategory(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+    }
+    private void processPostEditCategory(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+    }
+    private void processPostCreateContent(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+    }
+    private void processPostEditContent(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
     }
 }

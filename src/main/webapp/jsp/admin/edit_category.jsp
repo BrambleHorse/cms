@@ -16,7 +16,7 @@
     <jsp:include page="admin_header.jsp"/>
 
     <div class="edit-category">
-        <form action="/admin?mode=categories&action=edit" method="POST">
+        <form action="/admin.do?mode=categories&action=edit" method="POST">
             <table class="admin-input">
                 <tr>
                     <input type="hidden" name="categoryId" value="${currentCategory.id}"/>

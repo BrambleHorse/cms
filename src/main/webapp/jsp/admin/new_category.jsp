@@ -16,7 +16,7 @@
     <jsp:include page="admin_header.jsp"/>
 
     <div class="create-category">
-        <form action="/admin?mode=categories&action=create" method="POST">
+        <form action="/admin.do?mode=categories&action=create" method="POST">
             <table class="admin-input">
                 <tr>
                     <td>Название категории:</td>

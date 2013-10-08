@@ -32,6 +32,7 @@ public class MainServlet extends HttpServlet {
     public void init() throws ServletException {
         context = ContextLoaderListener.getCurrentWebApplicationContext();
         categoryService = (AbstractService<Category>)context.getBean("categoryService");
+        //uncomment if you want to fill your database with mock values
 //        insertMockValues();
     }
 
@@ -63,9 +64,7 @@ public class MainServlet extends HttpServlet {
       TableContent table2 = new TableContent();
       table1.setHtmlTable("<tr><td>11111</td><td>2222</td></tr><tr><td>3333</td><td>4444</td></tr>");
       table2.setHtmlTable("<tr><td>555</td><td>66666</td></tr><tr><td>77777</td><td>8888</td></tr>");
-   //   table1.setHtmlTable("Sheet 1");
       table1.setContentPosition(1);
-     // table2.setHtmlTable("Sheet 2");
       table2.setContentPosition(0);
       content1.setText("Content 1");
       content1.setContentPosition(0);

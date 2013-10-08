@@ -8,7 +8,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "categories")
-public class Category implements Comparable  {
+public class Category implements Comparable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_id")
@@ -17,7 +17,7 @@ public class Category implements Comparable  {
     private Integer categoryPosition;
     @Column(name = "category_name")
     private String name;
-    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "category")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "category")
     private List<Content> content;
 
     public Integer getCategoryPosition() {
@@ -56,10 +56,10 @@ public class Category implements Comparable  {
     public int compareTo(Object o) {
         if (o == null)
             throw new NullPointerException("Passed null to ru.bramblehorse.cms.model.Category#compareTo(Object)");
-        if(!(o instanceof Category))
+        if (!(o instanceof Category))
             throw new ClassCastException("ru.bramblehorse.cms.model.Category#compareTo(Object)");
-        if(((Category) o).getCategoryPosition() < this.getCategoryPosition()) return 1;
-        if(((Category) o).getCategoryPosition() > this.getCategoryPosition()) return -1;
+        if (((Category) o).getCategoryPosition() < this.getCategoryPosition()) return 1;
+        if (((Category) o).getCategoryPosition() > this.getCategoryPosition()) return -1;
         return 0;
     }
 }

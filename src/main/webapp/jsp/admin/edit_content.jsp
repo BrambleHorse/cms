@@ -16,7 +16,7 @@
     <jsp:include page="admin_header.jsp"/>
 
     <div class="edit-content">
-        <form action="/admin?mode=content&action=edit" method="POST">
+        <form action="/admin.do?mode=content&action=edit" method="POST">
             <table class="admin-input">
                 <tr>
                     <td>Название категории:</td>

@@ -8,5 +8,15 @@ package ru.bramblehorse.cms.model;
  * To change this template use File | Settings | File Templates.
  */
 public enum ContentType {
-    TEXT,IMAGE,TABLE,NONE
+    TEXT,IMAGE,TABLE,NONE;
+
+    public static ContentType getType(String s) {
+        if("text".equals(s) || "TEXT".equals(s))
+            return TEXT;
+        if("table".equals(s) || "TABLE".equals(s))
+            return TABLE;
+        if("image".equals(s) || "IMAGE".equals(s))
+            return IMAGE;
+        return NONE;
+    }
 }

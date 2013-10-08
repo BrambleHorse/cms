@@ -3,7 +3,6 @@
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <div class="header">
-    <ul class="admin-link"><a href="/admin">admin</a></ul>
     <ul class="nav">
         <c:set var="categoryLength" value="${fn:length(categoryList)}"/>
         <c:choose>

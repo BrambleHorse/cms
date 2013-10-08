@@ -21,7 +21,7 @@ public abstract class Content implements Comparable {
     private Integer contentPosition;
     @Column(name = "content_type")
     protected ContentType type = ContentType.NONE;
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
 

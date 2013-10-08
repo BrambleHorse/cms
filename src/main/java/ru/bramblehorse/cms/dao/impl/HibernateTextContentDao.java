@@ -28,7 +28,8 @@ public class HibernateTextContentDao implements AbstractDao<TextContent> {
     @Transactional
     @Override
     public void delete(Integer id) {
-        ht.delete(id);
+        TextContent temp = ht.load(TextContent.class, id);
+        ht.delete(temp);
     }
     @Transactional
     @Override

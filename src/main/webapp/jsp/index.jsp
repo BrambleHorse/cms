@@ -35,7 +35,7 @@
             <c:choose>
                 <c:when test="${categoryLength > 0}">
                     <c:forEach items="${categoryList}" var="category">
-                        <li><a href="${pageContext.request.contextPath}/index?category=${category.id}">${category.name}</a></li>
+                        <li><a href="${pageContext.request.contextPath}/index.do?category=${category.id}">${category.name}</a></li>
                     </c:forEach>
                 </c:when>
                 <c:otherwise>

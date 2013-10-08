@@ -6,19 +6,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Document</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp/css/styles.css" type="text/css">
-    <script type="text/javascript" src="${pageContext.request.contextPath}/jsp/js/jquery-1.10.2.js"></script>
-
+    <title>Edit content</title>
+    <link rel="stylesheet" href="../jsp/css/styles.css" type="text/css">
+    <script type="text/javascript" src="../jsp/js/jquery-1.10.2.js"></script>
 </head>
+
 <body>
 <div class="wrapper">
     <jsp:include page="admin_header.jsp"/>
-<div class="admin-content">
-    
 
-</div>
+    <div class="new-content">
+
     </div>
+</div>
 <jsp:include page="admin_footer.jsp"/>
 </body>
 </html>

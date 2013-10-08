@@ -4,6 +4,6 @@
 
 <div class="admin-header">
     <ul class="admin-nav">
-        <li><a href="/admin?mode=category">Управление категориями</a></li>
+        <li><a href="/admin.do?mode=category">Управление категориями</a></li>
     </ul>
 </div>
