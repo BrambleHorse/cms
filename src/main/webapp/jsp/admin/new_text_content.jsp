@@ -6,24 +6,27 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Document</title>
+    <title>Edit content</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp/css/styles.css" type="text/css">
     <script type="text/javascript" src="${pageContext.request.contextPath}/jsp/js/jquery-1.10.2.js"></script>
 </head>
 
 <body>
 <div class="wrapper">
-    <jsp:include page="admin_header.jsp"/>
-
-    <div class="create-category">
-        <form action="/admin.categories.do" method="POST">
+ <jsp:include page="admin_header.jsp"></jsp:include>
+    <div class="create-content">
+        <form action="/admin.content.do" method="POST">
             <input type="hidden" name="action" value="create">
+            <input type="hidden" name="contentType" value="TEXT">
+            <input type="hidden" name="categoryId" value="${param.categoryId}">
             <table class="admin-input">
                 <tr>
-                    <td>Название категории:</td>
-                    <td><input type="text" name="title"></td>
-                    <td>Место категории в списке:</td>
-                    <td><input type="text" name="categoryPosition"></td>
+                    <td>Место содержимого в списке:</td>
+                    <td><input type="text" name="contentPosition"></td>
+                </tr>
+                <tr>
+                    <td>Текст:</td>
+                    <td><textarea name="textValue" rows="12" cols="60"></textarea></td>
                 </tr>
                 <tr>
                     <td></td>
@@ -32,8 +35,7 @@
             </table>
         </form>
     </div>
-
-</div>
-<jsp:include page="admin_footer.jsp"/>
+    </div>
+ <jsp:include page="admin_footer.jsp"></jsp:include>
 </body>
 </html>

@@ -16,7 +16,7 @@
     </listener>
     <filter>
         <filter-name>FormEncodingSetterFilter</filter-name>
-        <filter-class>ru.bramblehorse.cms.controller.FormEncodingSetterFilter</filter-class>
+        <filter-class>ru.bramblehorse.cms.filter.FormEncodingSetterFilter</filter-class>
         <init-param>
             <param-name>encoding</param-name>
             <param-value>UTF-8</param-value>
@@ -26,6 +26,8 @@
         <filter-name>FormEncodingSetterFilter</filter-name>
         <url-pattern>/index.do</url-pattern>
         <url-pattern>/admin.do</url-pattern>
+        <url-pattern>/admin.categories.do</url-pattern>
+        <url-pattern>/admin.content.do</url-pattern>
     </filter-mapping>
     <filter>
         <filter-name>hibernateFilter</filter-name>
@@ -34,13 +36,15 @@
         </filter-class>
         <init-param>
             <param-name>singleSession</param-name>
-            <param-value>false</param-value>
+            <param-value>true</param-value>
         </init-param>
     </filter>
     <filter-mapping>
         <filter-name>hibernateFilter</filter-name>
         <url-pattern>/index.do</url-pattern>
         <url-pattern>/admin.do</url-pattern>
+        <url-pattern>/admin.categories.do</url-pattern>
+        <url-pattern>/admin.content.do</url-pattern>
     </filter-mapping>
     <servlet>
         <servlet-name>mainServlet</servlet-name>
@@ -57,6 +61,22 @@
     <servlet-mapping>
         <servlet-name>adminServlet</servlet-name>
         <url-pattern>/admin.do</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>categoryAdminServlet</servlet-name>
+        <servlet-class>ru.bramblehorse.cms.controller.CategoryAdminServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>categoryAdminServlet</servlet-name>
+        <url-pattern>/admin.categories.do</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>contentAdminServlet</servlet-name>
+        <servlet-class>ru.bramblehorse.cms.controller.ContentAdminServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>contentAdminServlet</servlet-name>
+        <url-pattern>/admin.content.do</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>index.do</welcome-file>

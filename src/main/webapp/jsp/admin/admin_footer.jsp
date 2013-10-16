@@ -3,5 +3,5 @@
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <div class="admin-footer">
-    <li><a href="/admin.do?mode=category&action=create">Создать категорию</a></li>
+    <li><a href="/admin.categories.do?action=create">Создать категорию</a></li>
 </div>

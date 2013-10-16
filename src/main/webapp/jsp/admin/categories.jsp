@@ -7,8 +7,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
-    <link rel="stylesheet" href="../jsp//css/styles.css" type="text/css">
-
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp/css/styles.css" type="text/css">
+    <script type="text/javascript" src="${pageContext.request.contextPath}/jsp/js/jquery-1.10.2.js"></script>
 </head>
 
 <body>
@@ -21,14 +21,14 @@
         <c:when test="${categoryLength > 0}">
             <c:forEach items="${categoryList}" var="category">
                 <li><a href="${pageContext.request.contextPath}/index.do?category=${category.id}">${category.name}</a></li>
-                <li><a href="/admin.do?mode=category&action=edit&categoryId=${category.id}">Редактировать категорию</a></li>
-                <li><a href="/admin.do?mode=content&categoryId=${category.id}">Редактировать содержимое категории</a></li>
-                <li><a href="/admin.do?mode=category&action=delete&categoryId=${category.id}">Удалить категорию</a></li>
+                <li><a href="/admin.categories.do?action=edit&categoryId=${category.id}">Редактировать категорию</a></li>
+                <li><a href="/admin.content.do?categoryId=${category.id}">Редактировать содержимое категории</a></li>
+                <li><a href="/admin.categories.do?action=delete&categoryId=${category.id}">Удалить категорию</a></li>
             </c:forEach>
         </c:when>
         <c:otherwise>
             <h2>Категорий нет.</h2>
-            <a href="/admin.do&mode=category&action=create">Создать категорию</a>
+            <a href="/admin.categories.do?action=create">Создать категорию</a>
         </c:otherwise>
     </c:choose>
 </div>

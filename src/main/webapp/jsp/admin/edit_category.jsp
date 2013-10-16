@@ -7,8 +7,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
-    <link rel="stylesheet" href="../jsp/css/styles.css" type="text/css">
-    <script type="text/javascript" src="../jsp/js/jquery-1.10.2.js"></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp/css/styles.css" type="text/css">
+    <script type="text/javascript" src="${pageContext.request.contextPath}/jsp/js/jquery-1.10.2.js"></script>
 </head>
 
 <body>
@@ -16,14 +16,14 @@
     <jsp:include page="admin_header.jsp"/>
 
     <div class="edit-category">
-        <form action="/admin.do?mode=categories&action=edit" method="POST">
+        <form action="/admin.categories.do?action=edit" method="POST">
             <table class="admin-input">
                 <tr>
                     <input type="hidden" name="categoryId" value="${currentCategory.id}"/>
                     <td>Название категории:</td>
                     <td><input type="text" name="title" value="${currentCategory.name}"></td>
                     <td>Место категории в списке:</td>
-                    <td><input type="text" name="category_position" value="${currentCategory.categoryPosition}"></td>
+                    <td><input type="text" name="categoryPosition" value="${currentCategory.categoryPosition}"></td>
                 </tr>
                 <tr>
                     <td></td>

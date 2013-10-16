@@ -1,5 +1,10 @@
 package ru.bramblehorse.cms.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
+
 /**
  * Created with IntelliJ IDEA.
  * User: bramblehorse
@@ -7,6 +12,11 @@ package ru.bramblehorse.cms.model;
  * Time: 23:06
  * To change this template use File | Settings | File Templates.
  */
-public class ImageContent extends Content {
-
-}
+//@Entity
+//@Table(name = "image_content")
+//@PrimaryKeyJoinColumn(name = "content_id", referencedColumnName = "content_id")
+//public class ImageContent extends Content {
+//    @Column(name = "path",columnDefinition = "LONGTEXT")
+//    private String imagePath;
+//
+//}

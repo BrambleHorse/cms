@@ -1,4 +1,4 @@
-package ru.bramblehorse.cms.controller;
+package ru.bramblehorse.cms.filter;
 
 /**
  * Created with IntelliJ IDEA.

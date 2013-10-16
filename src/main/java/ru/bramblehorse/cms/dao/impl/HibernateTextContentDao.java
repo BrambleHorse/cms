@@ -34,7 +34,7 @@ public class HibernateTextContentDao implements AbstractDao<TextContent> {
     @Transactional
     @Override
     public void edit(TextContent entity) {
-       ht.saveOrUpdate(entity);
+         ht.update(entity);
     }
     @Transactional
     @Override
