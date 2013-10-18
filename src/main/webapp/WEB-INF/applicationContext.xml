@@ -14,10 +14,17 @@
     <bean id="textContentService" class="ru.bramblehorse.cms.service.impl.TextContentService">
         <property name="textContentDao" ref="textContentDao"></property>
     </bean>
+
     <bean id="tableContentDao" class="ru.bramblehorse.cms.dao.impl.HibernateTableContentDao"></bean>
     <bean id="tableContentService" class="ru.bramblehorse.cms.service.impl.TableContentService">
         <property name="tableContentDao" ref="tableContentDao"></property>
     </bean>
+
+    <bean id="imageContentDao" class="ru.bramblehorse.cms.dao.impl.HibernateImageContentDao"></bean>
+    <bean id="imageContentService" class="ru.bramblehorse.cms.service.impl.ImageContentService">
+        <property name="imageContentDao" ref="imageContentDao"></property>
+    </bean>
+
     <bean id="categoryDao" class="ru.bramblehorse.cms.dao.impl.HibernateCategoryDao"></bean>
     <bean id="categoryService" class="ru.bramblehorse.cms.service.impl.CategoryService">
         <property name="categoryDao" ref="categoryDao"></property>

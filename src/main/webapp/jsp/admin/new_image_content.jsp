@@ -12,7 +12,21 @@
 </head>
 
 <body>
+<div class="wrapper">
+    <jsp:include page="admin_header.jsp"></jsp:include>
+    <div class="create-content">
+        <fieldset>
+            <legend>Загрузить изображение ${param.categoryId}</legend>
+            <form action="/image.upload.do" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="categoryId" value="${param.categoryId}">
+                <input type="text" name="contentPosition">
+                <label for="fileName">Select file:</label>
+                <input id="fileName" type="file" name="fileName" size="30"/><br/>
+                <input type="submit" value="Загрузить"/>
+            </form>
+        </fieldset>
+    </div>
+</div>
+<jsp:include page="admin_footer.jsp"></jsp:include>
 </body>
 </html>
-
-

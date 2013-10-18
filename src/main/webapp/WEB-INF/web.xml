@@ -4,6 +4,7 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 		  http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
          version="2.5">
+
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
@@ -14,6 +15,7 @@
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
+
     <filter>
         <filter-name>FormEncodingSetterFilter</filter-name>
         <filter-class>ru.bramblehorse.cms.filter.FormEncodingSetterFilter</filter-class>
@@ -46,6 +48,7 @@
         <url-pattern>/admin.categories.do</url-pattern>
         <url-pattern>/admin.content.do</url-pattern>
     </filter-mapping>
+
     <servlet>
         <servlet-name>mainServlet</servlet-name>
         <servlet-class>ru.bramblehorse.cms.controller.MainServlet</servlet-class>
@@ -78,7 +81,17 @@
         <servlet-name>contentAdminServlet</servlet-name>
         <url-pattern>/admin.content.do</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>imageUploadServlet</servlet-name>
+        <servlet-class>ru.bramblehorse.cms.controller.ImageUploadServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>imageUploadServlet</servlet-name>
+        <url-pattern>/image.upload.do</url-pattern>
+    </servlet-mapping>
+
     <welcome-file-list>
         <welcome-file>index.do</welcome-file>
     </welcome-file-list>
+
 </web-app>

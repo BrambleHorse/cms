@@ -27,6 +27,7 @@ public class ContentAdminServlet extends HttpServlet {
     private AbstractService<Category> categoryService;
     private AbstractService<TableContent> tableContentService;
     private AbstractService<TextContent> textContentService;
+    private AbstractService<ImageContent> imageContentService;
 
     @Override
     public void init() throws ServletException {
@@ -35,6 +36,7 @@ public class ContentAdminServlet extends HttpServlet {
         categoryService = (AbstractService<Category>) context.getBean("categoryService");
         tableContentService = (AbstractService<TableContent>) context.getBean("tableContentService");
         textContentService = (AbstractService<TextContent>) context.getBean("textContentService");
+        imageContentService = (AbstractService<ImageContent>) context.getBean("imageContentService");
     }
 
     @Override
@@ -42,22 +44,22 @@ public class ContentAdminServlet extends HttpServlet {
 
         String action = req.getParameter("action");
 
-            if(action == null) {
-                processGetNoActionContent(req,resp);
-                return;
-            }
-            if("create".equals(action)){
-                processGetCreateContent(req,resp);
-                return;
-            }
-            if("edit".equals(action)){
-                processGetEditContent(req,resp);
-                return;
-            }
-            if("delete".equals(action)) {
-                processGetDeleteContent(req, resp);
-                return;
-            }
+        if (action == null) {
+            processGetNoActionContent(req, resp);
+            return;
+        }
+        if ("create".equals(action)) {
+            processGetCreateContent(req, resp);
+            return;
+        }
+        if ("edit".equals(action)) {
+            processGetEditContent(req, resp);
+            return;
+        }
+        if ("delete".equals(action)) {
+            processGetDeleteContent(req, resp);
+            return;
+        }
 
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
         rd.forward(req, resp);
@@ -68,14 +70,14 @@ public class ContentAdminServlet extends HttpServlet {
 
         String action = req.getParameter("action");
 
-            if("create".equals(action)){
-               processPostCreateContent(req,resp);
-               return;
-            }
-            if("edit".equals(action)){
-               processPostEditContent(req, resp);
-               return;
-            }
+        if ("create".equals(action)) {
+            processPostCreateContent(req, resp);
+            return;
+        }
+        if ("edit".equals(action)) {
+            processPostEditContent(req, resp);
+            return;
+        }
 
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
         rd.forward(req, resp);
@@ -96,12 +98,11 @@ public class ContentAdminServlet extends HttpServlet {
 
         String contentType = req.getParameter("contentType");
         String categoryId = req.getParameter("categoryId");
-        req.setAttribute("contentType",contentType);
-        req.setAttribute("categoryId",categoryId);
-        if(contentType != null)
-        {
+        req.setAttribute("contentType", contentType);
+        req.setAttribute("categoryId", categoryId);
+        if (contentType != null) {
             RequestDispatcher rd;
-            switch (ContentType.getType(contentType)){
+            switch (ContentType.getType(contentType)) {
                 case TABLE:
                     rd = getServletContext().getRequestDispatcher("/jsp/admin/new_table_content.jsp");
                     rd.forward(req, resp);
@@ -111,9 +112,11 @@ public class ContentAdminServlet extends HttpServlet {
                     rd.forward(req, resp);
                     return;
                 case IMAGE:
-                    rd = getServletContext().getRequestDispatcher("/jsp/admin/new_image_content.jsp");
-                    rd.forward(req, resp);
-                    return;
+
+                        rd = getServletContext().getRequestDispatcher("/jsp/admin/new_image_content.jsp");
+                        rd.forward(req, resp);
+                        return;
+
                 default:
                     break;
             }
@@ -128,20 +131,26 @@ public class ContentAdminServlet extends HttpServlet {
         ContentType contentType = ContentType.getType(req.getParameter("contentType"));
         List<Category> categoryList = categoryService.getAll();
         Collections.sort(categoryList);
-        req.setAttribute("categoryList",categoryList);
+        req.setAttribute("categoryList", categoryList);
         RequestDispatcher rd;
         switch (contentType) {
             case TABLE:
                 TableContent tempTable = tableContentService.getById(Integer.parseInt(contentId));
                 req.setAttribute("content", tempTable);
                 rd = getServletContext().getRequestDispatcher("/jsp/admin/edit_table_content.jsp");
-                rd.forward(req,resp);
+                rd.forward(req, resp);
                 return;
             case TEXT:
                 TextContent tempText = textContentService.getById(Integer.parseInt(contentId));
                 req.setAttribute("content", tempText);
                 rd = getServletContext().getRequestDispatcher("/jsp/admin/edit_text_content.jsp");
-                rd.forward(req,resp);
+                rd.forward(req, resp);
+                return;
+            case IMAGE:
+                ImageContent tempImage = imageContentService.getById(Integer.parseInt(contentId));
+                req.setAttribute("content", tempImage);
+                rd = getServletContext().getRequestDispatcher("/jsp/admin/edit_image_content.jsp");
+                rd.forward(req, resp);
                 return;
             default:
                 break;
@@ -178,10 +187,10 @@ public class ContentAdminServlet extends HttpServlet {
         String contentType = req.getParameter("contentType");
         String contentPosition = req.getParameter("contentPosition");
 
-        if(categoryId != null && contentType != null && contentPosition != null) {
+        if (categoryId != null && contentType != null && contentPosition != null) {
             Category currentCategory = categoryService.getById(Integer.parseInt(categoryId));
             RequestDispatcher rd;
-            switch (ContentType.getType(contentType)){
+            switch (ContentType.getType(contentType)) {
                 case TABLE:
                     String htmlTable = req.getParameter("tableValue");
                     TableContent tempTableContent = new TableContent();
@@ -202,6 +211,27 @@ public class ContentAdminServlet extends HttpServlet {
                     rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
                     rd.forward(req, resp);
                     return;
+                case IMAGE:
+
+                    String uploadedPath = req.getParameter("uploadedPath");
+                    String uploadedThumbPath = req.getParameter("uploadedThumbPath");
+
+                    if (uploadedPath != null && uploadedThumbPath != null && contentPosition != null) {
+
+                        ImageContent tempImageContent = new ImageContent();
+                        tempImageContent.setImagePath(uploadedPath);
+                        tempImageContent.setContentPosition(Integer.parseInt(contentPosition));
+                        tempImageContent.setCategory(currentCategory);
+                        imageContentService.create(tempImageContent);
+                        System.out.println("post worked . .");
+                        rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
+                        rd.forward(req, resp);
+                        return;
+                    } else {
+                        rd = getServletContext().getRequestDispatcher("/jsp/admin/new_image_content.jsp");
+                        rd.forward(req, resp);
+                        return;
+                    }
                 default:
                     break;
             }
@@ -217,11 +247,11 @@ public class ContentAdminServlet extends HttpServlet {
         String contentType = req.getParameter("contentType");
         String contentPosition = req.getParameter("contentPosition");
 
-        if(categoryId != null && contentType != null && contentPosition != null && contentId != null) {
+        if (categoryId != null && contentType != null && contentPosition != null && contentId != null) {
             Category currentCategory = categoryService.getById(Integer.parseInt(categoryId));
             Integer idToEdit = Integer.parseInt(contentId);
             RequestDispatcher rd;
-            switch (ContentType.getType(contentType)){
+            switch (ContentType.getType(contentType)) {
                 case TABLE:
                     String htmlTable = req.getParameter("tableValue");
                     TableContent tempTableContent = new TableContent();
