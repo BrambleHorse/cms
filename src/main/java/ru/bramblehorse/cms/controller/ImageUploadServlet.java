@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -61,9 +62,10 @@ public class ImageUploadServlet extends HttpServlet {
                 while (iterator.hasNext()) {
                     FileItem item = (FileItem) iterator.next();
                     if (!item.isFormField()) {
-                        String fileName = item.getName();
+                        String fileName = new Date().getTime() + item.getName().substring(item.getName().length() - 4,item.getName().length());
+                        String thumbFileName = fileName.substring(0, fileName.length() - 4) + "_thumb" + fileName.substring(fileName.length()-4,fileName.length());
                         String root = getServletContext().getRealPath("/");
-                        File path = new File(root + "/upload");
+                        File path = new File(root +"/upload");
                         if (!path.exists()) {
                             boolean status = path.mkdirs();
                         }
@@ -73,11 +75,10 @@ public class ImageUploadServlet extends HttpServlet {
                         BufferedImage thumbnail =
                                 Scalr.resize(bi, Scalr.Method.SPEED, Scalr.Mode.FIT_TO_WIDTH,
                                         THUMB_IMAGE_HEIGHT, THUMB_IMAGE_WIDTH, Scalr.OP_ANTIALIAS);
-                        File thumbFile = new File(path + "/" +
-                                fileName.substring(0, fileName.length() - 4) + "_thumb.jpg");
+                        File thumbFile = new File(path + "/" + thumbFileName);
                         ImageIO.write(thumbnail, "jpg", thumbFile);
-                        imagePath = uploadedFile.getAbsolutePath();
-                        thumbImagePath = thumbFile.getAbsolutePath();
+                        imagePath = "/upload/" + fileName;
+                        thumbImagePath = "/upload/" + thumbFileName;
                     } else {
                         if("categoryId".equals(item.getFieldName())){
                            categoryId = item.getString();
@@ -94,14 +95,12 @@ public class ImageUploadServlet extends HttpServlet {
                 tempImageContent.setContentPosition(Integer.parseInt(contentPosition));
                 tempImageContent.setCategory(currentCategory);
                 imageContentService.create(tempImageContent);
-                System.out.println("get worked . .");
             } catch (FileUploadException e) {
                 e.printStackTrace();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        System.out.println("image upload worked . .");
         resp.sendRedirect("/admin.do");
     }
 

@@ -30,6 +30,7 @@
         <url-pattern>/admin.do</url-pattern>
         <url-pattern>/admin.categories.do</url-pattern>
         <url-pattern>/admin.content.do</url-pattern>
+        <url-pattern>/image.upload.do</url-pattern>
     </filter-mapping>
     <filter>
         <filter-name>hibernateFilter</filter-name>
@@ -47,6 +48,7 @@
         <url-pattern>/admin.do</url-pattern>
         <url-pattern>/admin.categories.do</url-pattern>
         <url-pattern>/admin.content.do</url-pattern>
+        <url-pattern>/image.upload.do</url-pattern>
     </filter-mapping>
 
     <servlet>

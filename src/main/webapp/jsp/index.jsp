@@ -80,9 +80,10 @@
                            <p class="content-text"> ${content.text} </p>
                         </c:if>
                         <c:if test="${content.type eq 'IMAGE'}">
-                            <img src="${pageContext.request.contextPath}\upload\horse_thumb.jpg"/>
+
                             <img src="${content.thumbImagePath}"/>
-                            <p>${pageContext.request.contextPath}\upload\horse_thumb.jpg</p>
+                            <p>${content.thumbImagePath}</p>
+
                         </c:if>
                     </c:forEach>
                 </c:when>
