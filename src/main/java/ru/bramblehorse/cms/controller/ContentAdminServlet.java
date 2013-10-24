@@ -10,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
@@ -173,6 +174,24 @@ public class ContentAdminServlet extends HttpServlet {
                 case TEXT:
                     textContentService.delete(idToDelete);
                     break;
+                case IMAGE:
+                    String pathToDelete = req.getParameter("path");
+                    String thumbPathToDelete = req.getParameter("thumbPath");
+                    File fileToDelete = new File(pathToDelete);
+                    File thumbFileToDelete = new File(thumbPathToDelete);
+                    if(fileToDelete.exists()){
+                       fileToDelete.delete();
+                        System.out.println("deleted . .");
+                    }   else {
+                        System.out.println("no file exists . .");
+                    }
+                    if(thumbFileToDelete.exists()){
+                        thumbFileToDelete.delete();
+                        System.out.println("thumb deleted . .");
+                    }   else {
+                        System.out.println("no thumb file exists . .");
+                    }
+                    imageContentService.delete(idToDelete);
                 default:
                     break;
             }

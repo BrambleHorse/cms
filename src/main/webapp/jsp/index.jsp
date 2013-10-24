@@ -80,10 +80,7 @@
                            <p class="content-text"> ${content.text} </p>
                         </c:if>
                         <c:if test="${content.type eq 'IMAGE'}">
-
-                            <img src="${content.thumbImagePath}"/>
-                            <p>${content.thumbImagePath}</p>
-
+                            <img src="${content.imagePath}"/>
                         </c:if>
                     </c:forEach>
                 </c:when>

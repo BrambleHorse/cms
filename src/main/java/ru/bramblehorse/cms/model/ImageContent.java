@@ -20,6 +20,26 @@ public class ImageContent extends Content {
     private String imagePath;
     @Column(name = "thumbpath")
     private String thumbImagePath;
+    @Column(name = "filepath")
+    private String imageFilePath;
+    @Column(name = "thumbfilepath")
+    private String thumbImageFilePath;
+
+    public String getImageFilePath() {
+        return imageFilePath;
+    }
+
+    public void setImageFilePath(String imageFilePath) {
+        this.imageFilePath = imageFilePath;
+    }
+
+    public String getThumbImageFilePath() {
+        return thumbImageFilePath;
+    }
+
+    public void setThumbImageFilePath(String thumbImageFilePath) {
+        this.thumbImageFilePath = thumbImageFilePath;
+    }
 
     public String getThumbImagePath() {
         return thumbImagePath;

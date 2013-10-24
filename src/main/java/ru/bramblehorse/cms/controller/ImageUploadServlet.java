@@ -48,6 +48,8 @@ public class ImageUploadServlet extends HttpServlet {
         String contentPosition = null;
         String imagePath = null;
         String thumbImagePath = null;
+        String imageFilePath = null;
+        String thumbImageFilePath =null;
 
         boolean isMultipart = ServletFileUpload.isMultipartContent(req);
         if (isMultipart) {
@@ -77,6 +79,8 @@ public class ImageUploadServlet extends HttpServlet {
                                         THUMB_IMAGE_HEIGHT, THUMB_IMAGE_WIDTH, Scalr.OP_ANTIALIAS);
                         File thumbFile = new File(path + "/" + thumbFileName);
                         ImageIO.write(thumbnail, "jpg", thumbFile);
+                        imageFilePath = uploadedFile.getAbsolutePath();
+                        thumbImageFilePath = thumbFile.getAbsolutePath();
                         imagePath = "/upload/" + fileName;
                         thumbImagePath = "/upload/" + thumbFileName;
                     } else {
@@ -90,6 +94,8 @@ public class ImageUploadServlet extends HttpServlet {
                 }
                 Category currentCategory = categoryService.getById(Integer.parseInt(categoryId));
                 ImageContent tempImageContent = new ImageContent();
+                tempImageContent.setImageFilePath(imageFilePath);
+                tempImageContent.setThumbImageFilePath(thumbImageFilePath);
                 tempImageContent.setImagePath(imagePath);
                 tempImageContent.setThumbImagePath(thumbImagePath);
                 tempImageContent.setContentPosition(Integer.parseInt(contentPosition));
@@ -101,6 +107,7 @@ public class ImageUploadServlet extends HttpServlet {
                 e.printStackTrace();
             }
         }
+
         resp.sendRedirect("/admin.do");
     }
 

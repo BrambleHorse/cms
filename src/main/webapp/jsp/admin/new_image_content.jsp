@@ -16,11 +16,12 @@
     <jsp:include page="admin_header.jsp"></jsp:include>
     <div class="create-content">
         <fieldset>
-            <legend>Загрузить изображение ${param.categoryId}</legend>
+            <legend>Загрузить изображение</legend>
             <form action="/image.upload.do" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="categoryId" value="${param.categoryId}">
-                <input type="text" name="contentPosition">
-                <label for="fileName">Select file:</label>
+                <label for="contentPosition">Место изображения в списке:</label>
+                <input id="contentPosition" type="text" name="contentPosition">
+                <label for="fileName">Укажите файл:</label>
                 <input id="fileName" type="file" name="fileName" size="30"/><br/>
                 <input type="submit" value="Загрузить"/>
             </form>

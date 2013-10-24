@@ -31,6 +31,11 @@
                         <li><a href="/admin.content.do?action=edit&contentType=TEXT&contentId=${content.contentId}&categoryId=${categoryId}">Редактировать</a></li>
                         <li><a href="/admin.content.do?action=delete&categoryId=${categoryId}&contentId=${content.contentId}&contentType=TEXT">Удалить</a></li>
                     </c:if>
+                    <c:if test="${content.type eq 'IMAGE'}">
+                        <li><img src="${content.imagePath}" alt="image not found"/></li>
+                        <li><a href="/admin.content.do?action=edit&contentType=IMAGE&contentId=${content.contentId}&categoryId=${categoryId}">Редактировать</a></li>
+                        <li><a href="/admin.content.do?action=delete&categoryId=${categoryId}&contentId=${content.contentId}&contentType=IMAGE&path=${content.imageFilePath}&thumbPath=${content.thumbImageFilePath}">Удалить</a></li>
+                    </c:if>
                 </c:forEach>
             </c:when>
             <c:otherwise>
