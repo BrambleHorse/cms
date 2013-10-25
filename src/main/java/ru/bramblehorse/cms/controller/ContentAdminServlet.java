@@ -293,6 +293,23 @@ public class ContentAdminServlet extends HttpServlet {
                     rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
                     rd.forward(req, resp);
                     return;
+                case IMAGE:
+                    String imagePath = req.getParameter("imagePath");
+                    String thumbImagePath = req.getParameter("thumbImagePath");
+                    String imageFilePath = req.getParameter("imageFilePath");
+                    String thumbImageFilePath = req.getParameter("thumbImageFilePath");
+                    ImageContent tempImageContent = new ImageContent();
+                    tempImageContent.setContentId(idToEdit);
+                    tempImageContent.setContentPosition(Integer.parseInt(contentPosition));
+                    tempImageContent.setCategory(currentCategory);
+                    tempImageContent.setImagePath(imagePath);
+                    tempImageContent.setThumbImagePath(thumbImagePath);
+                    tempImageContent.setImageFilePath(imageFilePath);
+                    tempImageContent.setThumbImageFilePath(thumbImageFilePath);
+                    imageContentService.edit(tempImageContent);
+                    rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
+                    rd.forward(req, resp);
+                    return;
                 default:
                     break;
             }
