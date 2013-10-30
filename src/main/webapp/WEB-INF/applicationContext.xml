@@ -11,22 +11,22 @@
     <context:annotation-config />
 
     <bean id="textContentDao" class="ru.bramblehorse.cms.dao.impl.HibernateTextContentDao"></bean>
-    <bean id="textContentService" class="ru.bramblehorse.cms.service.impl.TextContentService">
+    <bean id="textContentService" class="ru.bramblehorse.cms.service.impl.TextContentServiceImpl">
         <property name="textContentDao" ref="textContentDao"></property>
     </bean>
 
     <bean id="tableContentDao" class="ru.bramblehorse.cms.dao.impl.HibernateTableContentDao"></bean>
-    <bean id="tableContentService" class="ru.bramblehorse.cms.service.impl.TableContentService">
+    <bean id="tableContentService" class="ru.bramblehorse.cms.service.impl.TableContentServiceImpl">
         <property name="tableContentDao" ref="tableContentDao"></property>
     </bean>
 
     <bean id="imageContentDao" class="ru.bramblehorse.cms.dao.impl.HibernateImageContentDao"></bean>
-    <bean id="imageContentService" class="ru.bramblehorse.cms.service.impl.ImageContentService">
+    <bean id="imageContentService" class="ru.bramblehorse.cms.service.impl.ImageContentServiceImpl">
         <property name="imageContentDao" ref="imageContentDao"></property>
     </bean>
 
     <bean id="categoryDao" class="ru.bramblehorse.cms.dao.impl.HibernateCategoryDao"></bean>
-    <bean id="categoryService" class="ru.bramblehorse.cms.service.impl.CategoryService">
+    <bean id="categoryService" class="ru.bramblehorse.cms.service.impl.CategoryServiceImpl">
         <property name="categoryDao" ref="categoryDao"></property>
     </bean>
 

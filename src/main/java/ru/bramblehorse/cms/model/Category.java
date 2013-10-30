@@ -17,8 +17,32 @@ public class Category implements Comparable {
     private Integer categoryPosition;
     @Column(name = "category_name")
     private String name;
+    @ManyToOne
+    private Category parentCategory;
+    @OneToMany(mappedBy = "parentCategory", cascade = CascadeType.ALL)
+    private List<Category> childCategories;
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "category")
     private List<Content> content;
+
+    public boolean hasChildren(){
+        if(childCategories == null) return false;
+        return childCategories.isEmpty() ? false : true;
+    }
+    public Category getParentCategory() {
+        return parentCategory;
+    }
+
+    public void setParentCategory(Category parentCategory) {
+        this.parentCategory = parentCategory;
+    }
+
+    public List<Category> getChildCategories() {
+        return childCategories;
+    }
+
+    public void setChildCategories(List<Category> childCategories) {
+        this.childCategories = childCategories;
+    }
 
     public Integer getCategoryPosition() {
         return categoryPosition;

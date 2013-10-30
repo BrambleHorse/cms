@@ -13,7 +13,7 @@ import java.util.List;
  * Time: 21:56
  * To change this template use File | Settings | File Templates.
  */
-public class TextContentService implements AbstractService<TextContent> {
+public class TextContentServiceImpl implements AbstractService<TextContent> {
     AbstractDao<TextContent> textContentDao;
 
     public AbstractDao<TextContent> getTextContentDao() {

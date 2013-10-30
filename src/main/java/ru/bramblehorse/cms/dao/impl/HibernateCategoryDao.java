@@ -1,9 +1,12 @@
 package ru.bramblehorse.cms.dao.impl;
 
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.transaction.annotation.Transactional;
 import ru.bramblehorse.cms.dao.AbstractDao;
+import ru.bramblehorse.cms.dao.CategoryDao;
 import ru.bramblehorse.cms.model.Category;
 
 import java.util.List;
@@ -16,7 +19,7 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 @Transactional
-public class HibernateCategoryDao implements AbstractDao<Category> {
+public class HibernateCategoryDao implements CategoryDao {
     @Autowired
     HibernateTemplate ht;
 
@@ -45,5 +48,12 @@ public class HibernateCategoryDao implements AbstractDao<Category> {
     @Override
     public List<Category> getAll() {
         return ht.loadAll(Category.class);
+    }
+
+    @Override
+    public List getRootCategories() {
+        Criteria criteria = ht.getSessionFactory().getCurrentSession().createCriteria(Category.class);
+        criteria.add(Restrictions.isNull("parentCategory"));
+        return criteria.list();
     }
 }

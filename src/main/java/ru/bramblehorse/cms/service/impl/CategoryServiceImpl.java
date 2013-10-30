@@ -1,8 +1,9 @@
 package ru.bramblehorse.cms.service.impl;
 
-import ru.bramblehorse.cms.dao.AbstractDao;
+
+import ru.bramblehorse.cms.dao.CategoryDao;
 import ru.bramblehorse.cms.model.Category;
-import ru.bramblehorse.cms.service.AbstractService;
+import ru.bramblehorse.cms.service.CategoryService;
 
 import java.util.List;
 
@@ -13,14 +14,14 @@ import java.util.List;
  * Time: 22:03
  * To change this template use File | Settings | File Templates.
  */
-public class CategoryService implements AbstractService<Category> {
-    AbstractDao<Category> categoryDao;
+public class CategoryServiceImpl implements CategoryService {
+    CategoryDao categoryDao;
 
-    public AbstractDao<Category> getCategoryDao() {
+    public CategoryDao getCategoryDao() {
         return categoryDao;
     }
 
-    public void setCategoryDao(AbstractDao<Category> categoryDao) {
+    public void setCategoryDao(CategoryDao categoryDao) {
         this.categoryDao = categoryDao;
     }
 
@@ -47,5 +48,10 @@ public class CategoryService implements AbstractService<Category> {
     @Override
     public List<Category> getAll() {
         return categoryDao.getAll();
+    }
+
+    @Override
+    public List<Category> getRootCategories() {
+        return categoryDao.getRootCategories();
     }
 }

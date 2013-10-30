@@ -26,6 +26,28 @@
                     <td><input type="text" name="categoryPosition"></td>
                 </tr>
                 <tr>
+                    <td>Укажите родительскую категорию:</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><input type="radio" name="parentCategory" checked="checked" value="null"></td>
+                    <td>Нет (категория верхнего уровня)</td>
+                </tr>
+                <c:set var="categoryLength" value="${fn:length(categoryList)}"/>
+                <c:choose>
+                    <c:when test="${categoryLength > 0}">
+                        <c:forEach items="${categoryList}" var="category">
+                            <tr>
+                                <td><input type="radio"  name="parentCategory" value="${category.id}"></td>
+                                <td>${category.name}</td>
+                            </tr>
+                        </c:forEach>
+                    </c:when>
+                    <c:otherwise>
+                        <p> No categories . . </p>
+                    </c:otherwise>
+                </c:choose>
+                <tr>
                     <td></td>
                     <td><input type="submit" value="Создать"></td>
                 </tr>

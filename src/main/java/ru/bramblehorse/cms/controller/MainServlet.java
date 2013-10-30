@@ -4,6 +4,7 @@ import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.WebApplicationContext;
 import ru.bramblehorse.cms.model.*;
 import ru.bramblehorse.cms.service.AbstractService;
+import ru.bramblehorse.cms.service.CategoryService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -24,21 +25,22 @@ import java.util.List;
  */
 public class MainServlet extends HttpServlet {
     private WebApplicationContext context;
-    private AbstractService<Category> categoryService;
+    private CategoryService categoryService;
 
 
 
     @Override
     public void init() throws ServletException {
         context = ContextLoaderListener.getCurrentWebApplicationContext();
-        categoryService = (AbstractService<Category>)context.getBean("categoryService");
+        categoryService = (CategoryService)context.getBean("categoryService");
         //uncomment if you want to fill your database with mock values
 //        insertMockValues();
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Category> categoryList = categoryService.getAll();
+        List<Category> categoryList = categoryService.getRootCategories();
+
         String categoryId = req.getParameter("category");
         Collections.sort(categoryList);
         req.setAttribute("categoryList",categoryList);
@@ -74,6 +76,7 @@ public class MainServlet extends HttpServlet {
       Category category2 = new Category();
       category1.setName("Главная");
       category2.setName("Бетон");
+      category2.setParentCategory(category1);
       category1.setCategoryPosition(0);
       category2.setCategoryPosition(1);
       List<Content> list1 = new ArrayList<Content>();
