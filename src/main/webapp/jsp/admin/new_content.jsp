@@ -7,8 +7,6 @@
 <head>
     <meta charset="UTF-8">
     <title>New content</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp/css/styles.css" type="text/css">
-    <script type="text/javascript" src="${pageContext.request.contextPath}/jsp/js/jquery-1.10.2.js"></script>
 </head>
 
 <body>
@@ -20,7 +18,7 @@
                     <input type="hidden" name="categoryId" value="${param.categoryId}">
                     <table class="admin-input">
                         <tr>
-                            <td>Тип содержимого:</td>
+                            <td>Тип контента:</td>
                             <td></td>
                         </tr>
                         <tr>

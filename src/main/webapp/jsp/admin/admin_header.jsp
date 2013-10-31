@@ -3,7 +3,5 @@
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <div class="admin-header">
-    <ul class="admin-nav">
-        <li><a href="/admin.categories.do">Управление категориями</a></li>
-    </ul>
+    Admin page header
 </div>

@@ -1,6 +1,7 @@
 package ru.bramblehorse.cms.model;
 
 import javax.persistence.*;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -27,6 +28,10 @@ public class Category implements Comparable {
     public boolean hasChildren(){
         if(childCategories == null) return false;
         return childCategories.isEmpty() ? false : true;
+    }
+    public void sortChildren(){
+        if(childCategories != null)
+            Collections.sort(childCategories);
     }
     public Category getParentCategory() {
         return parentCategory;

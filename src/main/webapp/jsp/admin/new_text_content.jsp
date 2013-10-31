@@ -6,9 +6,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Edit content</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp/css/styles.css" type="text/css">
-    <script type="text/javascript" src="${pageContext.request.contextPath}/jsp/js/jquery-1.10.2.js"></script>
+    <title>New text</title>
 </head>
 
 <body>
@@ -21,7 +19,7 @@
             <input type="hidden" name="categoryId" value="${param.categoryId}">
             <table class="admin-input">
                 <tr>
-                    <td>Место содержимого в списке:</td>
+                    <td>Место текста в списке:</td>
                     <td><input type="text" name="contentPosition"></td>
                 </tr>
                 <tr>

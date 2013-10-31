@@ -6,17 +6,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Document</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp/css/styles.css" type="text/css">
-    <script type="text/javascript" src="${pageContext.request.contextPath}/jsp/js/jquery-1.10.2.js"></script>
-
+    <title>Admin page</title>
 </head>
 <body>
 <div class="wrapper">
     <jsp:include page="admin_header.jsp"/>
 <div class="admin-content">
-    
-
+    <ul class="admin-menu">
+        <li><a href="/admin.categories.do">Управление категориями и контентом</a></li>
+    </ul>
 </div>
     </div>
 <jsp:include page="admin_footer.jsp"/>

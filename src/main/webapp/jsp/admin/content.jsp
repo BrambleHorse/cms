@@ -7,8 +7,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Edit content</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp/css/styles.css" type="text/css">
-    <script type="text/javascript" src="${pageContext.request.contextPath}/jsp/js/jquery-1.10.2.js"></script>
 </head>
 
 <body>
@@ -16,7 +14,7 @@
     <jsp:include page="admin_header.jsp"/>
 
     <div class="content-list">
-        <li><a href="/admin.content.do?action=create&categoryId=${categoryId}">Создать</a></li>
+        <h3><li><a href="/admin.content.do?action=create&categoryId=${categoryId}">Добавить новый контент</a></li></h3>
         <c:set var="contentLength" value="${fn:length(contentList)}"/>
         <c:choose>
             <c:when test="${contentLength > 0}">
@@ -36,6 +34,7 @@
                         <li><a href="/admin.content.do?action=edit&contentType=IMAGE&contentId=${content.contentId}&categoryId=${categoryId}">Редактировать</a></li>
                         <li><a href="/admin.content.do?action=delete&categoryId=${categoryId}&contentId=${content.contentId}&contentType=IMAGE&path=${content.imageFilePath}&thumbPath=${content.thumbImageFilePath}">Удалить</a></li>
                     </c:if>
+                    <hr/>
                 </c:forEach>
             </c:when>
             <c:otherwise>
