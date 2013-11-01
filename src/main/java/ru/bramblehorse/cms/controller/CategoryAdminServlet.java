@@ -3,7 +3,6 @@ package ru.bramblehorse.cms.controller;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.WebApplicationContext;
 import ru.bramblehorse.cms.model.Category;
-import ru.bramblehorse.cms.service.AbstractService;
 import ru.bramblehorse.cms.service.CategoryService;
 
 import javax.servlet.RequestDispatcher;
@@ -84,10 +83,14 @@ public class CategoryAdminServlet extends HttpServlet {
 
     private void processGetNoActionCategory(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        List<Category> categoryList = categoryService.getAll();
+        List<Category> categoryList = categoryService.getRootCategories();
         Collections.sort(categoryList);
+        for(Category c : categoryList) {
+            c.sortChildren();
+        }
         req.setAttribute("categoryList", categoryList);
-        RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/categories.jsp");
+        req.setAttribute("adminAction","categories");
+        RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
         rd.forward(req, resp);
     }
 
@@ -96,7 +99,8 @@ public class CategoryAdminServlet extends HttpServlet {
         List<Category> categoryList = categoryService.getRootCategories();
         Collections.sort(categoryList);
         req.setAttribute("categoryList", categoryList);
-        RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/new_category.jsp");
+        req.setAttribute("adminAction","new_category");
+        RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
         rd.forward(req, resp);
     }
 
@@ -114,7 +118,8 @@ public class CategoryAdminServlet extends HttpServlet {
         if(currentParentCategory != null){
         req.setAttribute("parentCategoryId", currentCategory.getParentCategory().getId());
         }
-        RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/edit_category.jsp");
+        req.setAttribute("adminAction","edit_category");
+        RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
         rd.forward(req, resp);
     }
 
@@ -148,19 +153,20 @@ public class CategoryAdminServlet extends HttpServlet {
                 categoryParentValue = Integer.parseInt(parentCategory);
             }
         } catch (Exception e) {
-            RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/new_category.jsp");
+            req.setAttribute("adminAction","new_category");
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
             rd.forward(req, resp);
             return;
         }
         Category temp = new Category();
         if (categoryName == null || categoryName.isEmpty()) {
-            RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/new_category.jsp");
+            req.setAttribute("adminAction","new_category");
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
             rd.forward(req, resp);
             return;
         }
         temp.setName(categoryName);
-        if (categoryPositionValue != null)
-            temp.setCategoryPosition(categoryPositionValue);
+        temp.setCategoryPosition(categoryPositionValue);
         if(categoryParentValue != null)
             temp.setParentCategory(categoryService.getById(categoryParentValue));
         categoryService.create(temp);
@@ -191,14 +197,14 @@ public class CategoryAdminServlet extends HttpServlet {
 
         Category temp = new Category();
         if (categoryName == null || categoryName.isEmpty()) {
-            RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/new_category.jsp");
+            req.setAttribute("adminAction","new_category");
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
             rd.forward(req, resp);
             return;
         }
         temp.setName(categoryName);
         temp.setId(categoryId);
-        if (categoryPositionValue != null)
-            temp.setCategoryPosition(categoryPositionValue);
+        temp.setCategoryPosition(categoryPositionValue);
         if(categoryParentValue != null)
             temp.setParentCategory(categoryService.getById(categoryParentValue));
         categoryService.edit(temp);

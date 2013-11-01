@@ -40,6 +40,12 @@ public class ImageUploadServlet extends HttpServlet {
     private final int THUMB_IMAGE_WIDTH = 100;
     private final int THUMB_IMAGE_HEIGHT = 150;
 
+    @Override
+    public void init() throws ServletException {
+        context = ContextLoaderListener.getCurrentWebApplicationContext();
+        categoryService = (AbstractService<Category>) context.getBean("categoryService");
+        imageContentService = (AbstractService<ImageContent>) context.getBean("imageContentService");
+    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -78,7 +84,7 @@ public class ImageUploadServlet extends HttpServlet {
                                 Scalr.resize(bi, Scalr.Method.SPEED, Scalr.Mode.FIT_TO_WIDTH,
                                         THUMB_IMAGE_HEIGHT, THUMB_IMAGE_WIDTH, Scalr.OP_ANTIALIAS);
                         File thumbFile = new File(path + "/" + thumbFileName);
-                        ImageIO.write(thumbnail, "jpg", thumbFile);
+                        ImageIO.write(thumbnail,"jpg", thumbFile);
                         imageFilePath = uploadedFile.getAbsolutePath();
                         thumbImageFilePath = thumbFile.getAbsolutePath();
                         imagePath = "/upload/" + fileName;
@@ -109,13 +115,5 @@ public class ImageUploadServlet extends HttpServlet {
         }
 
         resp.sendRedirect("/admin.do");
-    }
-
-
-    @Override
-    public void init() throws ServletException {
-        context = ContextLoaderListener.getCurrentWebApplicationContext();
-        categoryService = (AbstractService<Category>) context.getBean("categoryService");
-        imageContentService = (AbstractService<ImageContent>) context.getBean("imageContentService");
     }
 }

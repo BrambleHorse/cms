@@ -2,18 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>New category</title>
-</head>
-
-<body>
-<div class="wrapper">
-    <jsp:include page="admin_header.jsp"/>
-
-    <div class="create-category">
+    <div class="new-category">
         <form action="/admin.categories.do" method="POST">
             <input type="hidden" name="action" value="create">
             <table class="admin-input">
@@ -52,8 +41,3 @@
             </table>
         </form>
     </div>
-
-</div>
-<jsp:include page="admin_footer.jsp"/>
-</body>
-</html>

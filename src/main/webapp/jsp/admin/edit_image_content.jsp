@@ -2,18 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Edit image</title>
-
-</head>
-
-<body>
-<div class="wrapper">
-    <jsp:include page="admin_header.jsp"></jsp:include>
-    <div class="edit-content">
+    <div class="edit-image-content">
         <form action="/admin.content.do" method="POST">
             <input type="hidden" name="action" value="edit">
             <input type="hidden" name="contentType" value="IMAGE">
@@ -56,7 +45,3 @@
             </table>
         </form>
     </div>
-</div>
-<jsp:include page="admin_footer.jsp"></jsp:include>
-</body>
-</html>

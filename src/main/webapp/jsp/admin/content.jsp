@@ -2,18 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Edit content</title>
-</head>
-
-<body>
-<div class="wrapper">
-    <jsp:include page="admin_header.jsp"/>
-
-    <div class="content-list">
+    <div class="manage-content">
         <h3><li><a href="/admin.content.do?action=create&categoryId=${categoryId}">Добавить новый контент</a></li></h3>
         <c:set var="contentLength" value="${fn:length(contentList)}"/>
         <c:choose>
@@ -42,7 +31,3 @@
             </c:otherwise>
         </c:choose>
     </div>
-</div>
-<jsp:include page="admin_footer.jsp"/>
-</body>
-</html>

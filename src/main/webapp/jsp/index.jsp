@@ -12,9 +12,7 @@
    <jsp:include page="header.jsp"></jsp:include>
     <div class="content-wrap">
         <jsp:include page="show_content.jsp"></jsp:include>
-        <div class="clear-container"></div>
     </div>
-    <div class="wrapper-clear-bot clear-container"></div>
 </div>
 <jsp:include page="footer.jsp"></jsp:include>
 </body>

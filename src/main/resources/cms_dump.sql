@@ -30,7 +30,7 @@ CREATE TABLE `categories` (
   PRIMARY KEY (`category_id`),
   KEY `FK4D47461C78D107D2` (`parentCategory_category_id`),
   CONSTRAINT `FK4D47461C78D107D2` FOREIGN KEY (`parentCategory_category_id`) REFERENCES `categories` (`category_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,7 +39,7 @@ CREATE TABLE `categories` (
 
 LOCK TABLES `categories` WRITE;
 /*!40000 ALTER TABLE `categories` DISABLE KEYS */;
-INSERT INTO `categories` VALUES (6,0,'Главная',NULL),(12,1,'Категория1',NULL),(13,2,'Категория2',NULL),(14,3,'Категория3',NULL),(15,5,'Подкатегория1.1',12);
+INSERT INTO `categories` VALUES (6,0,'Главная',NULL),(12,1,'Категория1',NULL),(13,2,'Категория2',NULL),(15,0,'Подкатегория1.1',12),(17,1,'Подкатегория1.2',12);
 /*!40000 ALTER TABLE `categories` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -58,7 +58,7 @@ CREATE TABLE `content` (
   PRIMARY KEY (`content_id`),
   KEY `FK38B7347948B169E9` (`category_id`),
   CONSTRAINT `FK38B7347948B169E9` FOREIGN KEY (`category_id`) REFERENCES `categories` (`category_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -67,7 +67,7 @@ CREATE TABLE `content` (
 
 LOCK TABLES `content` WRITE;
 /*!40000 ALTER TABLE `content` DISABLE KEYS */;
-INSERT INTO `content` VALUES (1,1,1,6),(2,0,0,6),(3,3,2,6);
+INSERT INTO `content` VALUES (8,0,0,6),(9,2,2,6);
 /*!40000 ALTER TABLE `content` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -96,7 +96,6 @@ CREATE TABLE `image_content` (
 
 LOCK TABLES `image_content` WRITE;
 /*!40000 ALTER TABLE `image_content` DISABLE KEYS */;
-INSERT INTO `image_content` VALUES ('D:\\Development\\Java\\intelliIdea\\cms\\target\\cms\\upload\\1383246295861.jpg','/upload/1383246295861.jpg','D:\\Development\\Java\\intelliIdea\\cms\\target\\cms\\upload\\1383246295861_thumb.jpg','/upload/1383246295861_thumb.jpg',1);
 /*!40000 ALTER TABLE `image_content` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -122,7 +121,7 @@ CREATE TABLE `sheet_content` (
 
 LOCK TABLES `sheet_content` WRITE;
 /*!40000 ALTER TABLE `sheet_content` DISABLE KEYS */;
-INSERT INTO `sheet_content` VALUES ('<tr>\r\n<td>\r\n111\r\n</td>\r\n<td>\r\n333\r\n</td>\r\n</tr>\r\n<tr>\r\n<td>\r\n555\r\n</td>\r\n<td>\r\n777\r\n</td>\r\n</tr>',3);
+INSERT INTO `sheet_content` VALUES ('<tr>\r\n<td>Название</td>\r\n<td>Стоимость</td>\r\n</tr>\r\n<tr>\r\n<td>Рыба</td>\r\n<td>100</td>\r\n</tr>\r\n<tr>\r\n<td>Мясо</td>\r\n<td>200</td>\r\n</tr>\r\n<tr>\r\n<td>Птица</td>\r\n<td>300</td>\r\n</tr>\r\n<tr>\r\n<td>Овощи</td>\r\n<td>400</td>\r\n</tr>',9);
 /*!40000 ALTER TABLE `sheet_content` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -148,7 +147,7 @@ CREATE TABLE `text_content` (
 
 LOCK TABLES `text_content` WRITE;
 /*!40000 ALTER TABLE `text_content` DISABLE KEYS */;
-INSERT INTO `text_content` VALUES ('This is the first content. This is the first content. This is the first content. This is the first content. This is the first content. This is the first content. This is the first content. This is the first content. This is the first content. This is the first content. This is the first content. This is the first content. This is the first content. This is the first content. This is the first content. This is the first content. This is the first content. This is the first content. This is the first content. This is the first content. This is the first content. This is the first content. This is the first content. This is the first content. This is the first content. This is the first content. This is the first content. This is the first content. This is the first content. This is the first content. This is the first content. This is the first content. This is the first content. ',2);
+INSERT INTO `text_content` VALUES ('Таким образом постоянный количественный рост и сфера нашей активности влечет за собой процесс внедрения и модернизации направлений прогрессивного развития. Товарищи! начало повседневной работы по формированию позиции требуют от нас анализа форм развития. Идейные соображения высшего порядка, а также реализация намеченных плановых заданий представляет собой интересный эксперимент проверки системы обучения кадров, соответствует насущным потребностям. Идейные соображения высшего порядка, а также реализация намеченных плановых заданий требуют от нас анализа системы обучения кадров, соответствует насущным потребностям. Равным образом реализация намеченных плановых заданий позволяет оценить значение системы обучения кадров, соответствует насущным потребностям.\r\nЗначимость этих проблем настолько очевидна, что дальнейшее развитие различных форм деятельности требуют от нас анализа дальнейших направлений развития. С другой стороны реализация намеченных плановых заданий влечет за собой процесс внедрения и модернизации модели развития. Значимость этих проблем настолько очевидна, что реализация намеченных плановых заданий играет важную роль в формировании дальнейших направлений развития.',8);
 /*!40000 ALTER TABLE `text_content` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -161,4 +160,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-11-01  0:01:03
+-- Dump completed on 2013-11-01 20:14:47

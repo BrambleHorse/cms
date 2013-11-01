@@ -91,7 +91,8 @@ public class ContentAdminServlet extends HttpServlet {
         Collections.sort(contentList);
         req.setAttribute("contentList", contentList);
         req.setAttribute("categoryId", categoryId);
-        RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/content.jsp");
+        req.setAttribute("adminAction","content");
+        RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
         rd.forward(req, resp);
     }
 
@@ -105,16 +106,18 @@ public class ContentAdminServlet extends HttpServlet {
             RequestDispatcher rd;
             switch (ContentType.getType(contentType)) {
                 case TABLE:
-                    rd = getServletContext().getRequestDispatcher("/jsp/admin/new_table_content.jsp");
+                    req.setAttribute("adminAction","new_table_content");
+                    rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
                     rd.forward(req, resp);
                     return;
                 case TEXT:
-                    rd = getServletContext().getRequestDispatcher("/jsp/admin/new_text_content.jsp");
+                    req.setAttribute("adminAction","new_text_content");
+                    rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
                     rd.forward(req, resp);
                     return;
                 case IMAGE:
-
-                        rd = getServletContext().getRequestDispatcher("/jsp/admin/new_image_content.jsp");
+                        req.setAttribute("adminAction","new_image_content");
+                        rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
                         rd.forward(req, resp);
                         return;
 
@@ -122,7 +125,8 @@ public class ContentAdminServlet extends HttpServlet {
                     break;
             }
         }
-        RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/new_content.jsp");
+        req.setAttribute("adminAction","new_content");
+        RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
         rd.forward(req, resp);
     }
 
@@ -138,19 +142,22 @@ public class ContentAdminServlet extends HttpServlet {
             case TABLE:
                 TableContent tempTable = tableContentService.getById(Integer.parseInt(contentId));
                 req.setAttribute("content", tempTable);
-                rd = getServletContext().getRequestDispatcher("/jsp/admin/edit_table_content.jsp");
+                req.setAttribute("adminAction","edit_table_content");
+                rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
                 rd.forward(req, resp);
                 return;
             case TEXT:
                 TextContent tempText = textContentService.getById(Integer.parseInt(contentId));
                 req.setAttribute("content", tempText);
-                rd = getServletContext().getRequestDispatcher("/jsp/admin/edit_text_content.jsp");
+                req.setAttribute("adminAction","edit_text_content");
+                rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
                 rd.forward(req, resp);
                 return;
             case IMAGE:
                 ImageContent tempImage = imageContentService.getById(Integer.parseInt(contentId));
                 req.setAttribute("content", tempImage);
-                rd = getServletContext().getRequestDispatcher("/jsp/admin/edit_image_content.jsp");
+                req.setAttribute("adminAction","edit_image_content");
+                rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
                 rd.forward(req, resp);
                 return;
             default:
@@ -230,27 +237,6 @@ public class ContentAdminServlet extends HttpServlet {
                     rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
                     rd.forward(req, resp);
                     return;
-                case IMAGE:
-
-                    String uploadedPath = req.getParameter("uploadedPath");
-                    String uploadedThumbPath = req.getParameter("uploadedThumbPath");
-
-                    if (uploadedPath != null && uploadedThumbPath != null && contentPosition != null) {
-
-                        ImageContent tempImageContent = new ImageContent();
-                        tempImageContent.setImagePath(uploadedPath);
-                        tempImageContent.setContentPosition(Integer.parseInt(contentPosition));
-                        tempImageContent.setCategory(currentCategory);
-                        imageContentService.create(tempImageContent);
-                        System.out.println("post worked . .");
-                        rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
-                        rd.forward(req, resp);
-                        return;
-                    } else {
-                        rd = getServletContext().getRequestDispatcher("/jsp/admin/new_image_content.jsp");
-                        rd.forward(req, resp);
-                        return;
-                    }
                 default:
                     break;
             }
