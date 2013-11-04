@@ -12,6 +12,10 @@
                             <td></td>
                         </tr>
                         <tr>
+                            <td><input type="radio" name="contentType" checked="checked" value="WYSIWYG"></td>
+                            <td>Ввод через WYSIWYG редактор</td>
+                        </tr>
+                        <tr>
                             <td><input type="radio" name="contentType" value="TEXT"></td>
                             <td>Текст</td>
                         </tr>

@@ -25,6 +25,11 @@
         <property name="imageContentDao" ref="imageContentDao"></property>
     </bean>
 
+    <bean id="wysiwygContentDao" class="ru.bramblehorse.cms.dao.impl.HibernateWYSIWYGContentDao"></bean>
+    <bean id="wysiwygContentService" class="ru.bramblehorse.cms.service.impl.WYSIWYGContentServiceImpl">
+        <property name="wysiwygContentDao" ref="wysiwygContentDao"></property>
+    </bean>
+
     <bean id="categoryDao" class="ru.bramblehorse.cms.dao.impl.HibernateCategoryDao"></bean>
     <bean id="categoryService" class="ru.bramblehorse.cms.service.impl.CategoryServiceImpl">
         <property name="categoryDao" ref="categoryDao"></property>

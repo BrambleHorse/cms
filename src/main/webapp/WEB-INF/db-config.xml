@@ -9,7 +9,7 @@
         <property name="url" value="jdbc:mysql://localhost:3306/cms"/>
         <property name="username" value="root"/>
         <property name="password" value="string"/>
-        <!--<property name="url" value="jdbc:mysql://localhost:3307/bramblehorse?autoReconnect=true"/>-->
+        <!--<property name="url" value="jdbc:mysql://localhost:3307/bramblehorse?characterEncoding=UTF-8"/>-->
         <!--<property name="username" value="bramblehorse"/>-->
         <!--<property name="password" value="4Nq7AlcjZzK3bm"/>-->
     </bean>
@@ -29,6 +29,7 @@
             <value>
                 hibernate.dialect=org.hibernate.dialect.MySQL5InnoDBDialect
                 hibernate.show_sql=true
+                <!--hibernate.hbm2ddl.auto=create-->
             </value>
         </property>
     </bean>

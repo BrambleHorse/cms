@@ -7,15 +7,24 @@
         <c:when test="${contentLength > 0}">
             <c:forEach items="${contentList}" var="content">
 
-                <c:if test="${content.type eq 'TABLE'}">
-                    <table class="content-sheet">${content.htmlTable}</table>
-                </c:if>
-                <c:if test="${content.type eq 'TEXT'}">
-                    <p class="content-text"> ${content.text} </p>
-                </c:if>
-                <c:if test="${content.type eq 'IMAGE'}">
-                    <img src="${content.imagePath}"/>
-                </c:if>
+                <c:choose>
+                    <c:when test="${content.type eq 'TABLE'}">
+                        <table class="content-sheet">${content.htmlTable}</table>
+                    </c:when>
+                    <c:when test="${content.type eq 'TEXT'}">
+                        <p class="content-text"> ${content.text} </p>
+                    </c:when>
+                    <c:when test="${content.type eq 'IMAGE'}">
+                        <img src="${content.imagePath}"/>
+                    </c:when>
+                    <c:when test="${content.type eq 'WYSIWYG'}">
+                         ${content.wysiwygData}
+                    </c:when>
+                    <c:otherwise>
+
+                    </c:otherwise>
+                </c:choose>
+
             </c:forEach>
         </c:when>
         <c:otherwise>

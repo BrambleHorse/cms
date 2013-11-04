@@ -8,15 +8,17 @@ package ru.bramblehorse.cms.model;
  * To change this template use File | Settings | File Templates.
  */
 public enum ContentType {
-    TEXT,IMAGE,TABLE,NONE;
+    TEXT,IMAGE,TABLE,WYSIWYG,NONE;
 
     public static ContentType getType(String s) {
-        if("text".equals(s) || "TEXT".equals(s))
+        if("text".equalsIgnoreCase(s))
             return TEXT;
-        if("table".equals(s) || "TABLE".equals(s))
+        if("table".equalsIgnoreCase(s))
             return TABLE;
-        if("image".equals(s) || "IMAGE".equals(s))
+        if("image".equalsIgnoreCase(s))
             return IMAGE;
+        if("wysiwyg".equalsIgnoreCase(s))
+            return WYSIWYG;
         return NONE;
     }
 }

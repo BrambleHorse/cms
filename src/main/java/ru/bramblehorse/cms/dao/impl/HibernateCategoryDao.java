@@ -37,7 +37,7 @@ public class HibernateCategoryDao implements CategoryDao {
     @Transactional
     @Override
     public void edit(Category entity) {
-        ht.saveOrUpdate(entity);
+        ht.update(entity);
     }
     @Transactional
     @Override

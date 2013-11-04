@@ -29,6 +29,7 @@ public class ContentAdminServlet extends HttpServlet {
     private AbstractService<TableContent> tableContentService;
     private AbstractService<TextContent> textContentService;
     private AbstractService<ImageContent> imageContentService;
+    private AbstractService<WYSIWYGContent> wysiwygContentService;
 
     @Override
     public void init() throws ServletException {
@@ -38,6 +39,7 @@ public class ContentAdminServlet extends HttpServlet {
         tableContentService = (AbstractService<TableContent>) context.getBean("tableContentService");
         textContentService = (AbstractService<TextContent>) context.getBean("textContentService");
         imageContentService = (AbstractService<ImageContent>) context.getBean("imageContentService");
+        wysiwygContentService = (AbstractService<WYSIWYGContent>) context.getBean("wysiwygContentService");
     }
 
     @Override
@@ -116,11 +118,17 @@ public class ContentAdminServlet extends HttpServlet {
                     rd.forward(req, resp);
                     return;
                 case IMAGE:
-                        req.setAttribute("adminAction","new_image_content");
+                        req.setAttribute("adminAction", "new_image_content");
                         rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
                         rd.forward(req, resp);
                         return;
-
+                case WYSIWYG:
+                      List<ImageContent> availableImages = imageContentService.getAll();
+                      req.setAttribute("availableImages",availableImages);
+                      req.setAttribute("adminAction","new_wysiwyg_content");
+                      rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
+                      rd.forward(req,resp);
+                      return;
                 default:
                     break;
             }
@@ -159,6 +167,15 @@ public class ContentAdminServlet extends HttpServlet {
                 req.setAttribute("adminAction","edit_image_content");
                 rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
                 rd.forward(req, resp);
+                return;
+            case WYSIWYG:
+                WYSIWYGContent tempWysiwyg = wysiwygContentService.getById(Integer.parseInt(contentId));
+                String tmp = "'" + tempWysiwyg.getWysiwygData() + "'";
+                tempWysiwyg.setWysiwygData(tmp);
+                req.setAttribute("content", tempWysiwyg);
+                req.setAttribute("adminAction","edit_wysiwyg_content");
+                rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
+                rd.forward(req,resp);
                 return;
             default:
                 break;
@@ -237,6 +254,16 @@ public class ContentAdminServlet extends HttpServlet {
                     rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
                     rd.forward(req, resp);
                     return;
+                case WYSIWYG:
+                    String wysiwyg = req.getParameter("wysiwygValue");
+                    WYSIWYGContent tempWYSIWYGContent = new WYSIWYGContent();
+                    tempWYSIWYGContent.setWysiwygData(wysiwyg);
+                    tempWYSIWYGContent.setContentPosition(Integer.parseInt(contentPosition));
+                    tempWYSIWYGContent.setCategory(currentCategory);
+                    wysiwygContentService.create(tempWYSIWYGContent);
+                    rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
+                    rd.forward(req, resp);
+                    return;
                 default:
                     break;
             }
@@ -293,6 +320,17 @@ public class ContentAdminServlet extends HttpServlet {
                     tempImageContent.setImageFilePath(imageFilePath);
                     tempImageContent.setThumbImageFilePath(thumbImageFilePath);
                     imageContentService.edit(tempImageContent);
+                    rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
+                    rd.forward(req, resp);
+                    return;
+                case WYSIWYG:
+                    String wysiwyg = req.getParameter("wysiwygValue");
+                    WYSIWYGContent tempWYSIWYGContent = new WYSIWYGContent();
+                    tempWYSIWYGContent.setContentId(idToEdit);
+                    tempWYSIWYGContent.setWysiwygData(wysiwyg);
+                    tempWYSIWYGContent.setContentPosition(Integer.parseInt(contentPosition));
+                    tempWYSIWYGContent.setCategory(currentCategory);
+                    wysiwygContentService.edit(tempWYSIWYGContent);
                     rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
                     rd.forward(req, resp);
                     return;

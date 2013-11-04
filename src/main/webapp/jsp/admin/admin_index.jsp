@@ -7,6 +7,28 @@
 <head>
     <meta charset="UTF-8">
     <title>Admin page</title>
+    <c:if test="${(adminAction eq 'new_wysiwyg_content') || (adminAction eq 'edit_wysiwyg_content')}">
+        <script type="text/javascript" src="${pageContext.request.contextPath}/jsp/tinymce/tinymce.min.js"></script>
+        <script type="text/javascript">
+            tinymce.init({
+                skin: "bramblehorse",
+                theme: "modern",
+                language : 'ru',
+                plugins: [
+                    "image","table","hr","textcolor","link"
+                ],
+                image_list: [
+                    <c:forEach items="${availableImages}" var="image">
+                    {title: '${image.contentId}', value: '${image.imagePath}'},
+                    </c:forEach>
+                ],
+                image_advtab: true,
+                selector: "textarea",
+                width: 800,
+                height: 500
+            });
+        </script>
+    </c:if>
 </head>
 <body>
     <jsp:include page="admin_header.jsp"/>
@@ -17,11 +39,13 @@
         <c:when test="${adminAction eq 'edit_image_content'}"><jsp:include page="edit_image_content.jsp"></jsp:include></c:when>
         <c:when test="${adminAction eq 'edit_table_content'}"><jsp:include page="edit_table_content.jsp"></jsp:include></c:when>
         <c:when test="${adminAction eq 'edit_text_content'}"><jsp:include page="edit_text_content.jsp"></jsp:include></c:when>
+        <c:when test="${adminAction eq 'edit_wysiwyg_content'}"><jsp:include page="edit_wysiwyg_content.jsp"></jsp:include></c:when>
         <c:when test="${adminAction eq 'new_category'}"><jsp:include page="new_category.jsp"></jsp:include></c:when>
         <c:when test="${adminAction eq 'new_content'}"><jsp:include page="new_content.jsp"></jsp:include></c:when>
         <c:when test="${adminAction eq 'new_image_content'}"><jsp:include page="new_image_content.jsp"></jsp:include></c:when>
         <c:when test="${adminAction eq 'new_table_content'}"><jsp:include page="new_table_content.jsp"></jsp:include></c:when>
         <c:when test="${adminAction eq 'new_text_content'}"><jsp:include page="new_text_content.jsp"></jsp:include></c:when>
+        <c:when test="${adminAction eq 'new_wysiwyg_content'}"><jsp:include page="new_wysiwyg_content.jsp"></jsp:include></c:when>
         <c:otherwise>
 
             <div class="admin-content">
