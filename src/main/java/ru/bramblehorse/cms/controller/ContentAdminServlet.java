@@ -170,8 +170,6 @@ public class ContentAdminServlet extends HttpServlet {
                 return;
             case WYSIWYG:
                 WYSIWYGContent tempWysiwyg = wysiwygContentService.getById(Integer.parseInt(contentId));
-                String tmp = "'" + tempWysiwyg.getWysiwygData() + "'";
-                tempWysiwyg.setWysiwygData(tmp);
                 req.setAttribute("content", tempWysiwyg);
                 req.setAttribute("adminAction","edit_wysiwyg_content");
                 rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
@@ -216,6 +214,8 @@ public class ContentAdminServlet extends HttpServlet {
                         System.out.println("no thumb file exists . .");
                     }
                     imageContentService.delete(idToDelete);
+                    case WYSIWYG:
+                        wysiwygContentService.delete(idToDelete);
                 default:
                     break;
             }
@@ -327,9 +327,9 @@ public class ContentAdminServlet extends HttpServlet {
                     String wysiwyg = req.getParameter("wysiwygValue");
                     WYSIWYGContent tempWYSIWYGContent = new WYSIWYGContent();
                     tempWYSIWYGContent.setContentId(idToEdit);
-                    tempWYSIWYGContent.setWysiwygData(wysiwyg);
                     tempWYSIWYGContent.setContentPosition(Integer.parseInt(contentPosition));
                     tempWYSIWYGContent.setCategory(currentCategory);
+                    tempWYSIWYGContent.setWysiwygData(wysiwyg);
                     wysiwygContentService.edit(tempWYSIWYGContent);
                     rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
                     rd.forward(req, resp);

@@ -5,9 +5,9 @@
 
 <div class="edit-wysiwyg-content">
     <form action="/admin.content.do" method="POST">
-        <input type="hidden" name="action" value="create">
+        <input type="hidden" name="action" value="edit">
         <input type="hidden" name="contentType" value="WYSIWYG">
-        <input type="hidden" name="categoryId" value="${param.categoryId}">
+        <input type="hidden" name="contentId" value="${content.contentId}">
         <table class="admin-input">
             <tr>
                 <td>Укажите категорию, в которой будет отображено содержимое:</td>
