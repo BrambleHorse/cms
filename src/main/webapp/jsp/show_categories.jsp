@@ -2,7 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <nav>
-    <ul class="nav-top">
+    <ul id="nav">
         <c:set var="categoryLength" value="${fn:length(categoryList)}"/>
         <c:choose>
             <c:when test="${categoryLength > 0}">

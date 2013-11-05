@@ -1,0 +1,92 @@
+html,
+body {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+header,
+nav  {
+    display: block;
+}
+/*------------------------------------*\
+	НАВИГАЦИЯ
+\*------------------------------------*/
+#nav {
+    background: #724374 0 0 repeat;
+    float:left;
+    width:100%;
+    list-style:none;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+#nav li{
+    float:left;
+    margin-right:10px;
+    position:relative;
+    display:block;
+}
+#nav li a{
+    display:block;
+    padding: 10px;
+    color:#fff;
+    text-decoration:none;
+}
+#nav li a:hover{
+    color: #da7d0c;
+}
+
+/*--- ВЫПАДАЮЩИЕ ПУНКТЫ ---*/
+#nav ul{
+    list-style:none;
+    position:absolute;
+    left:-9999px; /* Скрываем за экраном, когда не нужно (данный метод лучше, чем display:none;) */
+    opacity:0; /* Устанавливаем начальное состояние прозрачности */
+
+}
+#nav ul li{
+    padding-top:0px; /* без разделения пунктов меню */
+    float:none;
+    background: #ffffff;
+}
+#nav ul a{
+    white-space:nowrap; /* Останавливаем перенос текста и создаем многострочный выпадающий пункт */
+    display:block;
+}
+#nav li:hover ul{ /* Выводим выпадающий пункт при наведении курсора */
+    left:0; /* Приносим его обратно на экран, когда нужно */
+    opacity:1; /* Делаем непрозрачным */
+}
+#nav li:hover a{ /* Устанавливаем стили для верхнего уровня, когда выводится выпадающий список */
+    background:#724374;
+
+}
+#nav li:hover ul a{ /* Изменяем некоторые стили верхнего уровня при выводе выпадающего пункта */
+    text-decoration:none;
+}
+#nav li:hover ul li a:hover{ /* Устанавливаем стили для выпадающих пунктов, когда курсор наводится на конкретный пункт */
+    background: #724374;
+}
+
+html, body, #wrap {height: 100%;}
+
+body > #wrap {height: auto; min-height: 100%;}
+
+#main {padding-bottom: 150px;}  /* отступ должен быть равен высоте футера */
+
+#footer {
+    position: relative;
+    margin-top: -150px; /* отрицательное значение высоты футера */
+    height: 150px;
+    clear:both;
+    text-align: center;
+}
+.clearfix:after {content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;}
+.clearfix {display: inline-block;}
+/* Hides from IE-mac \*/
+* html .clearfix { height: 1%;}
+.clearfix {display: block;}
+/* End hide from IE-mac */

@@ -6,11 +6,12 @@
 <head>
     <meta charset="UTF-8">
     <title>CMS Demo</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp/css/styles.css">
 </head>
 <body>
-<div class="wrapper">
+<div id="wrap">
    <jsp:include page="header.jsp"></jsp:include>
-    <div class="content-wrap">
+    <div id="main" class="clearfix">
         <jsp:include page="show_content.jsp"></jsp:include>
     </div>
 </div>

@@ -170,6 +170,8 @@ public class ContentAdminServlet extends HttpServlet {
                 return;
             case WYSIWYG:
                 WYSIWYGContent tempWysiwyg = wysiwygContentService.getById(Integer.parseInt(contentId));
+                List<ImageContent> availableImages = imageContentService.getAll();
+                req.setAttribute("availableImages",availableImages);
                 req.setAttribute("content", tempWysiwyg);
                 req.setAttribute("adminAction","edit_wysiwyg_content");
                 rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
