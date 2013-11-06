@@ -2,7 +2,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<div id="footer">
-   <jsp:include page="show_links.jsp"></jsp:include>
-   <a href="#">Версия: 1.0.3 - Тестирование</a>
+<div class="under-construction">
+    <h2>Страница находится в разработке, пожалуйста зайдите позже!</h2><br/>
 </div>

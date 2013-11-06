@@ -1,4 +1,4 @@
-package ru.bramblehorse.cms.model;
+package ru.bramblehorse.cms.model.content;
 
 /**
  * Created with IntelliJ IDEA.
@@ -8,7 +8,7 @@ package ru.bramblehorse.cms.model;
  * To change this template use File | Settings | File Templates.
  */
 public enum ContentType {
-    TEXT,IMAGE,TABLE,WYSIWYG,NONE;
+    TEXT,IMAGE,TABLE,WYSIWYG,LINK,NONE;
 
     public static ContentType getType(String s) {
         if("text".equalsIgnoreCase(s))
@@ -19,6 +19,8 @@ public enum ContentType {
             return IMAGE;
         if("wysiwyg".equalsIgnoreCase(s))
             return WYSIWYG;
+        if("link".equalsIgnoreCase(s))
+            return LINK;
         return NONE;
     }
 }

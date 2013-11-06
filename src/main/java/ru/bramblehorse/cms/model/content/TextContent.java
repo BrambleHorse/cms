@@ -1,4 +1,4 @@
-package ru.bramblehorse.cms.model;
+package ru.bramblehorse.cms.model.content;
 
 import javax.persistence.*;
 

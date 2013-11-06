@@ -1,6 +1,6 @@
 package ru.bramblehorse.cms.dao;
 
-import ru.bramblehorse.cms.model.Category;
+import ru.bramblehorse.cms.model.content.Category;
 
 import java.util.List;
 

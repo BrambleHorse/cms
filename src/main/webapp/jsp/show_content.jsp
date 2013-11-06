@@ -28,7 +28,7 @@
             </c:forEach>
         </c:when>
         <c:otherwise>
-            <h2>There are no content.&nbsp;You can add content using admin page.</h2>
+           <jsp:include page="under_construction.jsp"></jsp:include>
         </c:otherwise>
     </c:choose>
 </div>

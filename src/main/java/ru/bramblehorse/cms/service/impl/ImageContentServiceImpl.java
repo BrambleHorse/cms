@@ -1,7 +1,7 @@
 package ru.bramblehorse.cms.service.impl;
 
 import ru.bramblehorse.cms.dao.AbstractDao;
-import ru.bramblehorse.cms.model.ImageContent;
+import ru.bramblehorse.cms.model.content.ImageContent;
 import ru.bramblehorse.cms.service.AbstractService;
 
 import java.util.List;

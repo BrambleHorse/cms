@@ -5,9 +5,8 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.transaction.annotation.Transactional;
-import ru.bramblehorse.cms.dao.AbstractDao;
 import ru.bramblehorse.cms.dao.CategoryDao;
-import ru.bramblehorse.cms.model.Category;
+import ru.bramblehorse.cms.model.content.Category;
 
 import java.util.List;
 
@@ -49,7 +48,7 @@ public class HibernateCategoryDao implements CategoryDao {
     public List<Category> getAll() {
         return ht.loadAll(Category.class);
     }
-
+    @Transactional
     @Override
     public List getRootCategories() {
         Criteria criteria = ht.getSessionFactory().getCurrentSession().createCriteria(Category.class);

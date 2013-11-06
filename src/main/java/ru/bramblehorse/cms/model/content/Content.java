@@ -1,4 +1,4 @@
-package ru.bramblehorse.cms.model;
+package ru.bramblehorse.cms.model.content;
 
 import javax.persistence.*;
 
@@ -60,9 +60,9 @@ public abstract class Content implements Comparable {
     @Override
     public int compareTo(Object o) {
         if (o == null)
-            throw new NullPointerException("Passed null to ru.bramblehorse.cms.model.Content#compareTo(Object)");
+            throw new NullPointerException("Passed null to ru.bramblehorse.cms.model.content.Content#compareTo(Object)");
         if(!(o instanceof Content))
-            throw new ClassCastException("ru.bramblehorse.cms.model.Content#compareTo(Object)");
+            throw new ClassCastException("ru.bramblehorse.cms.model.content.Content#compareTo(Object)");
         if(((Content) o).getContentPosition() < this.getContentPosition()) return 1;
         if(((Content) o).getContentPosition() > this.getContentPosition()) return -1;
         return 0;

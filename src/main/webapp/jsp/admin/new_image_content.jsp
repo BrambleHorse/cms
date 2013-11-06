@@ -7,6 +7,7 @@
             <legend>Загрузить изображение</legend>
             <form action="/image.upload.do" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="categoryId" value="${param.categoryId}">
+                <input type="hidden" name="contentType" value="IMAGE">
                 <label for="contentPosition">Место изображения в списке:</label>
                 <input id="contentPosition" type="text" name="contentPosition">
                 <label for="fileName">Укажите файл:</label>

@@ -1,4 +1,4 @@
-package ru.bramblehorse.cms.model;
+package ru.bramblehorse.cms.model.content;
 
 import javax.persistence.*;
 import java.util.Collections;
@@ -84,9 +84,9 @@ public class Category implements Comparable {
     @Override
     public int compareTo(Object o) {
         if (o == null)
-            throw new NullPointerException("Passed null to ru.bramblehorse.cms.model.Category#compareTo(Object)");
+            throw new NullPointerException("Passed null to ru.bramblehorse.cms.model.content.Category#compareTo(Object)");
         if (!(o instanceof Category))
-            throw new ClassCastException("ru.bramblehorse.cms.model.Category#compareTo(Object)");
+            throw new ClassCastException("ru.bramblehorse.cms.model.content.Category#compareTo(Object)");
         if (((Category) o).getCategoryPosition() < this.getCategoryPosition()) return 1;
         if (((Category) o).getCategoryPosition() > this.getCategoryPosition()) return -1;
         return 0;

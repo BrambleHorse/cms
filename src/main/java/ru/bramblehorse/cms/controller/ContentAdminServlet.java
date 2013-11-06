@@ -2,7 +2,7 @@ package ru.bramblehorse.cms.controller;
 
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.WebApplicationContext;
-import ru.bramblehorse.cms.model.*;
+import ru.bramblehorse.cms.model.content.*;
 import ru.bramblehorse.cms.service.AbstractService;
 
 import javax.servlet.RequestDispatcher;
@@ -30,6 +30,7 @@ public class ContentAdminServlet extends HttpServlet {
     private AbstractService<TextContent> textContentService;
     private AbstractService<ImageContent> imageContentService;
     private AbstractService<WYSIWYGContent> wysiwygContentService;
+    private AbstractService<LinkContent> linkContentService;
 
     @Override
     public void init() throws ServletException {
@@ -40,14 +41,20 @@ public class ContentAdminServlet extends HttpServlet {
         textContentService = (AbstractService<TextContent>) context.getBean("textContentService");
         imageContentService = (AbstractService<ImageContent>) context.getBean("imageContentService");
         wysiwygContentService = (AbstractService<WYSIWYGContent>) context.getBean("wysiwygContentService");
+        linkContentService = (AbstractService<LinkContent>) context.getBean("linkContentService");
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String action = req.getParameter("action");
+        String mode = req.getParameter("mode");
 
         if (action == null) {
+            if ("links".equals(mode)) {
+                processGetNoActionLinkContent(req, resp);
+                return;
+            }
             processGetNoActionContent(req, resp);
             return;
         }
@@ -89,11 +96,22 @@ public class ContentAdminServlet extends HttpServlet {
     private void processGetNoActionContent(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String categoryId = req.getParameter("categoryId");
+
         List<Content> contentList = categoryService.getById(Integer.parseInt(categoryId)).getContent();
         Collections.sort(contentList);
         req.setAttribute("contentList", contentList);
         req.setAttribute("categoryId", categoryId);
-        req.setAttribute("adminAction","content");
+        req.setAttribute("adminAction", "content");
+        RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
+        rd.forward(req, resp);
+
+    }
+
+    private void processGetNoActionLinkContent(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        List<LinkContent> linkList = linkContentService.getAll();
+        Collections.sort(linkList);
+        req.setAttribute("linkList", linkList);
+        req.setAttribute("adminAction", "links");
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
         rd.forward(req, resp);
     }
@@ -108,32 +126,32 @@ public class ContentAdminServlet extends HttpServlet {
             RequestDispatcher rd;
             switch (ContentType.getType(contentType)) {
                 case TABLE:
-                    req.setAttribute("adminAction","new_table_content");
+                    req.setAttribute("adminAction", "new_table_content");
                     rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
                     rd.forward(req, resp);
                     return;
                 case TEXT:
-                    req.setAttribute("adminAction","new_text_content");
+                    req.setAttribute("adminAction", "new_text_content");
                     rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
                     rd.forward(req, resp);
                     return;
                 case IMAGE:
-                        req.setAttribute("adminAction", "new_image_content");
-                        rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
-                        rd.forward(req, resp);
-                        return;
+                    req.setAttribute("adminAction", "new_image_content");
+                    rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
+                    rd.forward(req, resp);
+                    return;
                 case WYSIWYG:
-                      List<ImageContent> availableImages = imageContentService.getAll();
-                      req.setAttribute("availableImages",availableImages);
-                      req.setAttribute("adminAction","new_wysiwyg_content");
-                      rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
-                      rd.forward(req,resp);
-                      return;
+                    List<ImageContent> availableImages = imageContentService.getAll();
+                    req.setAttribute("availableImages", availableImages);
+                    req.setAttribute("adminAction", "new_wysiwyg_content");
+                    rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
+                    rd.forward(req, resp);
+                    return;
                 default:
                     break;
             }
         }
-        req.setAttribute("adminAction","new_content");
+        req.setAttribute("adminAction", "new_content");
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
         rd.forward(req, resp);
     }
@@ -150,32 +168,46 @@ public class ContentAdminServlet extends HttpServlet {
             case TABLE:
                 TableContent tempTable = tableContentService.getById(Integer.parseInt(contentId));
                 req.setAttribute("content", tempTable);
-                req.setAttribute("adminAction","edit_table_content");
+                req.setAttribute("adminAction", "edit_table_content");
                 rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
                 rd.forward(req, resp);
                 return;
             case TEXT:
                 TextContent tempText = textContentService.getById(Integer.parseInt(contentId));
                 req.setAttribute("content", tempText);
-                req.setAttribute("adminAction","edit_text_content");
+                req.setAttribute("adminAction", "edit_text_content");
                 rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
                 rd.forward(req, resp);
                 return;
             case IMAGE:
                 ImageContent tempImage = imageContentService.getById(Integer.parseInt(contentId));
                 req.setAttribute("content", tempImage);
-                req.setAttribute("adminAction","edit_image_content");
+                req.setAttribute("adminAction", "edit_image_content");
                 rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
                 rd.forward(req, resp);
                 return;
             case WYSIWYG:
                 WYSIWYGContent tempWysiwyg = wysiwygContentService.getById(Integer.parseInt(contentId));
                 List<ImageContent> availableImages = imageContentService.getAll();
-                req.setAttribute("availableImages",availableImages);
+                req.setAttribute("availableImages", availableImages);
                 req.setAttribute("content", tempWysiwyg);
-                req.setAttribute("adminAction","edit_wysiwyg_content");
+                req.setAttribute("adminAction", "edit_wysiwyg_content");
                 rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
-                rd.forward(req,resp);
+                rd.forward(req, resp);
+                return;
+            case LINK:
+                LinkContent tempLink = linkContentService.getById(Integer.parseInt(contentId));
+                String editImage = req.getParameter("editImage");
+                req.setAttribute("content", tempLink);
+                if ("true".equalsIgnoreCase(editImage)) {
+                    req.setAttribute("adminAction", "edit_link_content");
+                    rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
+                    rd.forward(req, resp);
+                    return;
+                }
+                req.setAttribute("adminAction", "edit_link");
+                rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
+                rd.forward(req, resp);
                 return;
             default:
                 break;
@@ -186,10 +218,9 @@ public class ContentAdminServlet extends HttpServlet {
 
     private void processGetDeleteContent(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        String categoryId = req.getParameter("categoryId");
         String contentId = req.getParameter("contentId");
         String contentType = req.getParameter("contentType");
-        if (categoryId != null && contentId != null && contentType != null) {
+        if (contentId != null && contentType != null) {
             Integer idToDelete = Integer.parseInt(contentId);
             switch (ContentType.getType(contentType)) {
                 case TABLE:
@@ -203,21 +234,31 @@ public class ContentAdminServlet extends HttpServlet {
                     String thumbPathToDelete = req.getParameter("thumbPath");
                     File fileToDelete = new File(pathToDelete);
                     File thumbFileToDelete = new File(thumbPathToDelete);
-                    if(fileToDelete.exists()){
-                       fileToDelete.delete();
+                    if (fileToDelete.exists()) {
+                        fileToDelete.delete();
                         System.out.println("deleted . .");
-                    }   else {
+                    } else {
                         System.out.println("no file exists . .");
                     }
-                    if(thumbFileToDelete.exists()){
+                    if (thumbFileToDelete.exists()) {
                         thumbFileToDelete.delete();
                         System.out.println("thumb deleted . .");
-                    }   else {
+                    } else {
                         System.out.println("no thumb file exists . .");
                     }
                     imageContentService.delete(idToDelete);
-                    case WYSIWYG:
-                        wysiwygContentService.delete(idToDelete);
+                case WYSIWYG:
+                    wysiwygContentService.delete(idToDelete);
+                    break;
+                case LINK:
+                    String linkImagePathToDelete = req.getParameter("linkImageFilePath");
+                    File linkFileToDelete = new File(linkImagePathToDelete);
+                    if (linkFileToDelete.exists()) {
+                        linkFileToDelete.delete();
+                        System.out.println("deleted . .");
+                    }
+                    linkContentService.delete(idToDelete);
+                    break;
                 default:
                     break;
             }
@@ -281,8 +322,12 @@ public class ContentAdminServlet extends HttpServlet {
         String contentType = req.getParameter("contentType");
         String contentPosition = req.getParameter("contentPosition");
 
-        if (categoryId != null && contentType != null && contentPosition != null && contentId != null) {
-            Category currentCategory = categoryService.getById(Integer.parseInt(categoryId));
+        if (contentType != null && contentPosition != null && contentId != null) {
+
+            Category currentCategory = null;
+            if (categoryId != null) {
+                currentCategory = categoryService.getById(Integer.parseInt(categoryId));
+            }
             Integer idToEdit = Integer.parseInt(contentId);
             RequestDispatcher rd;
             switch (ContentType.getType(contentType)) {
@@ -326,13 +371,28 @@ public class ContentAdminServlet extends HttpServlet {
                     rd.forward(req, resp);
                     return;
                 case WYSIWYG:
-                    String wysiwyg = req.getParameter("wysiwygValue");
+                    String wysiwygValue = req.getParameter("wysiwygValue");
                     WYSIWYGContent tempWYSIWYGContent = new WYSIWYGContent();
                     tempWYSIWYGContent.setContentId(idToEdit);
                     tempWYSIWYGContent.setContentPosition(Integer.parseInt(contentPosition));
                     tempWYSIWYGContent.setCategory(currentCategory);
-                    tempWYSIWYGContent.setWysiwygData(wysiwyg);
+                    tempWYSIWYGContent.setWysiwygData(wysiwygValue);
                     wysiwygContentService.edit(tempWYSIWYGContent);
+                    rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
+                    rd.forward(req, resp);
+                    return;
+                case LINK:
+                    String linkValue = req.getParameter("linkValue");
+                    String linkImagePath = req.getParameter("linkImagePath");
+                    String linkImageFilePath = req.getParameter("linkImageFilePath");
+                    LinkContent tempLinkContent = new LinkContent();
+                    tempLinkContent.setContentId(idToEdit);
+                    tempLinkContent.setContentPosition(Integer.parseInt(contentPosition));
+                    tempLinkContent.setCategory(null);
+                    tempLinkContent.setLinkValue(linkValue);
+                    tempLinkContent.setLinkImagePath(linkImagePath);
+                    tempLinkContent.setLinkImageFilePath(linkImageFilePath);
+                    linkContentService.edit(tempLinkContent);
                     rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
                     rd.forward(req, resp);
                     return;

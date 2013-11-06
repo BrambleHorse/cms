@@ -1,6 +1,6 @@
 package ru.bramblehorse.cms.service;
 
-import ru.bramblehorse.cms.model.Category;
+import ru.bramblehorse.cms.model.content.Category;
 
 import java.util.List;
 

@@ -35,4 +35,9 @@
         <property name="categoryDao" ref="categoryDao"></property>
     </bean>
 
+    <bean id="linkContentDao" class="ru.bramblehorse.cms.dao.impl.HibernateLinkContentDao"></bean>
+    <bean id="linkContentService" class="ru.bramblehorse.cms.service.impl.LinkContentService">
+        <property name="linkContentDao" ref="linkContentDao"></property>
+    </bean>
+
 </beans>

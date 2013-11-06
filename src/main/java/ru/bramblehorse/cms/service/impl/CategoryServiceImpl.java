@@ -2,7 +2,7 @@ package ru.bramblehorse.cms.service.impl;
 
 
 import ru.bramblehorse.cms.dao.CategoryDao;
-import ru.bramblehorse.cms.model.Category;
+import ru.bramblehorse.cms.model.content.Category;
 import ru.bramblehorse.cms.service.CategoryService;
 
 import java.util.List;

@@ -8,8 +8,8 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.imgscalr.Scalr;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.WebApplicationContext;
-import ru.bramblehorse.cms.model.Category;
-import ru.bramblehorse.cms.model.ImageContent;
+import ru.bramblehorse.cms.model.content.Category;
+import ru.bramblehorse.cms.model.content.ImageContent;
 import ru.bramblehorse.cms.service.AbstractService;
 
 import javax.imageio.ImageIO;

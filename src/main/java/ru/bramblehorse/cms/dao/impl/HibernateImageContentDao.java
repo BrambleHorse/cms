@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.transaction.annotation.Transactional;
 import ru.bramblehorse.cms.dao.AbstractDao;
-import ru.bramblehorse.cms.model.ImageContent;
+import ru.bramblehorse.cms.model.content.ImageContent;
 
 import java.util.List;
 

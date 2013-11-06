@@ -1,0 +1,27 @@
+<%@page contentType="text/html" pageEncoding="UTF-8" language="java" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
+<div class="edit-text-content">
+    <form action="/admin.content.do" method="POST">
+        <input type="hidden" name="action" value="edit">
+        <input type="hidden" name="contentType" value="LINK">
+        <input type="hidden" name="contentId" value="${content.contentId}">
+        <input type="hidden" name="linkImagePath" value="${content.linkImagePath}">
+        <input type="hidden" name="linkImageFilePath" value="${content.linkImageFilePath}">
+        <table class="admin-input">
+            <tr>
+                <td>Позиция:</td>
+                <td><input type="text" name="contentPosition" value="${content.contentPosition}"></td>
+            </tr>
+            <tr>
+                <td>Ссылка:</td>
+                <td><input type="text" name="linkValue" value="${content.linkValue}"></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" value="Сохранить"></td>
+            </tr>
+        </table>
+    </form>
+</div>
