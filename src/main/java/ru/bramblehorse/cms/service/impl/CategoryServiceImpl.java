@@ -54,4 +54,9 @@ public class CategoryServiceImpl implements CategoryService {
     public List<Category> getRootCategories() {
         return categoryDao.getRootCategories();
     }
+
+    @Override
+    public List<Category> getVisibleRootCategories() {
+        return categoryDao.getVisibleRootCategories();
+    }
 }

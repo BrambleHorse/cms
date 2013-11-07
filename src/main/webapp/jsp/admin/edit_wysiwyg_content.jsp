@@ -36,6 +36,10 @@
                 <td><textarea name="wysiwygValue">${content.wysiwygData}</textarea></td>
             </tr>
             <tr>
+                <td>Отображать</td>
+                <td><input type="checkbox" name="isVisible" <c:if test="${content.isVisible}">checked="true"</c:if> value="visible"></td>
+            </tr>
+            <tr>
                 <td></td>
                 <td><input type="submit" value="Сохранить"></td>
             </tr>

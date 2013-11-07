@@ -17,6 +17,10 @@
                     <td><textarea name="textValue" rows="12" cols="60"></textarea></td>
                 </tr>
                 <tr>
+                    <td>Отображать</td>
+                    <td><input type="checkbox" name="isVisible" checked="true" value="visible"></td>
+                </tr>
+                <tr>
                     <td></td>
                     <td><input type="submit" value="Создать"></td>
                 </tr>

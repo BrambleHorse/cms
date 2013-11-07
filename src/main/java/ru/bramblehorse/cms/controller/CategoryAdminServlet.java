@@ -143,6 +143,7 @@ public class CategoryAdminServlet extends HttpServlet {
         String categoryName = req.getParameter("title");
         String categoryPosition = req.getParameter("categoryPosition");
         String parentCategory = req.getParameter("parentCategory");
+        String isVisible = req.getParameter("isVisible");
         Integer categoryPositionValue;
         Integer categoryParentValue;
         try {
@@ -167,6 +168,11 @@ public class CategoryAdminServlet extends HttpServlet {
         }
         temp.setName(categoryName);
         temp.setCategoryPosition(categoryPositionValue);
+        if("visible".equalsIgnoreCase(isVisible)){
+            temp.setIsVisible(true);
+        }   else {
+            temp.setIsVisible(false);
+        }
         if(categoryParentValue != null)
             temp.setParentCategory(categoryService.getById(categoryParentValue));
         categoryService.create(temp);
@@ -179,6 +185,7 @@ public class CategoryAdminServlet extends HttpServlet {
         String categoryName = req.getParameter("title");
         String categoryPosition = req.getParameter("categoryPosition");
         String parentCategory = req.getParameter("parentCategory");
+        String isVisible = req.getParameter("isVisible");
         Integer categoryId = Integer.parseInt(req.getParameter("categoryId"));
         Integer categoryPositionValue;
         Integer categoryParentValue;
@@ -205,6 +212,11 @@ public class CategoryAdminServlet extends HttpServlet {
         temp.setName(categoryName);
         temp.setId(categoryId);
         temp.setCategoryPosition(categoryPositionValue);
+        if("visible".equalsIgnoreCase(isVisible)){
+            temp.setIsVisible(true);
+        }  else {
+            temp.setIsVisible(false);
+        }
         if(categoryParentValue != null)
             temp.setParentCategory(categoryService.getById(categoryParentValue));
         categoryService.edit(temp);

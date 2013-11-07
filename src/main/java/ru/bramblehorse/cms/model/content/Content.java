@@ -21,9 +21,19 @@ public abstract class Content implements Comparable {
     private Integer contentPosition;
     @Column(name = "content_type")
     protected ContentType type = ContentType.NONE;
+    @Column(name = "is_visible")
+    private boolean isVisible;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
+
+    public boolean getIsVisible() {
+        return isVisible;
+    }
+
+    public void setIsVisible(boolean isVisible) {
+        this.isVisible = isVisible;
+    }
 
     public Integer getContentPosition() {
         return contentPosition;

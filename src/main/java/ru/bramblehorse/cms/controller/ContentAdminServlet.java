@@ -272,6 +272,7 @@ public class ContentAdminServlet extends HttpServlet {
         String categoryId = req.getParameter("categoryId");
         String contentType = req.getParameter("contentType");
         String contentPosition = req.getParameter("contentPosition");
+        String isVisible = req.getParameter("isVisible");
 
         if (categoryId != null && contentType != null && contentPosition != null) {
             Category currentCategory = categoryService.getById(Integer.parseInt(categoryId));
@@ -283,6 +284,11 @@ public class ContentAdminServlet extends HttpServlet {
                     tempTableContent.setHtmlTable(htmlTable);
                     tempTableContent.setContentPosition(Integer.parseInt(contentPosition));
                     tempTableContent.setCategory(currentCategory);
+                    if("visible".equalsIgnoreCase(isVisible)){
+                        tempTableContent.setIsVisible(true);
+                    }  else {
+                        tempTableContent.setIsVisible(false);
+                    }
                     tableContentService.create(tempTableContent);
                     rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
                     rd.forward(req, resp);
@@ -293,6 +299,11 @@ public class ContentAdminServlet extends HttpServlet {
                     tempTextContent.setText(text);
                     tempTextContent.setContentPosition(Integer.parseInt(contentPosition));
                     tempTextContent.setCategory(currentCategory);
+                    if("visible".equalsIgnoreCase(isVisible)){
+                        tempTextContent.setIsVisible(true);
+                    }  else {
+                        tempTextContent.setIsVisible(false);
+                    }
                     textContentService.create(tempTextContent);
                     rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
                     rd.forward(req, resp);
@@ -303,6 +314,11 @@ public class ContentAdminServlet extends HttpServlet {
                     tempWYSIWYGContent.setWysiwygData(wysiwyg);
                     tempWYSIWYGContent.setContentPosition(Integer.parseInt(contentPosition));
                     tempWYSIWYGContent.setCategory(currentCategory);
+                    if("visible".equalsIgnoreCase(isVisible)){
+                        tempWYSIWYGContent.setIsVisible(true);
+                    }  else {
+                        tempWYSIWYGContent.setIsVisible(false);
+                    }
                     wysiwygContentService.create(tempWYSIWYGContent);
                     rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
                     rd.forward(req, resp);
@@ -321,6 +337,7 @@ public class ContentAdminServlet extends HttpServlet {
         String contentId = req.getParameter("contentId");
         String contentType = req.getParameter("contentType");
         String contentPosition = req.getParameter("contentPosition");
+        String isVisible = req.getParameter("isVisible");
 
         if (contentType != null && contentPosition != null && contentId != null) {
 
@@ -338,6 +355,11 @@ public class ContentAdminServlet extends HttpServlet {
                     tempTableContent.setHtmlTable(htmlTable);
                     tempTableContent.setContentPosition(Integer.parseInt(contentPosition));
                     tempTableContent.setCategory(currentCategory);
+                    if("visible".equalsIgnoreCase(isVisible)){
+                        tempTableContent.setIsVisible(true);
+                    }  else {
+                        tempTableContent.setIsVisible(false);
+                    }
                     tableContentService.edit(tempTableContent);
                     rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
                     rd.forward(req, resp);
@@ -349,6 +371,11 @@ public class ContentAdminServlet extends HttpServlet {
                     tempTextContent.setText(text);
                     tempTextContent.setContentPosition(Integer.parseInt(contentPosition));
                     tempTextContent.setCategory(currentCategory);
+                    if("visible".equalsIgnoreCase(isVisible)){
+                        tempTextContent.setIsVisible(true);
+                    }  else {
+                        tempTextContent.setIsVisible(false);
+                    }
                     textContentService.edit(tempTextContent);
                     rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
                     rd.forward(req, resp);
@@ -366,6 +393,11 @@ public class ContentAdminServlet extends HttpServlet {
                     tempImageContent.setThumbImagePath(thumbImagePath);
                     tempImageContent.setImageFilePath(imageFilePath);
                     tempImageContent.setThumbImageFilePath(thumbImageFilePath);
+                    if("visible".equalsIgnoreCase(isVisible)){
+                        tempImageContent.setIsVisible(true);
+                    }  else {
+                        tempImageContent.setIsVisible(false);
+                    }
                     imageContentService.edit(tempImageContent);
                     rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
                     rd.forward(req, resp);
@@ -377,6 +409,11 @@ public class ContentAdminServlet extends HttpServlet {
                     tempWYSIWYGContent.setContentPosition(Integer.parseInt(contentPosition));
                     tempWYSIWYGContent.setCategory(currentCategory);
                     tempWYSIWYGContent.setWysiwygData(wysiwygValue);
+                    if("visible".equalsIgnoreCase(isVisible)){
+                        tempWYSIWYGContent.setIsVisible(true);
+                    }  else {
+                        tempWYSIWYGContent.setIsVisible(false);
+                    }
                     wysiwygContentService.edit(tempWYSIWYGContent);
                     rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
                     rd.forward(req, resp);
@@ -392,6 +429,11 @@ public class ContentAdminServlet extends HttpServlet {
                     tempLinkContent.setLinkValue(linkValue);
                     tempLinkContent.setLinkImagePath(linkImagePath);
                     tempLinkContent.setLinkImageFilePath(linkImageFilePath);
+                    if("visible".equalsIgnoreCase(isVisible)){
+                        tempLinkContent.setIsVisible(true);
+                    }  else {
+                        tempLinkContent.setIsVisible(false);
+                    }
                     linkContentService.edit(tempLinkContent);
                     rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
                     rd.forward(req, resp);

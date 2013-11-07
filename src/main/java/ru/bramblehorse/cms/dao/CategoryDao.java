@@ -1,6 +1,7 @@
 package ru.bramblehorse.cms.dao;
 
 import ru.bramblehorse.cms.model.content.Category;
+import ru.bramblehorse.cms.model.content.Content;
 
 import java.util.List;
 
@@ -13,4 +14,5 @@ import java.util.List;
  */
 public interface CategoryDao extends AbstractDao<Category> {
     public List<Category> getRootCategories();
+    public List<Category> getVisibleRootCategories();
 }

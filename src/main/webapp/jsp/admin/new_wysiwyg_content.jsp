@@ -18,6 +18,10 @@
                 <td><textarea name="wysiwygValue"></textarea></td>
             </tr>
             <tr>
+                <td>Отображать</td>
+                <td><input type="checkbox" name="isVisible" checked="true" value="visible"></td>
+            </tr>
+            <tr>
                 <td></td>
                 <td><input type="submit" value="Создать"></td>
             </tr>

@@ -18,12 +18,22 @@ public class Category implements Comparable {
     private Integer categoryPosition;
     @Column(name = "category_name")
     private String name;
+    @Column(name = "is_visible")
+    private boolean isVisible;
     @ManyToOne
     private Category parentCategory;
     @OneToMany(mappedBy = "parentCategory", cascade = CascadeType.ALL)
     private List<Category> childCategories;
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "category")
     private List<Content> content;
+
+    public boolean getIsVisible() {
+        return isVisible;
+    }
+
+    public void setIsVisible(boolean isVisible) {
+        this.isVisible = isVisible;
+    }
 
     public boolean hasChildren(){
         if(childCategories == null) return false;

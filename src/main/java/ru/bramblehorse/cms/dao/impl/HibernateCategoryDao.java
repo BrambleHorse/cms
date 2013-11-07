@@ -7,6 +7,7 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.transaction.annotation.Transactional;
 import ru.bramblehorse.cms.dao.CategoryDao;
 import ru.bramblehorse.cms.model.content.Category;
+import ru.bramblehorse.cms.model.content.Content;
 
 import java.util.List;
 
@@ -53,6 +54,13 @@ public class HibernateCategoryDao implements CategoryDao {
     public List getRootCategories() {
         Criteria criteria = ht.getSessionFactory().getCurrentSession().createCriteria(Category.class);
         criteria.add(Restrictions.isNull("parentCategory"));
+        return criteria.list();
+    }
+
+    @Override
+    public List<Category> getVisibleRootCategories() {
+        Criteria criteria = ht.getSessionFactory().getCurrentSession().createCriteria(Category.class);
+        criteria.add(Restrictions.eq("isVisible",true));
         return criteria.list();
     }
 }

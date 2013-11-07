@@ -55,7 +55,8 @@ public class ImageUploadServlet extends HttpServlet {
         String imagePath = null;
         String thumbImagePath = null;
         String imageFilePath = null;
-        String thumbImageFilePath =null;
+        String thumbImageFilePath = null;
+        String isVisible = null;
 
         boolean isMultipart = ServletFileUpload.isMultipartContent(req);
         if (isMultipart) {
@@ -90,11 +91,14 @@ public class ImageUploadServlet extends HttpServlet {
                         imagePath = "/upload/" + fileName;
                         thumbImagePath = "/upload/" + thumbFileName;
                     } else {
-                        if("categoryId".equals(item.getFieldName())){
+                        if("categoryId".equalsIgnoreCase(item.getFieldName())){
                            categoryId = item.getString();
                         }
-                        if("contentPosition".equals(item.getFieldName())){
+                        if("contentPosition".equalsIgnoreCase(item.getFieldName())){
                             contentPosition = item.getString();
+                        }
+                        if("isVisible".equalsIgnoreCase(item.getFieldName())){
+                            isVisible = item.getString();
                         }
                     }
                 }
@@ -106,6 +110,11 @@ public class ImageUploadServlet extends HttpServlet {
                 tempImageContent.setThumbImagePath(thumbImagePath);
                 tempImageContent.setContentPosition(Integer.parseInt(contentPosition));
                 tempImageContent.setCategory(currentCategory);
+                if("visible".equalsIgnoreCase(isVisible)){
+                    tempImageContent.setIsVisible(true);
+                }  else {
+                    tempImageContent.setIsVisible(false);
+                }
                 imageContentService.create(tempImageContent);
             } catch (FileUploadException e) {
                 e.printStackTrace();

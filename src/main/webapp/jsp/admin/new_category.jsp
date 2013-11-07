@@ -31,9 +31,13 @@
                         </c:forEach>
                     </c:when>
                     <c:otherwise>
-                        <p> No categories . . </p>
+
                     </c:otherwise>
                 </c:choose>
+                <tr>
+                   <td>Отображать</td>
+                    <td><input type="checkbox" name="isVisible" checked="true" value="visible"></td>
+                </tr>
                 <tr>
                     <td></td>
                     <td><input type="submit" value="Создать"></td>

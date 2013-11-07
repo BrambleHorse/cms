@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -41,7 +42,7 @@ public class MainServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String categoryId = req.getParameter("category");
-        List<Category> categoryList = categoryService.getRootCategories();
+        List<Category> categoryList = categoryService.getVisibleRootCategories();
         Collections.sort(categoryList);
         for(Category c : categoryList) {
             c.sortChildren();
@@ -56,7 +57,12 @@ public class MainServlet extends HttpServlet {
             }
         }
         if(categoryId != null && !categoryId.isEmpty()) {
-            List<Content> contentList = categoryService.getById(Integer.parseInt(categoryId)).getContent();
+            List<Content> tempList = categoryService.getById(Integer.parseInt(categoryId)).getContent();
+            List<Content> contentList = new ArrayList<Content>();
+            for(Content c : tempList){
+                if(c.getIsVisible())
+                    contentList.add(c);
+            }
             Collections.sort(contentList);
             req.setAttribute("contentList",contentList);
         }

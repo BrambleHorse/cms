@@ -13,4 +13,5 @@ import java.util.List;
  */
 public interface CategoryService extends AbstractService<Category> {
     public List<Category> getRootCategories();
+    public List<Category> getVisibleRootCategories();
 }

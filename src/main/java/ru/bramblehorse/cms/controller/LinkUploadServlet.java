@@ -64,7 +64,7 @@ public class LinkUploadServlet extends HttpServlet {
         String linkImagePath = null;
         String linkImageFilePath = null;
         String linkValue = null;
-
+        String isVisible = null;
 
         boolean isMultipart = ServletFileUpload.isMultipartContent(req);
         if (isMultipart) {
@@ -90,11 +90,14 @@ public class LinkUploadServlet extends HttpServlet {
                         linkImageFilePath = uploadedFile.getAbsolutePath();
                         linkImagePath = "/link_icons/" + fileName;
                     } else {
-                        if ("linkValue".equals(item.getFieldName())) {
+                        if ("linkValue".equalsIgnoreCase(item.getFieldName())) {
                             linkValue = item.getString();
                         }
-                        if ("contentPosition".equals(item.getFieldName())) {
+                        if ("contentPosition".equalsIgnoreCase(item.getFieldName())) {
                             contentPosition = item.getString();
+                        }
+                        if("isVisible".equalsIgnoreCase(item.getFieldName())) {
+                            isVisible = item.getString();
                         }
                     }
                 }
@@ -104,6 +107,11 @@ public class LinkUploadServlet extends HttpServlet {
                 tempLinkContent.setLinkImageFilePath(linkImageFilePath);
                 tempLinkContent.setLinkValue(linkValue);
                 tempLinkContent.setContentPosition(Integer.parseInt(contentPosition));
+                if("visible".equalsIgnoreCase(isVisible)){
+                    tempLinkContent.setIsVisible(true);
+                }  else {
+                    tempLinkContent.setIsVisible(false);
+                }
                 linkContentService.create(tempLinkContent);
 
             } catch (FileUploadException e) {
