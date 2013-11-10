@@ -60,6 +60,7 @@ public class HibernateCategoryDao implements CategoryDao {
     @Override
     public List<Category> getVisibleRootCategories() {
         Criteria criteria = ht.getSessionFactory().getCurrentSession().createCriteria(Category.class);
+        criteria.add(Restrictions.isNull("parentCategory"));
         criteria.add(Restrictions.eq("isVisible",true));
         return criteria.list();
     }

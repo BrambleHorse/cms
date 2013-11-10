@@ -52,6 +52,7 @@ public class ImageUploadServlet extends HttpServlet {
 
         String categoryId = null;
         String contentPosition = null;
+        String imageName = null;
         String imagePath = null;
         String thumbImagePath = null;
         String imageFilePath = null;
@@ -71,6 +72,7 @@ public class ImageUploadServlet extends HttpServlet {
                 while (iterator.hasNext()) {
                     FileItem item = (FileItem) iterator.next();
                     if (!item.isFormField()) {
+                        imageName = item.getName();
                         String fileName = new Date().getTime() + item.getName().substring(item.getName().length() - 4,item.getName().length());
                         String thumbFileName = fileName.substring(0, fileName.length() - 4) + "_thumb" + fileName.substring(fileName.length()-4,fileName.length());
                         String root = getServletContext().getRealPath("/");
@@ -104,6 +106,7 @@ public class ImageUploadServlet extends HttpServlet {
                 }
                 Category currentCategory = categoryService.getById(Integer.parseInt(categoryId));
                 ImageContent tempImageContent = new ImageContent();
+                tempImageContent.setImageName(imageName);
                 tempImageContent.setImageFilePath(imageFilePath);
                 tempImageContent.setThumbImageFilePath(thumbImageFilePath);
                 tempImageContent.setImagePath(imagePath);

@@ -247,6 +247,7 @@ public class ContentAdminServlet extends HttpServlet {
                         System.out.println("no thumb file exists . .");
                     }
                     imageContentService.delete(idToDelete);
+                    break;
                 case WYSIWYG:
                     wysiwygContentService.delete(idToDelete);
                     break;
@@ -263,8 +264,10 @@ public class ContentAdminServlet extends HttpServlet {
                     break;
             }
         }
+
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
         rd.forward(req, resp);
+
     }
 
     private void processPostCreateContent(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

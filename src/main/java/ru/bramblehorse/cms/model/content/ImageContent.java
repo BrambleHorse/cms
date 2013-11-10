@@ -16,6 +16,8 @@ import javax.persistence.Table;
 @Table(name = "image_content")
 @PrimaryKeyJoinColumn(name = "content_id", referencedColumnName = "content_id")
 public class ImageContent extends Content {
+    @Column(name="image_name")
+    private String imageName;
     @Column(name = "path")
     private String imagePath;
     @Column(name = "thumbpath")
@@ -24,6 +26,14 @@ public class ImageContent extends Content {
     private String imageFilePath;
     @Column(name = "thumbfilepath")
     private String thumbImageFilePath;
+
+    public String getImageName() {
+        return imageName;
+    }
+
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
+    }
 
     public String getImageFilePath() {
         return imageFilePath;

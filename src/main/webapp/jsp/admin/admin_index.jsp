@@ -19,7 +19,7 @@
                 ],
                 image_list: [
                     <c:forEach items="${availableImages}" var="image">
-                    {title: '${image.contentId}', value: '${image.imagePath}'},
+                    {title: '${image.imageName}', value: '${image.imagePath}'},
                     </c:forEach>
                 ],
                 image_advtab: true,
