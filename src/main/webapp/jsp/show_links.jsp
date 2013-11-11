@@ -6,7 +6,7 @@
     <c:choose>
         <c:when test="${linkLength > 0}">
             <c:forEach items="${linkList}" var="link">
-            <a href="${link.linkValue}"><img src="${link.linkImagePath}" width="64" height="64"/></a>
+            <a href="${link.linkValue}"><img src="${link.linkImagePath}" width="${footerLinksSize}" height="${footerLinksSize}"/></a>
 
             </c:forEach>
         </c:when>

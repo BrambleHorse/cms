@@ -46,4 +46,5 @@ public class HibernateLinkContentDao implements AbstractDao<LinkContent> {
     public List<LinkContent> getAll() {
         return ht.loadAll(LinkContent.class);
     }
+
 }

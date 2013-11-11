@@ -16,5 +16,4 @@ public interface AbstractDao<T> {
     public void edit(T entity);
     public T getById(Integer id);
     public List<T> getAll();
-
 }

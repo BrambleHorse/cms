@@ -8,6 +8,7 @@ import ru.bramblehorse.cms.model.content.LinkContent;
 import ru.bramblehorse.cms.service.AbstractService;
 import ru.bramblehorse.cms.service.CategoryService;
 
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -17,6 +18,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Properties;
 
 /**
  * Created with IntelliJ IDEA.
@@ -30,12 +32,20 @@ public class MainServlet extends HttpServlet {
     private WebApplicationContext context;
     private CategoryService categoryService;
     private AbstractService<LinkContent> linkContentService;
+    private Properties settings;
 
     @Override
     public void init() throws ServletException {
         context = ContextLoaderListener.getCurrentWebApplicationContext();
         categoryService = (CategoryService)context.getBean("categoryService");
         linkContentService = (AbstractService<LinkContent>) context.getBean("linkContentService");
+        settings = new Properties();
+        try {
+        settings.load(getServletContext().getResourceAsStream("/WEB-INF/classes/settings.properties"));
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -48,9 +58,19 @@ public class MainServlet extends HttpServlet {
             c.sortChildren();
         }
         req.setAttribute("categoryList",categoryList);
-        List<LinkContent>linkList = linkContentService.getAll();
-        Collections.sort(linkList);
-        req.setAttribute("linkList", linkList);
+        if("true".equalsIgnoreCase(settings.getProperty("show_footer_links"))){
+            List<LinkContent>tempLinkList = linkContentService.getAll();
+            List<LinkContent>linkList = new ArrayList<LinkContent>();
+            for(LinkContent l : tempLinkList){
+                if(l.getIsVisible())
+                    linkList.add(l);
+            }
+            Collections.sort(linkList);
+            req.setAttribute("linkList", linkList);
+            String footerLinksSize = settings.getProperty("footer_links_size");
+            req.setAttribute("footerLinksSize", footerLinksSize);
+        }
+
         if(categoryList != null) {
             if((!categoryList.isEmpty()) && (categoryId == null || categoryId.isEmpty())) {
                 categoryId = String.valueOf(categoryList.get(0).getId());
