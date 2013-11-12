@@ -49,6 +49,7 @@
         <c:when test="${adminAction eq 'new_table_content'}"><jsp:include page="new_table_content.jsp"></jsp:include></c:when>
         <c:when test="${adminAction eq 'new_text_content'}"><jsp:include page="new_text_content.jsp"></jsp:include></c:when>
         <c:when test="${adminAction eq 'new_wysiwyg_content'}"><jsp:include page="new_wysiwyg_content.jsp"></jsp:include></c:when>
+        <c:when test="${adminAction eq 'settings_links'}"><jsp:include page="settings_links.jsp"></jsp:include></c:when>
         <c:otherwise>
 
             <div class="admin-content">

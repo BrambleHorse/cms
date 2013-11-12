@@ -51,6 +51,17 @@ public class MainServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        Boolean isSettingsChanged = (Boolean)getServletContext().getAttribute("isSettingsChanged");
+        if(isSettingsChanged != null){
+            if(isSettingsChanged){
+                try {
+                    settings.load(getServletContext().getResourceAsStream("/WEB-INF/classes/settings.properties"));
+                }
+                catch (IOException e){
+                    e.printStackTrace();
+                }
+            }
+        }
         String categoryId = req.getParameter("category");
         List<Category> categoryList = categoryService.getVisibleRootCategories();
         Collections.sort(categoryList);

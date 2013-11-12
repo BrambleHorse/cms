@@ -32,6 +32,7 @@
         <url-pattern>/admin.content.do</url-pattern>
         <url-pattern>/image.upload.do</url-pattern>
         <url-pattern>/link.upload.do</url-pattern>
+        <url-pattern>/settings.admin.do</url-pattern>
     </filter-mapping>
     <filter>
         <filter-name>hibernateFilter</filter-name>
@@ -51,6 +52,7 @@
         <url-pattern>/admin.content.do</url-pattern>
         <url-pattern>/image.upload.do</url-pattern>
         <url-pattern>/link.upload.do</url-pattern>
+        <url-pattern>/settings.admin.do</url-pattern>
     </filter-mapping>
 
     <servlet>
@@ -101,7 +103,14 @@
         <servlet-name>linkUploadServlet</servlet-name>
         <url-pattern>/link.upload.do</url-pattern>
     </servlet-mapping>
-
+    <servlet>
+        <servlet-name>settingsAdminServlet</servlet-name>
+        <servlet-class>ru.bramblehorse.cms.controller.SettingsAdminServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>settingsAdminServlet</servlet-name>
+        <url-pattern>/settings.admin.do</url-pattern>
+    </servlet-mapping>
     <welcome-file-list>
         <welcome-file>index.do</welcome-file>
     </welcome-file-list>
