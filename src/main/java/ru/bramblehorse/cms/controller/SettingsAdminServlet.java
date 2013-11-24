@@ -52,7 +52,7 @@ public class SettingsAdminServlet extends HttpServlet {
 
         String settingsMode = req.getParameter("settingsMode");
         if("links".equalsIgnoreCase(settingsMode)){
-            processLinkSettings(req,resp);
+            processPostLinkSettings(req,resp);
             return;
         }
 
@@ -67,7 +67,7 @@ public class SettingsAdminServlet extends HttpServlet {
         rd.forward(req,resp);
     }
 
-    private void processLinkSettings(HttpServletRequest req, HttpServletResponse resp) throws ServletException,IOException {
+    private void processPostLinkSettings(HttpServletRequest req, HttpServletResponse resp) throws ServletException,IOException {
 
         String showFooterLinks = req.getParameter("showFooterLinks");
         String footerLinksSize = req.getParameter("footerLinksSize");

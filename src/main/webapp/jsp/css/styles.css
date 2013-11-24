@@ -71,7 +71,11 @@ html, body, #wrap {height: 100%;}
 
 body > #wrap {height: auto; min-height: 100%;}
 
-#main {padding-bottom: 150px;}  /* отступ должен быть равен высоте футера */
+#main {
+    width: 800px;
+    margin: 0 auto;
+    padding-bottom: 150px;   /* отступ должен быть равен высоте футера */
+}
 
 #footer {
     position: relative;

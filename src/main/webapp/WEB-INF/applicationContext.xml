@@ -36,8 +36,18 @@
     </bean>
 
     <bean id="linkContentDao" class="ru.bramblehorse.cms.dao.impl.HibernateLinkContentDao"></bean>
-    <bean id="linkContentService" class="ru.bramblehorse.cms.service.impl.LinkContentService">
+    <bean id="linkContentService" class="ru.bramblehorse.cms.service.impl.LinkContentServiceImpl">
         <property name="linkContentDao" ref="linkContentDao"></property>
+    </bean>
+
+    <bean id="accountDao" class="ru.bramblehorse.cms.dao.impl.HibernateAccountDao"></bean>
+    <bean id="accountService" class="ru.bramblehorse.cms.service.impl.AccountServiceImpl">
+        <property name="accountDao" ref="accountDao"></property>
+    </bean>
+
+    <bean id="tomcatRoleDao" class="ru.bramblehorse.cms.dao.impl.HibernateTomcatRoleDao"></bean>
+    <bean id="tomcatRoleService" class="ru.bramblehorse.cms.service.impl.TomcatRoleServiceImpl">
+        <property name="tomcatRoleDao" ref="tomcatRoleDao"></property>
     </bean>
 
 </beans>

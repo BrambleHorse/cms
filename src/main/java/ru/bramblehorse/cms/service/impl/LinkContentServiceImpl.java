@@ -13,7 +13,7 @@ import java.util.List;
  * Time: 20:13
  * To change this template use File | Settings | File Templates.
  */
-public class LinkContentService implements AbstractService<LinkContent> {
+public class LinkContentServiceImpl implements AbstractService<LinkContent> {
 
     AbstractDao<LinkContent> linkContentDao;
 
