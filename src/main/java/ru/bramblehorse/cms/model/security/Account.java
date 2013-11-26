@@ -19,7 +19,7 @@ public class Account {
     private String userName;
     @Column(name = "user_password")
     private String userPassword;
-    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinTable(name = "accounts_roles",
     joinColumns = @JoinColumn(name = "user_name"),
     inverseJoinColumns = @JoinColumn(name = "role_name"))

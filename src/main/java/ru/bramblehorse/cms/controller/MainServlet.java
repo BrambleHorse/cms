@@ -39,6 +39,7 @@ public class MainServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
+
         context = ContextLoaderListener.getCurrentWebApplicationContext();
         categoryService = (CategoryService)context.getBean("categoryService");
         linkContentService = (AbstractService<LinkContent>) context.getBean("linkContentService");
@@ -117,14 +118,14 @@ public class MainServlet extends HttpServlet {
 
     private void createFakeUsers(){
 
+        TomcatRole role1 = tomcatRoleService.getByName("administrator");
+        Set<TomcatRole>roles = new HashSet<TomcatRole>();
+        roles.add(role1);
 
-      Account account1 = new Account();
-        account1.setUserName("barsik");
-        account1.setUserPassword("3335577");
-      Set<TomcatRole>roles = new HashSet<TomcatRole>();
-      roles.add(tomcatRoleService.getByName("administrator"));
-      account1.setRoles(roles);
-      accountService.create(account1);
-
+        Account user2 = new Account();
+        user2.setUserName("unicorn");
+        user2.setUserPassword("555777");
+        user2.setRoles(roles);
+        accountService.create(user2);
     }
 }

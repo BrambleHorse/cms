@@ -3,7 +3,7 @@
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <div class="settings-links">
-    <form action="/settings.admin.do" method="POST">
+    <form action="/admin.settings.do" method="POST">
         <input type="hidden" name="settingsMode" value="links">
         <table class="admin-input">
             <tr>

@@ -5,7 +5,7 @@
 <div class="manage-links">
     <h3>
        <ul>
-        <li><a href="/settings.admin.do?settingsMode=links">Настройка отображения ссылок</a></li>
+        <li><a href="/admin.settings.do?settingsMode=links">Настройка отображения ссылок</a></li>
         <li><a href="${pageContext.request.contextPath}/jsp/admin/new_link_content.jsp">Добавить новую ссылку</a></li>
       </ul>
     </h3>

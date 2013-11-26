@@ -32,7 +32,8 @@
         <url-pattern>/admin.content.do</url-pattern>
         <url-pattern>/image.upload.do</url-pattern>
         <url-pattern>/link.upload.do</url-pattern>
-        <url-pattern>/settings.admin.do</url-pattern>
+        <url-pattern>/admin.settings.do</url-pattern>
+        <url-pattern>/admin.accounts.do</url-pattern>
     </filter-mapping>
     <filter>
         <filter-name>hibernateFilter</filter-name>
@@ -52,7 +53,8 @@
         <url-pattern>/admin.content.do</url-pattern>
         <url-pattern>/image.upload.do</url-pattern>
         <url-pattern>/link.upload.do</url-pattern>
-        <url-pattern>/settings.admin.do</url-pattern>
+        <url-pattern>/admin.settings.do</url-pattern>
+        <url-pattern>/admin.accounts.do</url-pattern>
     </filter-mapping>
 
     <servlet>
@@ -109,7 +111,15 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>settingsAdminServlet</servlet-name>
-        <url-pattern>/settings.admin.do</url-pattern>
+        <url-pattern>/admin.settings.do</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>securityAdminServlet</servlet-name>
+        <servlet-class>ru.bramblehorse.cms.controller.SecurityAdminServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>securityAdminServlet</servlet-name>
+        <url-pattern>/admin.accounts.do</url-pattern>
     </servlet-mapping>
 
     <session-config>
@@ -119,7 +129,13 @@
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>Wildcard means whole app requires authentication</web-resource-name>
-            <url-pattern>/*</url-pattern>
+            <url-pattern>/admin.do</url-pattern>
+            <url-pattern>/admin.categories.do</url-pattern>
+            <url-pattern>/admin.content.do</url-pattern>
+            <url-pattern>/image.upload.do</url-pattern>
+            <url-pattern>/link.upload.do</url-pattern>
+            <url-pattern>/admin.settings.do</url-pattern>
+            <url-pattern>/admin.accounts.do</url-pattern>
             <http-method>GET</http-method>
             <http-method>POST</http-method>
         </web-resource-collection>
