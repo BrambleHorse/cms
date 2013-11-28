@@ -40,6 +40,26 @@
         <property name="linkContentDao" ref="linkContentDao"></property>
     </bean>
 
+    <bean id="catalogCategoryDao" class="ru.bramblehorse.cms.dao.impl.HibernateCatalogCategoryDao"></bean>
+    <bean id="catalogCategoryService" class="ru.bramblehorse.cms.service.impl.CatalogCategoryServiceImpl">
+        <property name="catalogCategoryDao" ref="catalogCategoryDao"></property>
+    </bean>
+
+    <bean id="catalogCategoryFilterDao" class="ru.bramblehorse.cms.dao.impl.HibernateCatalogCategoryFilterDao"></bean>
+    <bean id="catalogCategoryFilterService" class="ru.bramblehorse.cms.service.impl.CatalogCategoryFilterServiceImpl">
+        <property name="catalogCategoryFilterDao" ref="catalogCategoryFilterDao"></property>
+    </bean>
+
+    <bean id="filterCriterionDao" class="ru.bramblehorse.cms.dao.impl.HibernateFilterCriterionDao"></bean>
+    <bean id="filterCriterionService" class="ru.bramblehorse.cms.service.impl.FilterCriterionServiceImpl">
+        <property name="filterCriterionDao" ref="filterCriterionDao"></property>
+    </bean>
+
+    <bean id="itemDao" class="ru.bramblehorse.cms.dao.impl.HibernateItemDao"></bean>
+    <bean id="itemService" class="ru.bramblehorse.cms.service.impl.ItemServiceImpl">
+        <property name="itemDao" ref="itemDao"></property>
+    </bean>
+
     <bean id="accountDao" class="ru.bramblehorse.cms.dao.impl.HibernateAccountDao"></bean>
     <bean id="accountService" class="ru.bramblehorse.cms.service.impl.AccountServiceImpl">
         <property name="accountDao" ref="accountDao"></property>

@@ -3,6 +3,10 @@ package ru.bramblehorse.cms.controller;
 import org.hibernate.Hibernate;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.WebApplicationContext;
+import ru.bramblehorse.cms.model.commerce.CatalogCategory;
+import ru.bramblehorse.cms.model.commerce.CatalogCategoryFilter;
+import ru.bramblehorse.cms.model.commerce.FilterCriterion;
+import ru.bramblehorse.cms.model.commerce.Item;
 import ru.bramblehorse.cms.model.content.Category;
 import ru.bramblehorse.cms.model.content.Content;
 import ru.bramblehorse.cms.model.content.LinkContent;
@@ -33,6 +37,12 @@ public class MainServlet extends HttpServlet {
     private WebApplicationContext context;
     private CategoryService categoryService;
     private AbstractService<LinkContent> linkContentService;
+
+    private AbstractService<CatalogCategory> catalogCategoryService;
+    private AbstractService<CatalogCategoryFilter> catalogCategoryFilterService;
+    private AbstractService<FilterCriterion> filterCriterionService;
+    private AbstractService<Item> itemService;
+
     private SecurityService<Account> accountService;
     private SecurityService<TomcatRole> tomcatRoleService;
     private Properties settings;
@@ -41,10 +51,18 @@ public class MainServlet extends HttpServlet {
     public void init() throws ServletException {
 
         context = ContextLoaderListener.getCurrentWebApplicationContext();
+
         categoryService = (CategoryService)context.getBean("categoryService");
         linkContentService = (AbstractService<LinkContent>) context.getBean("linkContentService");
+
+        catalogCategoryService = (AbstractService<CatalogCategory>) context.getBean("catalogCategoryService");
+        catalogCategoryFilterService = (AbstractService<CatalogCategoryFilter>) context.getBean("catalogCategoryFilterService");
+        filterCriterionService = (AbstractService<FilterCriterion>) context.getBean("filterCriterionService");
+        itemService = (AbstractService<Item>) context.getBean("itemService");
+
         accountService = (SecurityService<Account>) context.getBean("accountService");
         tomcatRoleService = (SecurityService<TomcatRole>) context.getBean("tomcatRoleService");
+
         settings = new Properties();
         try {
         settings.load(getServletContext().getResourceAsStream("/WEB-INF/classes/settings.properties"));
@@ -52,7 +70,7 @@ public class MainServlet extends HttpServlet {
         catch (IOException e){
             e.printStackTrace();
         }
-//        createFakeUsers();
+        insertMockValues();
     }
 
     @Override
@@ -116,16 +134,19 @@ public class MainServlet extends HttpServlet {
         rd.forward(req,resp);
     }
 
-    private void createFakeUsers(){
+    private void insertMockValues(){
 
-        TomcatRole role1 = tomcatRoleService.getByName("administrator");
-        Set<TomcatRole>roles = new HashSet<TomcatRole>();
-        roles.add(role1);
+        CatalogCategory category1 = new CatalogCategory();
+        category1.setCatalogCategoryName("category1");
 
-        Account user2 = new Account();
-        user2.setUserName("unicorn");
-        user2.setUserPassword("555777");
-        user2.setRoles(roles);
-        accountService.create(user2);
+        Item item1 = new Item();
+        item1.setItemDescription("item desc");
+        item1.setItemName("item name");
+        item1.setItemPrice(35);
+        List<Item> items = new ArrayList<Item>();
+        items.add(item1);
+        category1.setCatalogCategoryItems(items);
+        catalogCategoryService.create(category1);
+
     }
 }

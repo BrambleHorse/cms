@@ -53,6 +53,8 @@ public class HibernateAccountDao implements SecurityDao<Account> {
         return ht.loadAll(Account.class);
     }
 
+    @Transactional
+    @Override
     public Account getByNameWithRoles(String uniqueName) {
 
         Account temp = ht.load(Account.class,uniqueName);

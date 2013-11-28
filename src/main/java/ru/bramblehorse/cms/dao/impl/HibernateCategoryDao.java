@@ -57,6 +57,7 @@ public class HibernateCategoryDao implements CategoryDao {
         return criteria.list();
     }
 
+    @Transactional
     @Override
     public List<Category> getVisibleRootCategories() {
         Criteria criteria = ht.getSessionFactory().getCurrentSession().createCriteria(Category.class);

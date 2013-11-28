@@ -13,6 +13,8 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public interface CategoryDao extends AbstractDao<Category> {
+
     public List<Category> getRootCategories();
     public List<Category> getVisibleRootCategories();
+
 }

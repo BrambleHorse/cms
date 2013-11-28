@@ -85,6 +85,22 @@ body > #wrap {height: auto; min-height: 100%;}
     text-align: center;
 }
 
+input[type="submit"] {
+
+    background: #724374;
+    display: inline-block;
+    border-style: hidden;
+    font: 12pt bold sans-serif;
+    padding: 7px 31px 8px;
+    color: #da7d0c;
+    text-decoration: none;
+    -moz-border-radius: 19px;
+    -webkit-border-radius: 19px;
+    position: relative;
+    cursor: pointer
+
+}
+
 .clearfix:after {content: ".";
     display: block;
     height: 0;

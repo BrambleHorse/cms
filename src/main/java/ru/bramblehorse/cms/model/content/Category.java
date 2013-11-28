@@ -7,6 +7,7 @@ import java.util.List;
 /**
  *
  */
+
 @Entity
 @Table(name = "categories")
 public class Category implements Comparable {

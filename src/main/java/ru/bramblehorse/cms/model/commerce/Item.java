@@ -43,6 +43,10 @@ public class Item {
     @JoinColumn(name = "brand_id")
     private Brand itemBrand;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "catalog_category_id")
+    private CatalogCategory itemCategory;
+
     public Integer getItemId() {
         return itemId;
     }
@@ -113,5 +117,13 @@ public class Item {
 
     public void setItemBrand(Brand itemBrand) {
         this.itemBrand = itemBrand;
+    }
+
+    public CatalogCategory getItemCategory() {
+        return itemCategory;
+    }
+
+    public void setItemCategory(CatalogCategory itemCategory) {
+        this.itemCategory = itemCategory;
     }
 }

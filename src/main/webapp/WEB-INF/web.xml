@@ -126,36 +126,36 @@
         <session-timeout>30</session-timeout>
     </session-config>
 
-    <security-constraint>
-        <web-resource-collection>
-            <web-resource-name>Administrative tools</web-resource-name>
-            <url-pattern>/admin.do</url-pattern>
-            <url-pattern>/admin.categories.do</url-pattern>
-            <url-pattern>/admin.content.do</url-pattern>
-            <url-pattern>/image.upload.do</url-pattern>
-            <url-pattern>/link.upload.do</url-pattern>
-            <url-pattern>/admin.settings.do</url-pattern>
-            <url-pattern>/admin.accounts.do</url-pattern>
-            <http-method>GET</http-method>
-            <http-method>POST</http-method>
-        </web-resource-collection>
-        <auth-constraint>
-            <role-name>administrator</role-name>
-        </auth-constraint>
+    <!--<security-constraint>-->
+        <!--<web-resource-collection>-->
+            <!--<web-resource-name>Administrative tools</web-resource-name>-->
+            <!--<url-pattern>/admin.do</url-pattern>-->
+            <!--<url-pattern>/admin.categories.do</url-pattern>-->
+            <!--<url-pattern>/admin.content.do</url-pattern>-->
+            <!--<url-pattern>/image.upload.do</url-pattern>-->
+            <!--<url-pattern>/link.upload.do</url-pattern>-->
+            <!--<url-pattern>/admin.settings.do</url-pattern>-->
+            <!--<url-pattern>/admin.accounts.do</url-pattern>-->
+            <!--<http-method>GET</http-method>-->
+            <!--<http-method>POST</http-method>-->
+        <!--</web-resource-collection>-->
+        <!--<auth-constraint>-->
+            <!--<role-name>administrator</role-name>-->
+        <!--</auth-constraint>-->
 
-        <user-data-constraint>
-            <!-- transport-guarantee NONE if SSL not available, otherwise use CONFIDENTIAL -->
-            <transport-guarantee>NONE</transport-guarantee>
-        </user-data-constraint>
-    </security-constraint>
+        <!--<user-data-constraint>-->
+            <!--&lt;!&ndash; transport-guarantee NONE if SSL not available, otherwise use CONFIDENTIAL &ndash;&gt;-->
+            <!--<transport-guarantee>NONE</transport-guarantee>-->
+        <!--</user-data-constraint>-->
+    <!--</security-constraint>-->
 
-    <login-config>
-        <auth-method>FORM</auth-method>
-        <form-login-config>
-            <form-login-page>/jsp/security/login.jsp</form-login-page>
-            <form-error-page>/jsp/security/login_error.jsp</form-error-page>
-        </form-login-config>
-    </login-config>
+    <!--<login-config>-->
+        <!--<auth-method>FORM</auth-method>-->
+        <!--<form-login-config>-->
+            <!--<form-login-page>/jsp/security/login.jsp</form-login-page>-->
+            <!--<form-error-page>/jsp/security/login_error.jsp</form-error-page>-->
+        <!--</form-login-config>-->
+    <!--</login-config>-->
 
     <welcome-file-list>
         <welcome-file>index.do</welcome-file>
