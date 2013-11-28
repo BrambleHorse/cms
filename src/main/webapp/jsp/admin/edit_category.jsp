@@ -9,7 +9,7 @@
                     <input type="hidden" name="categoryId" value="${currentCategory.id}"/>
                     <td>Название категории:</td>
                     <td><input type="text" name="title" value="${currentCategory.name}"></td>
-                    <td>Место категории в списке:</td>
+                    <td>Позиция:</td>
                     <td><input type="text" name="categoryPosition" value="${currentCategory.categoryPosition}"></td>
                 </tr>
                 <c:set var="categoryLength" value="${fn:length(categoryList)}"/>

@@ -9,7 +9,7 @@ nav  {
     display: block;
 }
 /*------------------------------------*\
-	НАВИГАЦИЯ
+	Navigation styles
 \*------------------------------------*/
 #nav {
     background: #724374 0 0 repeat;
@@ -84,6 +84,7 @@ body > #wrap {height: auto; min-height: 100%;}
     clear:both;
     text-align: center;
 }
+
 .clearfix:after {content: ".";
     display: block;
     height: 0;

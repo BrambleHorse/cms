@@ -28,7 +28,7 @@
                 </c:otherwise>
             </c:choose>
             <tr>
-                <td>Место контента в списке:</td>
+                <td>Позиция:</td>
                 <td><input type="text" name="contentPosition" value="${content.contentPosition}"></td>
             </tr>
             <tr>

@@ -98,7 +98,8 @@ public class SecurityAdminServlet extends HttpServlet {
     private void processGetEditAccount(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String userName = req.getParameter("userName");
-
+        Account account = accountService.getByName(userName);
+        req.setAttribute("account", account);
         req.setAttribute("adminAction", "edit_account");
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
         rd.forward(req, resp);
@@ -147,6 +148,24 @@ public class SecurityAdminServlet extends HttpServlet {
     }
 
     private void processPostEditAccount(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        String userName = req.getParameter("userName");
+        String userPassword = req.getParameter("userPassword");
+        String userPasswordRepeat = req.getParameter("userPasswordRepeat");
+
+        if(userName != null && userPassword != null && userPasswordRepeat != null){
+            if(!userName.isEmpty() && !userPassword.isEmpty() && userPassword.equals(userPasswordRepeat)){
+
+                Account temp = new Account();
+                TomcatRole tempRole = tomcatRoleService.getByName("administrator");
+                Set<TomcatRole>roles = new HashSet<TomcatRole>();
+                roles.add(tempRole);
+                temp.setUserName(userName);
+                temp.setUserPassword(userPassword);
+                temp.setRoles(roles);
+                accountService.edit(temp);
+            }
+        }
 
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
         rd.forward(req, resp);

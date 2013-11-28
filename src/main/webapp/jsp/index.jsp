@@ -14,6 +14,9 @@
     <div id="main" class="clearfix">
         <jsp:include page="show_content.jsp"></jsp:include>
     </div>
+    <div id="catalog">
+        <jsp:include page="show_catalog.jsp"></jsp:include>
+    </div>
 </div>
 <jsp:include page="footer.jsp"></jsp:include>
 </body>

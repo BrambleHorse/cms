@@ -128,7 +128,7 @@
 
     <security-constraint>
         <web-resource-collection>
-            <web-resource-name>Wildcard means whole app requires authentication</web-resource-name>
+            <web-resource-name>Administrative tools</web-resource-name>
             <url-pattern>/admin.do</url-pattern>
             <url-pattern>/admin.categories.do</url-pattern>
             <url-pattern>/admin.content.do</url-pattern>
@@ -144,13 +144,17 @@
         </auth-constraint>
 
         <user-data-constraint>
-            <!-- transport-guarantee can be CONFIDENTIAL, INTEGRAL, or NONE -->
+            <!-- transport-guarantee NONE if SSL not available, otherwise use CONFIDENTIAL -->
             <transport-guarantee>NONE</transport-guarantee>
         </user-data-constraint>
     </security-constraint>
 
     <login-config>
-        <auth-method>BASIC</auth-method>
+        <auth-method>FORM</auth-method>
+        <form-login-config>
+            <form-login-page>/jsp/security/login.jsp</form-login-page>
+            <form-error-page>/jsp/security/login_error.jsp</form-error-page>
+        </form-login-config>
     </login-config>
 
     <welcome-file-list>

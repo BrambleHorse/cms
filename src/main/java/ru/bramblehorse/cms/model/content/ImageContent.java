@@ -18,13 +18,13 @@ import javax.persistence.Table;
 public class ImageContent extends Content {
     @Column(name="image_name")
     private String imageName;
-    @Column(name = "path")
+    @Column(name = "image_path")
     private String imagePath;
-    @Column(name = "thumbpath")
+    @Column(name = "thumb_image_path")
     private String thumbImagePath;
-    @Column(name = "filepath")
+    @Column(name = "iamge_file_path")
     private String imageFilePath;
-    @Column(name = "thumbfilepath")
+    @Column(name = "thumb_image_file_path")
     private String thumbImageFilePath;
 
     public String getImageName() {
