@@ -3,10 +3,7 @@ package ru.bramblehorse.cms.controller;
 import org.hibernate.Hibernate;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.WebApplicationContext;
-import ru.bramblehorse.cms.model.commerce.CatalogCategory;
-import ru.bramblehorse.cms.model.commerce.CatalogCategoryFilter;
-import ru.bramblehorse.cms.model.commerce.FilterCriterion;
-import ru.bramblehorse.cms.model.commerce.Item;
+import ru.bramblehorse.cms.model.commerce.*;
 import ru.bramblehorse.cms.model.content.Category;
 import ru.bramblehorse.cms.model.content.Content;
 import ru.bramblehorse.cms.model.content.LinkContent;
@@ -42,6 +39,7 @@ public class MainServlet extends HttpServlet {
     private AbstractService<CatalogCategoryFilter> catalogCategoryFilterService;
     private AbstractService<FilterCriterion> filterCriterionService;
     private AbstractService<Item> itemService;
+    private AbstractService<Brand> brandService;
 
     private SecurityService<Account> accountService;
     private SecurityService<TomcatRole> tomcatRoleService;
@@ -59,6 +57,7 @@ public class MainServlet extends HttpServlet {
         catalogCategoryFilterService = (AbstractService<CatalogCategoryFilter>) context.getBean("catalogCategoryFilterService");
         filterCriterionService = (AbstractService<FilterCriterion>) context.getBean("filterCriterionService");
         itemService = (AbstractService<Item>) context.getBean("itemService");
+        brandService = (AbstractService<Brand>) context.getBean("brandService");
 
         accountService = (SecurityService<Account>) context.getBean("accountService");
         tomcatRoleService = (SecurityService<TomcatRole>) context.getBean("tomcatRoleService");
@@ -70,7 +69,7 @@ public class MainServlet extends HttpServlet {
         catch (IOException e){
             e.printStackTrace();
         }
-        insertMockValues();
+//        insertMockValues();
     }
 
     @Override
@@ -130,19 +129,45 @@ public class MainServlet extends HttpServlet {
             req.setAttribute("contentList",contentList);
         }
 
+        processShowCatalog(req, resp);
+
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/index.jsp");
         rd.forward(req,resp);
+    }
+
+    private void processShowCatalog(HttpServletRequest req, HttpServletResponse resp) throws ServletException,IOException{
+
+        String catalogCategoryId = req.getParameter("catalogCategoryId");
+        String filterCriterionId = req.getParameter("filterCriterionId");
+
+        List<CatalogCategory> catalogCategoriesList = catalogCategoryService.getAll();
+        Collections.sort(catalogCategoriesList);
+        req.setAttribute("catalogCategoriesList", catalogCategoriesList);
+        req.setAttribute("catalogCategoryId", catalogCategoryId);
+
+        if(catalogCategoryId != null){
+
+
+        }   else {
+
+
+        }
     }
 
     private void insertMockValues(){
 
         CatalogCategory category1 = new CatalogCategory();
-        category1.setCatalogCategoryName("category1");
+        category1.setCatalogCategoryName("category2");
+        category1.setCatalogCategoryPosition(1);
 
         Item item1 = new Item();
-        item1.setItemDescription("item desc");
-        item1.setItemName("item name");
-        item1.setItemPrice(35);
+        Brand brand1 = new Brand();
+        brand1.setBrandName("Oras");
+        brandService.create(brand1);
+        item1.setItemDescription("item1 desc");
+        item1.setItemName("item1 name");
+        item1.setItemPrice(33);
+        item1.setItemBrand(brand1);
         List<Item> items = new ArrayList<Item>();
         items.add(item1);
         category1.setCatalogCategoryItems(items);

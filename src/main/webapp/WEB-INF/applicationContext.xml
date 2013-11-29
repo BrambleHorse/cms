@@ -60,6 +60,11 @@
         <property name="itemDao" ref="itemDao"></property>
     </bean>
 
+    <bean id="brandDao" class="ru.bramblehorse.cms.dao.impl.HibernateBrandDao"></bean>
+    <bean id="brandService" class="ru.bramblehorse.cms.service.impl.BrandServiceImpl">
+        <property name="brandDao" ref="brandDao"></property>
+    </bean>
+
     <bean id="accountDao" class="ru.bramblehorse.cms.dao.impl.HibernateAccountDao"></bean>
     <bean id="accountService" class="ru.bramblehorse.cms.service.impl.AccountServiceImpl">
         <property name="accountDao" ref="accountDao"></property>

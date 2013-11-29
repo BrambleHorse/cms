@@ -87,18 +87,52 @@ body > #wrap {height: auto; min-height: 100%;}
 
 input[type="submit"] {
 
-    background: #724374;
     display: inline-block;
-    border-style: hidden;
-    font: 12pt bold sans-serif;
-    padding: 7px 31px 8px;
-    color: #da7d0c;
-    text-decoration: none;
-    -moz-border-radius: 19px;
-    -webkit-border-radius: 19px;
-    position: relative;
-    cursor: pointer
+    padding: 10px 50px;
+    border: none;
+    outline: none;
+    color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    line-height: 20px;
+    cursor: pointer;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    background-color: #7c0d8c;
+    background-image: -moz-linear-gradient(top, #9b12af, #4d0558);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#9b12af), to(#4d0558));
+    background-image: -webkit-linear-gradient(top, #9b12af, #4d0558);
+    background-image: -o-linear-gradient(top, #9b12af, #4d0558);
+    background-image: linear-gradient(to bottom, #9b12af, #4d0558);
+    background-repeat: repeat-x;
+    -moz-box-shadow: 0 0 6px #383738;
+    -webkit-box-shadow: 0 0 6px #383738;
+    box-shadow: 0 0 6px #383738;
 
+}
+
+input[type="submit"]:hover {
+
+    background-color: #a511bb;
+    background-image: -moz-linear-gradient(top, #c417dd, #770888);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#c417dd), to(#770888));
+    background-image: -webkit-linear-gradient(top, #c417dd, #770888);
+    background-image: -o-linear-gradient(top, #c417dd, #770888);
+    background-image: linear-gradient(to bottom, #c417dd, #770888);
+    background-repeat: repeat-x;
+
+}
+
+input[type="submit"]:active {
+
+    background-color: #6c0a7b;
+    background-image: -moz-linear-gradient(top, #4d0558, #9b12af);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#4d0558), to(#9b12af));
+    background-image: -webkit-linear-gradient(top, #4d0558, #9b12af);
+    background-image: -o-linear-gradient(top, #4d0558, #9b12af);
+    background-image: linear-gradient(to bottom, #4d0558, #9b12af);
+    background-repeat: repeat-x;
 }
 
 .clearfix:after {content: ".";

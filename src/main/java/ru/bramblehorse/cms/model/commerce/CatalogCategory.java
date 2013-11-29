@@ -12,7 +12,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "catalog_category")
-public class CatalogCategory {
+public class CatalogCategory implements Comparable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,13 +22,16 @@ public class CatalogCategory {
     @Column(name = "catalog_category_name")
     private String catalogCategoryName;
 
+    @Column(name = "catalog_category_position")
+    private Integer catalogCategoryPosition;
+
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "itemCategory")
     private List<Item> catalogCategoryItems;
 
     @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-    @JoinTable(name="catalog_filters_categories",
-    joinColumns = @JoinColumn(name = "catalog_category_id"),
-    inverseJoinColumns = @JoinColumn(name="filter_id"))
+    @JoinTable(name = "catalog_filters_categories",
+            joinColumns = @JoinColumn(name = "catalog_category_id"),
+            inverseJoinColumns = @JoinColumn(name = "filter_id"))
     private List<CatalogCategoryFilter> catalogCategoryFilters;
 
     public Integer getCatalogCategoryId() {
@@ -61,5 +64,24 @@ public class CatalogCategory {
 
     public void setCatalogCategoryFilters(List<CatalogCategoryFilter> catalogCategoryFilters) {
         this.catalogCategoryFilters = catalogCategoryFilters;
+    }
+
+    public Integer getCatalogCategoryPosition() {
+        return catalogCategoryPosition;
+    }
+
+    public void setCatalogCategoryPosition(Integer catalogCategoryPosition) {
+        this.catalogCategoryPosition = catalogCategoryPosition;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        if (o == null)
+            throw new NullPointerException("Passed null to ru.bramblehorse.cms.model.commerce.CatalogCategory#compareTo(Object)");
+        if (!(o instanceof CatalogCategory))
+            throw new ClassCastException("Passed invalid type to ru.bramblehorse.cms.model.commerce.CatalogCategory#compareTo(Object)");
+        if (((CatalogCategory) o).getCatalogCategoryPosition() < this.getCatalogCategoryPosition()) return 1;
+        if (((CatalogCategory) o).getCatalogCategoryPosition() > this.getCatalogCategoryPosition()) return -1;
+        return 0;
     }
 }
