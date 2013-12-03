@@ -62,4 +62,22 @@ public class CatalogCategoryFilter {
     public void setFilterCriterions(List<FilterCriterion> filterCriterions) {
         this.filterCriterions = filterCriterions;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CatalogCategoryFilter)) return false;
+
+        CatalogCategoryFilter filter = (CatalogCategoryFilter) o;
+
+        if (!catalogCategoryFilterId.equals(filter.catalogCategoryFilterId)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+
+        return 13 * catalogCategoryFilterId.hashCode();
+    }
 }

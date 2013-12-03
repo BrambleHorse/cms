@@ -25,6 +25,10 @@ public class FilterCriterion {
     @JoinColumn(name = "filter_id")
     private CatalogCategoryFilter catalogCategoryFilter;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "item_id")
+    private Item relatedItem;
+
     public Integer getFilterCriterionId() {
         return filterCriterionId;
     }
@@ -47,5 +51,31 @@ public class FilterCriterion {
 
     public void setCatalogCategoryFilter(CatalogCategoryFilter catalogCategoryFilter) {
         this.catalogCategoryFilter = catalogCategoryFilter;
+    }
+
+    public Item getRelatedItem() {
+        return relatedItem;
+    }
+
+    public void setRelatedItem(Item relatedItem) {
+        this.relatedItem = relatedItem;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof FilterCriterion)) return false;
+
+        FilterCriterion that = (FilterCriterion) o;
+
+        if (!filterCriterionId.equals(that.filterCriterionId)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+
+        return 11 * filterCriterionId.hashCode();
     }
 }

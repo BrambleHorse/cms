@@ -1,6 +1,7 @@
 package ru.bramblehorse.cms.model.commerce;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -46,6 +47,9 @@ public class Item {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "catalog_category_id")
     private CatalogCategory itemCategory;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "relatedItem")
+    private List<FilterCriterion> filterCriterions;
 
     public Integer getItemId() {
         return itemId;
@@ -112,6 +116,7 @@ public class Item {
     }
 
     public Brand getItemBrand() {
+
         return itemBrand;
     }
 
@@ -125,5 +130,32 @@ public class Item {
 
     public void setItemCategory(CatalogCategory itemCategory) {
         this.itemCategory = itemCategory;
+    }
+
+    public List<FilterCriterion> getFilterCriterions() {
+        return filterCriterions;
+    }
+
+    public void setFilterCriterions(List<FilterCriterion> filterCriterions) {
+        this.filterCriterions = filterCriterions;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Item)) return false;
+
+        Item item = (Item) o;
+
+        if (!itemId.equals(item.itemId)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+
+        return 17 * itemId.hashCode();
+
     }
 }

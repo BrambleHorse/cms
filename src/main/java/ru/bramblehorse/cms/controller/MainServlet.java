@@ -1,6 +1,8 @@
 package ru.bramblehorse.cms.controller;
 
 import org.hibernate.Hibernate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.WebApplicationContext;
 import ru.bramblehorse.cms.model.commerce.*;
@@ -11,6 +13,7 @@ import ru.bramblehorse.cms.model.security.Account;
 import ru.bramblehorse.cms.model.security.TomcatRole;
 import ru.bramblehorse.cms.service.AbstractService;
 import ru.bramblehorse.cms.service.CategoryService;
+import ru.bramblehorse.cms.service.ItemService;
 import ru.bramblehorse.cms.service.SecurityService;
 
 
@@ -31,6 +34,7 @@ import java.util.*;
  */
 public class MainServlet extends HttpServlet {
 
+    private Logger logger;
     private WebApplicationContext context;
     private CategoryService categoryService;
     private AbstractService<LinkContent> linkContentService;
@@ -38,7 +42,7 @@ public class MainServlet extends HttpServlet {
     private AbstractService<CatalogCategory> catalogCategoryService;
     private AbstractService<CatalogCategoryFilter> catalogCategoryFilterService;
     private AbstractService<FilterCriterion> filterCriterionService;
-    private AbstractService<Item> itemService;
+    private ItemService itemService;
     private AbstractService<Brand> brandService;
 
     private SecurityService<Account> accountService;
@@ -50,13 +54,14 @@ public class MainServlet extends HttpServlet {
 
         context = ContextLoaderListener.getCurrentWebApplicationContext();
 
+        logger = LoggerFactory.getLogger(MainServlet.class);
         categoryService = (CategoryService)context.getBean("categoryService");
         linkContentService = (AbstractService<LinkContent>) context.getBean("linkContentService");
 
         catalogCategoryService = (AbstractService<CatalogCategory>) context.getBean("catalogCategoryService");
         catalogCategoryFilterService = (AbstractService<CatalogCategoryFilter>) context.getBean("catalogCategoryFilterService");
         filterCriterionService = (AbstractService<FilterCriterion>) context.getBean("filterCriterionService");
-        itemService = (AbstractService<Item>) context.getBean("itemService");
+        itemService = (ItemService) context.getBean("itemService");
         brandService = (AbstractService<Brand>) context.getBean("brandService");
 
         accountService = (SecurityService<Account>) context.getBean("accountService");
@@ -146,10 +151,26 @@ public class MainServlet extends HttpServlet {
         req.setAttribute("catalogCategoryId", catalogCategoryId);
 
         if(catalogCategoryId != null){
+            CatalogCategory currentCatalogCategory = null;
+            try{
 
+               currentCatalogCategory = catalogCategoryService.getById(Integer.parseInt(catalogCategoryId));
+
+            }   catch (Exception e) {
+
+
+            }
+
+            List<Item> itemsList = currentCatalogCategory.getCatalogCategoryItems();
+            List<CatalogCategoryFilter> filtersList = currentCatalogCategory.getCatalogCategoryFilters();
+
+            req.setAttribute("itemsList", itemsList);
+            req.setAttribute("filtersList", filtersList);
+            req.setAttribute("contentValue", "catalog");
 
         }   else {
 
+            req.setAttribute("contentValue", "content");
 
         }
     }
@@ -157,14 +178,15 @@ public class MainServlet extends HttpServlet {
     private void insertMockValues(){
 
         CatalogCategory category1 = new CatalogCategory();
-        category1.setCatalogCategoryName("category2");
-        category1.setCatalogCategoryPosition(1);
+        category1.setCatalogCategoryName("category1");
+        category1.setCatalogCategoryPosition(0);
 
         Item item1 = new Item();
         Brand brand1 = new Brand();
         brand1.setBrandName("Oras");
         brandService.create(brand1);
         item1.setItemDescription("item1 desc");
+        item1.setItemCategory(category1);
         item1.setItemName("item1 name");
         item1.setItemPrice(33);
         item1.setItemBrand(brand1);
@@ -172,6 +194,21 @@ public class MainServlet extends HttpServlet {
         items.add(item1);
         category1.setCatalogCategoryItems(items);
         catalogCategoryService.create(category1);
+
+        CatalogCategoryFilter filter1 = new CatalogCategoryFilter();
+        filter1.setCatalogCategoryFilterName("Размер");
+        List<CatalogCategory> catalogCategories = new ArrayList<CatalogCategory>();
+        catalogCategories.add(category1);
+        filter1.setCatalogCategories(catalogCategories);
+        catalogCategoryFilterService.create(filter1);
+
+        FilterCriterion criterion1 = new FilterCriterion();
+        criterion1.setRelatedItem(item1);
+        criterion1.setCatalogCategoryFilter(filter1);
+        criterion1.setFilterCriterionValue("170");
+        filterCriterionService.create(criterion1);
+
+
 
     }
 }

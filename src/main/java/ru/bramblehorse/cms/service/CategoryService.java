@@ -12,6 +12,7 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public interface CategoryService extends AbstractService<Category> {
+
     public List<Category> getRootCategories();
     public List<Category> getVisibleRootCategories();
 }

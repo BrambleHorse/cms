@@ -18,7 +18,9 @@ public class CategoryServiceImpl implements CategoryService {
     CategoryDao categoryDao;
 
     public CategoryDao getCategoryDao() {
+
         return categoryDao;
+
     }
 
     public void setCategoryDao(CategoryDao categoryDao) {

@@ -9,7 +9,7 @@
             <input type="hidden" name="categoryId" value="${param.categoryId}">
             <table class="admin-input">
                 <tr>
-                    <td>Место таблицы в списке:</td>
+                    <td>Позиция::</td>
                     <td><input type="text" name="contentPosition"></td>
                 </tr>
                 <tr>

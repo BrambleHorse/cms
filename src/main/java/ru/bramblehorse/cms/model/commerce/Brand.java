@@ -48,4 +48,22 @@ public class Brand {
     public void setRelatedItems(List<Item> relatedItems) {
         this.relatedItems = relatedItems;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Brand)) return false;
+
+        Brand brand = (Brand) o;
+
+        if (!brandId.equals(brand.brandId)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+
+        return 3 * brandId.hashCode();
+    }
 }

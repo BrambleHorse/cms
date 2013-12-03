@@ -9,7 +9,7 @@
                 <tr>
                     <td>Название категории:</td>
                     <td><input type="text" name="title"></td>
-                    <td>Место категории в списке:</td>
+                    <td>Позиция:</td>
                     <td><input type="text" name="categoryPosition"></td>
                 </tr>
                 <tr>

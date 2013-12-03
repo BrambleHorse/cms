@@ -93,6 +93,24 @@ public class Category implements Comparable {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Category)) return false;
+
+        Category category = (Category) o;
+
+        if (!id.equals(category.id)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+
+        return 7 * id.hashCode();
+    }
+
+    @Override
     public int compareTo(Object o) {
         if (o == null)
             throw new NullPointerException("Passed null to ru.bramblehorse.cms.model.content.Category#compareTo(Object)");

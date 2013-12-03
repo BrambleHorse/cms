@@ -84,4 +84,22 @@ public class CatalogCategory implements Comparable {
         if (((CatalogCategory) o).getCatalogCategoryPosition() > this.getCatalogCategoryPosition()) return -1;
         return 0;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CatalogCategory)) return false;
+
+        CatalogCategory category = (CatalogCategory) o;
+
+        if (!catalogCategoryId.equals(category.catalogCategoryId)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+
+        return 7 * catalogCategoryId.hashCode();
+    }
 }

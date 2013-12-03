@@ -8,7 +8,7 @@
         <form action="/link.upload.do" method="post" enctype="multipart/form-data">
             <label for="contentPosition">Ссылка:</label>
             <input id="linkValue" type="text" name="linkValue">
-            <label for="contentPosition">Место ссылки в списке:</label>
+            <label for="contentPosition">Позиция::</label>
             <input id="contentPosition" type="text" name="contentPosition">
             <label for="isVisible">Отображать</label>
             <input type="checkbox" id="isVisible" name="isVisible" checked="true" value="visible">

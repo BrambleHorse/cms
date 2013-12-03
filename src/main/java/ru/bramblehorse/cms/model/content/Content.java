@@ -68,6 +68,24 @@ public abstract class Content implements Comparable {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Content)) return false;
+
+        Content content = (Content) o;
+
+        if (!contentId.equals(content.contentId)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+
+        return 11 * contentId.hashCode();
+    }
+
+    @Override
     public int compareTo(Object o) {
         if (o == null)
             throw new NullPointerException("Passed null to ru.bramblehorse.cms.model.content.Content#compareTo(Object)");
