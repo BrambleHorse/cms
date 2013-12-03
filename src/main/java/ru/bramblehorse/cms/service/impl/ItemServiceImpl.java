@@ -61,6 +61,6 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public List<Item> getAllCatalogCategoryItems(CatalogCategory catalogCategory) {
 
-        return itemDao.getAllCatalogCategoryItems(catalogCategory);
+        return itemDao.getAllCatalogCategoryItems(catalogCategory, null);
     }
 }

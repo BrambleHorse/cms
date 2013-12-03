@@ -1,6 +1,7 @@
 package ru.bramblehorse.cms.dao;
 
 import ru.bramblehorse.cms.model.commerce.CatalogCategory;
+import ru.bramblehorse.cms.model.commerce.CatalogCategoryFilter;
 import ru.bramblehorse.cms.model.commerce.Item;
 
 import java.util.List;
@@ -14,5 +15,6 @@ import java.util.List;
  */
 public interface ItemDao extends AbstractDao<Item> {
 
-    public List<Item> getAllCatalogCategoryItems(CatalogCategory catalogCategory);
+    public List<Item> getAllCatalogCategoryItems(CatalogCategory catalogCategory, List<CatalogCategoryFilter> filters);
+
 }

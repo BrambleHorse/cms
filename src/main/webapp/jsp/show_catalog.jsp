@@ -16,6 +16,7 @@
                             <c:choose>
                                 <c:when test="${filtersLength > 0}">
                                     <form action="/index.do" method="post">
+                                        <input type="hidden" name="catalogCategoryId" value="${param.catalogCategoryId}">
                                      <table>
                                     <c:forEach items="${filtersList}" var="catalogCategoryFilter">
 
@@ -26,8 +27,13 @@
 
                                              <c:forEach items="${catalogCategoryFilter.filterCriterions}" var="filterCriterion">
                                                  <tr>
-                                                <td><input type="checkbox" name="filterCriterion${filterCriterion.filterCriterionId}" value="${filterCriterion.filterCriterionValue}" ></td>
-                                                <td>${filterCriterion.filterCriterionValue}</td>
+                                                     <c:set var="index">criterion${filterCriterion.filterCriterionId}</c:set>
+                                                <td><input type="checkbox" name="${filterCriterion.filterCriterionValue}" <c:if test="${requestScope[index] eq true}"> checked="checked"</c:if> value="checked"></td>
+                                                <td>${filterCriterion.filterCriterionValue} </td>
+                                                 </tr>
+                                                 <tr>
+                                                     <td>${index}</td>
+                                                     <td>${requestScope[index]}</td>
                                                  </tr>
                                              </c:forEach>
 
@@ -40,10 +46,7 @@
                                     </form>
                                 </c:when>
                             </c:choose>
-                            <ul>
-                                <li>Selected one category!</li>
 
-                            </ul>
                         </c:if>
                     </li>
                 </c:forEach>

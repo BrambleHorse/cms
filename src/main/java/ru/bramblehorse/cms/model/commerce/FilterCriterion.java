@@ -1,6 +1,7 @@
 package ru.bramblehorse.cms.model.commerce;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -10,7 +11,7 @@ import javax.persistence.*;
  * To change this template use File | Settings | File Templates.
  */
 @Entity
-@Table(name = "filter_criterions")
+@Table(name = "filter_criteria")
 public class FilterCriterion {
 
     @Id
@@ -25,9 +26,11 @@ public class FilterCriterion {
     @JoinColumn(name = "filter_id")
     private CatalogCategoryFilter catalogCategoryFilter;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "item_id")
-    private Item relatedItem;
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @JoinTable(name = "items_criteria",
+            joinColumns = @JoinColumn(name = "filter_criterion_id"),
+            inverseJoinColumns = @JoinColumn(name = "item_id"))
+    private List<Item> items;
 
     public Integer getFilterCriterionId() {
         return filterCriterionId;
@@ -53,12 +56,14 @@ public class FilterCriterion {
         this.catalogCategoryFilter = catalogCategoryFilter;
     }
 
-    public Item getRelatedItem() {
-        return relatedItem;
+    public List<Item> getItems() {
+
+        return items;
     }
 
-    public void setRelatedItem(Item relatedItem) {
-        this.relatedItem = relatedItem;
+    public void setItems(List<Item> items) {
+
+        this.items = items;
     }
 
     @Override

@@ -7,6 +7,7 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 import ru.bramblehorse.cms.dao.AbstractDao;
 import ru.bramblehorse.cms.dao.ItemDao;
 import ru.bramblehorse.cms.model.commerce.CatalogCategory;
+import ru.bramblehorse.cms.model.commerce.CatalogCategoryFilter;
 import ru.bramblehorse.cms.model.commerce.Item;
 
 import java.util.List;
@@ -55,10 +56,17 @@ public class HibernateItemDao implements ItemDao {
     }
 
     @Override
-    public List<Item> getAllCatalogCategoryItems(CatalogCategory catalogCategory) {
+    public List<Item> getAllCatalogCategoryItems(CatalogCategory catalogCategory, List<CatalogCategoryFilter> filters) {
 
-        Criteria criteria = ht.getSessionFactory().getCurrentSession().createCriteria(Item.class);
-        criteria.add(Restrictions.eq("itemCategory", catalogCategory));
-        return criteria.list();
+        if(catalogCategory == null) return null;
+
+        if(filters == null){
+
+            Criteria criteria = ht.getSessionFactory().getCurrentSession().createCriteria(Item.class);
+            criteria.add(Restrictions.eq("itemCategory", catalogCategory));
+            return criteria.list();
+        }
+
+          return null;
     }
 }

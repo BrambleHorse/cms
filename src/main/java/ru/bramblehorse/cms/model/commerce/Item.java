@@ -48,8 +48,7 @@ public class Item {
     @JoinColumn(name = "catalog_category_id")
     private CatalogCategory itemCategory;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "relatedItem")
-    private List<FilterCriterion> filterCriterions;
+
 
     public Integer getItemId() {
         return itemId;
@@ -132,12 +131,20 @@ public class Item {
         this.itemCategory = itemCategory;
     }
 
-    public List<FilterCriterion> getFilterCriterions() {
-        return filterCriterions;
+   @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+   @JoinTable(name = "items_criteria",
+           joinColumns = @JoinColumn(name = "item_id"),
+           inverseJoinColumns = @JoinColumn(name = "filter_criterion_id"))
+   private List<FilterCriterion> filterCriteria;
+
+    public List<FilterCriterion> getFilterCriteria() {
+
+        return filterCriteria;
     }
 
-    public void setFilterCriterions(List<FilterCriterion> filterCriterions) {
-        this.filterCriterions = filterCriterions;
+    public void setFilterCriteria(List<FilterCriterion> filterCriteria) {
+
+        this.filterCriteria = filterCriteria;
     }
 
     @Override
