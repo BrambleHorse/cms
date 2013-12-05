@@ -153,7 +153,7 @@ public class MainServlet extends HttpServlet {
 
         CatalogCategory currentCatalogCategory = null;
         List<CatalogCategory> catalogCategoriesList = catalogCategoryService.getAll();
-        List<Item> itemsList = null;
+        Set<Item> itemsSet = new TreeSet<Item>();
         List<CatalogCategoryFilter> filtersList = null;
         Collections.sort(catalogCategoriesList);
         req.setAttribute("catalogCategoriesList", catalogCategoriesList);
@@ -176,7 +176,6 @@ public class MainServlet extends HttpServlet {
             if ("POST".equals(req.getMethod())) {
 
 
-                itemsList = new ArrayList<Item>();
                 for (CatalogCategoryFilter filter : filtersList) {
 
                     List<FilterCriterion> criteriaList = filter.getFilterCriterions();
@@ -192,7 +191,7 @@ public class MainServlet extends HttpServlet {
 
                                     if (i.getItemCategory().getCatalogCategoryId().equals(currentCatalogCategory.getCatalogCategoryId())) {
 
-                                        itemsList.add(i);
+                                        itemsSet.add(i);
                                     }
                                 }
                             }
@@ -200,19 +199,27 @@ public class MainServlet extends HttpServlet {
                         }
                     }
                 }
-                if (itemsList.isEmpty()) {
+                if (itemsSet.isEmpty()) {
 
-                    itemsList = currentCatalogCategory.getCatalogCategoryItems();
+                    List<Item> allItems = currentCatalogCategory.getCatalogCategoryItems();
+                    for(Item i : allItems){
+
+                        itemsSet.add(i);
+                    }
                 }
 
 
             } else {
 
-                itemsList = currentCatalogCategory.getCatalogCategoryItems();
+                List<Item> allItems = currentCatalogCategory.getCatalogCategoryItems();
+                for(Item i : allItems){
+
+                    itemsSet.add(i);
+                }
 
             }
 
-            req.setAttribute("itemsList", itemsList);
+            req.setAttribute("itemsSet", itemsSet);
             req.setAttribute("filtersList", filtersList);
             req.setAttribute("contentValue", "catalog");
 
@@ -259,12 +266,18 @@ public class MainServlet extends HttpServlet {
 
         CatalogCategory temp = catalogCategoryService.getById(1);
         Item tempItem = new Item();
-        tempItem.setItemName("Item 2");
-        tempItem.setItemDescription("Item 2 Desc");
+        tempItem.setItemName("A letter");
+        tempItem.setItemDescription("A letter Desc");
         tempItem.setItemBrand(brandService.getAll().get(0));
         tempItem.setItemCategory(temp);
-        tempItem.setItemPrice(337);
+        tempItem.setItemPrice(335);
         itemService.create(tempItem);
+
+//        FilterCriterion criterion2 = new FilterCriterion();
+//        criterion2.setItems(itemService.getAll());
+//        criterion2.setCatalogCategoryFilter(catalogCategoryFilterService.getAll().get(0));
+//        criterion2.setFilterCriterionValue("190");
+//        filterCriterionService.create(criterion2);
 
     }
 }

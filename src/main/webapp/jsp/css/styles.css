@@ -76,6 +76,12 @@ body > #wrap {height: auto; min-height: 100%;}
     margin: 0 auto;
     padding-bottom: 150px;   /* отступ должен быть равен высоте футера */
 }
+#catalog-nav {
+
+    width: 800px;
+    margin: 0 auto;
+    padding-bottom: 150px;
+}
 
 #footer {
     position: relative;

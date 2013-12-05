@@ -12,7 +12,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "items")
-public class Item {
+public class Item implements Comparable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -148,6 +148,16 @@ public class Item {
     }
 
     @Override
+    public int compareTo(Object o) {
+
+        if (o == null)
+            throw new NullPointerException("Passed null to ru.bramblehorse.cms.model.commerce.Item#compareTo(Object)");
+        if (!(o instanceof Item))
+            throw new ClassCastException("ru.bramblehorse.cms.model.commerce.Item#compareTo(Object)");
+        return this.getItemName().compareTo(((Item) o).getItemName());
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Item)) return false;
@@ -165,4 +175,5 @@ public class Item {
         return 17 * itemId.hashCode();
 
     }
+
 }

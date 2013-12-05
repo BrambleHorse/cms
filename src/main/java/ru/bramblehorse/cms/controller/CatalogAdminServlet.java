@@ -30,4 +30,36 @@ public class CatalogAdminServlet extends HttpServlet {
 
     }
 
+    private void processGetNoActionCatalog(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+
+    }
+
+    private void processGetCreateCatalogCategory(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+
+    }
+
+    private void processGetCreateBrand(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+
+    }
+
+    private void processGetCreateCatalogCategoryFilter(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+
+    }
+
+    private void processGetCreateFilterCriterion(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+
+    }
+
+    private void processGetCreateItem(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+
+    }
+
+
+
 }

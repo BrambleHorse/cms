@@ -44,10 +44,10 @@
 
         <div class="catalog-content">
 
-            <c:set var="itemsLength" value="${fn:length(itemsList)}"/>
+            <c:set var="itemsLength" value="${fn:length(itemsSet)}"/>
             <c:choose>
                 <c:when test="${itemsLength > 0}">
-                    <c:forEach items="${itemsList}" var="catalogItem">
+                    <c:forEach items="${itemsSet}" var="catalogItem">
 
                         <ul class="catalog-list">
 
