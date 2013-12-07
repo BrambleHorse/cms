@@ -38,73 +38,76 @@
     <%-- include admin menu pages --%>
 
     <c:when test="${adminAction eq 'categories'}">
-        <jsp:include page="categories.jsp"></jsp:include>
+        <jsp:include page="content/categories.jsp"></jsp:include>
     </c:when>
     <c:when test="${adminAction eq 'content'}">
-        <jsp:include page="content.jsp"></jsp:include>
+        <jsp:include page="content/content.jsp"></jsp:include>
     </c:when>
     <c:when test="${adminAction eq 'links'}">
-        <jsp:include page="links.jsp"></jsp:include>
+        <jsp:include page="content/links.jsp"></jsp:include>
     </c:when>
     <c:when test="${adminAction eq 'accounts'}">
-        <jsp:include page="accounts.jsp"></jsp:include>
+        <jsp:include page="${pageContext.request.contextPath}/jsp/security/accounts.jsp"></jsp:include>
+    </c:when>
+    <c:when test="${adminAction eq 'admin_commerce'}">
+        <jsp:include page="commerce/admin_commerce.jsp"></jsp:include>
     </c:when>
 
     <%-- include edit pages --%>
 
     <c:when test="${adminAction eq 'edit_category'}">
-        <jsp:include page="edit_category.jsp"></jsp:include>
+        <jsp:include page="content/edit_category.jsp"></jsp:include>
     </c:when>
     <c:when test="${adminAction eq 'edit_image_content'}">
-        <jsp:include page="edit_image_content.jsp"></jsp:include>
+        <jsp:include page="content/edit_image_content.jsp"></jsp:include>
     </c:when>
     <c:when test="${adminAction eq 'edit_table_content'}">
-        <jsp:include page="edit_table_content.jsp"></jsp:include>
+        <jsp:include page="content/edit_table_content.jsp"></jsp:include>
     </c:when>
     <c:when test="${adminAction eq 'edit_text_content'}">
-        <jsp:include page="edit_text_content.jsp"></jsp:include>
+        <jsp:include page="content/edit_text_content.jsp"></jsp:include>
     </c:when>
     <c:when test="${adminAction eq 'edit_wysiwyg_content'}">
-        <jsp:include page="edit_wysiwyg_content.jsp"></jsp:include>
+        <jsp:include page="content/edit_wysiwyg_content.jsp"></jsp:include>
     </c:when>
     <c:when test="${adminAction eq 'edit_link_content'}">
-        <jsp:include page="edit_link_content.jsp"></jsp:include>
+        <jsp:include page="content/edit_link_content.jsp"></jsp:include>
     </c:when>
     <c:when test="${adminAction eq 'edit_link'}">
-        <jsp:include page="edit_link.jsp"></jsp:include>
+        <jsp:include page="content/edit_link.jsp"></jsp:include>
     </c:when>
     <c:when test="${adminAction eq 'edit_account'}">
-        <jsp:include page="edit_account.jsp"></jsp:include>
+        <jsp:include page="${pageContext.request.contextPath}/jsp/security/edit_account.jsp"></jsp:include>
     </c:when>
 
     <%-- include create pages --%>
 
     <c:when test="${adminAction eq 'new_category'}">
-        <jsp:include page="new_category.jsp"></jsp:include>
+        <jsp:include page="content/new_category.jsp"></jsp:include>
     </c:when>
     <c:when test="${adminAction eq 'new_content'}">
-        <jsp:include page="new_content.jsp"></jsp:include>
+        <jsp:include page="content/new_content.jsp"></jsp:include>
     </c:when>
     <c:when test="${adminAction eq 'new_image_content'}">
-        <jsp:include page="new_image_content.jsp"></jsp:include>
+        <jsp:include page="content/new_image_content.jsp"></jsp:include>
     </c:when>
     <c:when test="${adminAction eq 'new_table_content'}">
-        <jsp:include page="new_table_content.jsp"></jsp:include>
+        <jsp:include page="content/new_table_content.jsp"></jsp:include>
     </c:when>
     <c:when test="${adminAction eq 'new_text_content'}">
-        <jsp:include page="new_text_content.jsp"></jsp:include>
+        <jsp:include page="content/new_text_content.jsp"></jsp:include>
     </c:when>
     <c:when test="${adminAction eq 'new_wysiwyg_content'}">
-        <jsp:include page="new_wysiwyg_content.jsp"></jsp:include>
+        <jsp:include page="content/new_wysiwyg_content.jsp"></jsp:include>
     </c:when>
     <c:when test="${adminAction eq 'new_account'}">
-        <jsp:include page="new_account.jsp"></jsp:include>
+        <jsp:include page="${pageContext.request.contextPath}/jsp/security/new_account.jsp"></jsp:include>
     </c:when>
 
     <%-- include settings pages --%>
 
     <c:when test="${adminAction eq 'settings_links'}">
-        <jsp:include page="settings_links.jsp"></jsp:include>
+        <jsp:include page="content/settings_links.jsp"></jsp:include>
     </c:when>
 
     <c:otherwise>

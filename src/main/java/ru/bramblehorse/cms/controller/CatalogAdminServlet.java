@@ -1,5 +1,6 @@
 package ru.bramblehorse.cms.controller;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +24,32 @@ public class CatalogAdminServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        String mode = req.getParameter("mode");
+        if ("categories".equalsIgnoreCase(mode)) {
+
+            processGetNoActionCategories(req, resp);
+            return;
+        }
+
+        if ("filters".equalsIgnoreCase(mode)) {
+
+            processGetNoActionFilters(req, resp);
+            return;
+        }
+
+        if ("items".equalsIgnoreCase(mode)) {
+
+            processGetNoActionItems(req, resp);
+            return;
+        }
+
+        if ("brands".equalsIgnoreCase(mode)) {
+
+            processGetNoActionBrands(req, resp);
+            return;
+        }
+
+        processGetNoActionCatalog(req, resp);
     }
 
     @Override
@@ -32,7 +59,37 @@ public class CatalogAdminServlet extends HttpServlet {
 
     private void processGetNoActionCatalog(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        req.setAttribute("adminAction", "admin_commerce");
+        RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
+        rd.forward(req, resp);
+    }
 
+    private void processGetNoActionCategories(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        req.setAttribute("adminAction", "catalog_categories");
+        RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
+        rd.forward(req, resp);
+    }
+
+    private void processGetNoActionFilters(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        req.setAttribute("adminAction", "catalog_filters");
+        RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
+        rd.forward(req, resp);
+    }
+
+    private void processGetNoActionItems(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        req.setAttribute("adminAction", "catalog_items");
+        RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
+        rd.forward(req, resp);
+    }
+
+    private void processGetNoActionBrands(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        req.setAttribute("adminAction", "catalog_brands");
+        RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
+        rd.forward(req, resp);
     }
 
     private void processGetCreateCatalogCategory(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -59,7 +116,6 @@ public class CatalogAdminServlet extends HttpServlet {
 
 
     }
-
 
 
 }
