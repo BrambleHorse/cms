@@ -1,5 +1,7 @@
-package ru.bramblehorse.cms.controller;
+package ru.bramblehorse.cms.controller.content;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.WebApplicationContext;
 import ru.bramblehorse.cms.model.content.*;
@@ -25,22 +27,25 @@ import java.util.List;
 public class ContentAdminServlet extends HttpServlet {
 
     private WebApplicationContext context;
+    private Logger logger;
     private AbstractService<Category> categoryService;
     private AbstractService<TableContent> tableContentService;
     private AbstractService<TextContent> textContentService;
     private AbstractService<ImageContent> imageContentService;
-    private AbstractService<WYSIWYGContent> wysiwygContentService;
+    private AbstractService<WysiwygContent> wysiwygContentService;
     private AbstractService<LinkContent> linkContentService;
 
     @Override
     public void init() throws ServletException {
 
         context = ContextLoaderListener.getCurrentWebApplicationContext();
+        logger = LoggerFactory.getLogger(ContentAdminServlet.class);
+
         categoryService = (AbstractService<Category>) context.getBean("categoryService");
         tableContentService = (AbstractService<TableContent>) context.getBean("tableContentService");
         textContentService = (AbstractService<TextContent>) context.getBean("textContentService");
         imageContentService = (AbstractService<ImageContent>) context.getBean("imageContentService");
-        wysiwygContentService = (AbstractService<WYSIWYGContent>) context.getBean("wysiwygContentService");
+        wysiwygContentService = (AbstractService<WysiwygContent>) context.getBean("wysiwygContentService");
         linkContentService = (AbstractService<LinkContent>) context.getBean("linkContentService");
     }
 
@@ -60,14 +65,6 @@ public class ContentAdminServlet extends HttpServlet {
         }
         if ("create".equals(action)) {
             processGetCreateContent(req, resp);
-            return;
-        }
-        if ("edit".equals(action)) {
-            processGetEditContent(req, resp);
-            return;
-        }
-        if ("delete".equals(action)) {
-            processGetDeleteContent(req, resp);
             return;
         }
 
@@ -119,32 +116,28 @@ public class ContentAdminServlet extends HttpServlet {
     private void processGetCreateContent(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String contentType = req.getParameter("contentType");
-        String categoryId = req.getParameter("categoryId");
-        req.setAttribute("contentType", contentType);
-        req.setAttribute("categoryId", categoryId);
+
         if (contentType != null) {
             RequestDispatcher rd;
             switch (ContentType.getType(contentType)) {
                 case TABLE:
-                    req.setAttribute("adminAction", "new_table_content");
-                    rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
+
+                    rd = getServletContext().getRequestDispatcher("/admin.content.table.do");
                     rd.forward(req, resp);
                     return;
                 case TEXT:
-                    req.setAttribute("adminAction", "new_text_content");
-                    rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
+
+                    rd = getServletContext().getRequestDispatcher("/admin.content.text.do");
                     rd.forward(req, resp);
                     return;
                 case IMAGE:
-                    req.setAttribute("adminAction", "new_image_content");
-                    rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
+
+                    rd = getServletContext().getRequestDispatcher("/admin.content.image.do");
                     rd.forward(req, resp);
                     return;
                 case WYSIWYG:
-                    List<ImageContent> availableImages = imageContentService.getAll();
-                    req.setAttribute("availableImages", availableImages);
-                    req.setAttribute("adminAction", "new_wysiwyg_content");
-                    rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
+
+                    rd = getServletContext().getRequestDispatcher("/admin.content.wysiwyg.do");
                     rd.forward(req, resp);
                     return;
                 default:
@@ -154,120 +147,6 @@ public class ContentAdminServlet extends HttpServlet {
         req.setAttribute("adminAction", "new_content");
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
         rd.forward(req, resp);
-    }
-
-    private void processGetEditContent(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        String contentId = req.getParameter("contentId");
-        ContentType contentType = ContentType.getType(req.getParameter("contentType"));
-        List<Category> categoryList = categoryService.getAll();
-        Collections.sort(categoryList);
-        req.setAttribute("categoryList", categoryList);
-        RequestDispatcher rd;
-        switch (contentType) {
-            case TABLE:
-                TableContent tempTable = tableContentService.getById(Integer.parseInt(contentId));
-                req.setAttribute("content", tempTable);
-                req.setAttribute("adminAction", "edit_table_content");
-                rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
-                rd.forward(req, resp);
-                return;
-            case TEXT:
-                TextContent tempText = textContentService.getById(Integer.parseInt(contentId));
-                req.setAttribute("content", tempText);
-                req.setAttribute("adminAction", "edit_text_content");
-                rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
-                rd.forward(req, resp);
-                return;
-            case IMAGE:
-                ImageContent tempImage = imageContentService.getById(Integer.parseInt(contentId));
-                req.setAttribute("content", tempImage);
-                req.setAttribute("adminAction", "edit_image_content");
-                rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
-                rd.forward(req, resp);
-                return;
-            case WYSIWYG:
-                WYSIWYGContent tempWysiwyg = wysiwygContentService.getById(Integer.parseInt(contentId));
-                List<ImageContent> availableImages = imageContentService.getAll();
-                req.setAttribute("availableImages", availableImages);
-                req.setAttribute("content", tempWysiwyg);
-                req.setAttribute("adminAction", "edit_wysiwyg_content");
-                rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
-                rd.forward(req, resp);
-                return;
-            case LINK:
-                LinkContent tempLink = linkContentService.getById(Integer.parseInt(contentId));
-                String editImage = req.getParameter("editImage");
-                req.setAttribute("content", tempLink);
-                if ("true".equalsIgnoreCase(editImage)) {
-                    req.setAttribute("adminAction", "edit_link_content");
-                    rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
-                    rd.forward(req, resp);
-                    return;
-                }
-                req.setAttribute("adminAction", "edit_link");
-                rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
-                rd.forward(req, resp);
-                return;
-            default:
-                break;
-        }
-        rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
-        rd.forward(req, resp);
-    }
-
-    private void processGetDeleteContent(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        String contentId = req.getParameter("contentId");
-        String contentType = req.getParameter("contentType");
-        if (contentId != null && contentType != null) {
-            Integer idToDelete = Integer.parseInt(contentId);
-            switch (ContentType.getType(contentType)) {
-                case TABLE:
-                    tableContentService.delete(idToDelete);
-                    break;
-                case TEXT:
-                    textContentService.delete(idToDelete);
-                    break;
-                case IMAGE:
-                    String pathToDelete = req.getParameter("path");
-                    String thumbPathToDelete = req.getParameter("thumbPath");
-                    File fileToDelete = new File(pathToDelete);
-                    File thumbFileToDelete = new File(thumbPathToDelete);
-                    if (fileToDelete.exists()) {
-                        fileToDelete.delete();
-                        System.out.println("deleted . .");
-                    } else {
-                        System.out.println("no file exists . .");
-                    }
-                    if (thumbFileToDelete.exists()) {
-                        thumbFileToDelete.delete();
-                        System.out.println("thumb deleted . .");
-                    } else {
-                        System.out.println("no thumb file exists . .");
-                    }
-                    imageContentService.delete(idToDelete);
-                    break;
-                case WYSIWYG:
-                    wysiwygContentService.delete(idToDelete);
-                    break;
-                case LINK:
-                    String linkImagePathToDelete = req.getParameter("linkImageFilePath");
-                    File linkFileToDelete = new File(linkImagePathToDelete);
-                    if (linkFileToDelete.exists()) {
-                        linkFileToDelete.delete();
-                        System.out.println("deleted . .");
-                    }
-                    linkContentService.delete(idToDelete);
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
-        rd.forward(req, resp);
-
     }
 
     private void processPostCreateContent(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -313,16 +192,16 @@ public class ContentAdminServlet extends HttpServlet {
                     return;
                 case WYSIWYG:
                     String wysiwyg = req.getParameter("wysiwygValue");
-                    WYSIWYGContent tempWYSIWYGContent = new WYSIWYGContent();
-                    tempWYSIWYGContent.setWysiwygData(wysiwyg);
-                    tempWYSIWYGContent.setContentPosition(Integer.parseInt(contentPosition));
-                    tempWYSIWYGContent.setCategory(currentCategory);
+                    WysiwygContent tempWysiwygContent = new WysiwygContent();
+                    tempWysiwygContent.setWysiwygData(wysiwyg);
+                    tempWysiwygContent.setContentPosition(Integer.parseInt(contentPosition));
+                    tempWysiwygContent.setCategory(currentCategory);
                     if("visible".equalsIgnoreCase(isVisible)){
-                        tempWYSIWYGContent.setIsVisible(true);
+                        tempWysiwygContent.setIsVisible(true);
                     }  else {
-                        tempWYSIWYGContent.setIsVisible(false);
+                        tempWysiwygContent.setIsVisible(false);
                     }
-                    wysiwygContentService.create(tempWYSIWYGContent);
+                    wysiwygContentService.create(tempWysiwygContent);
                     rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
                     rd.forward(req, resp);
                     return;
@@ -407,17 +286,17 @@ public class ContentAdminServlet extends HttpServlet {
                     return;
                 case WYSIWYG:
                     String wysiwygValue = req.getParameter("wysiwygValue");
-                    WYSIWYGContent tempWYSIWYGContent = new WYSIWYGContent();
-                    tempWYSIWYGContent.setContentId(idToEdit);
-                    tempWYSIWYGContent.setContentPosition(Integer.parseInt(contentPosition));
-                    tempWYSIWYGContent.setCategory(currentCategory);
-                    tempWYSIWYGContent.setWysiwygData(wysiwygValue);
+                    WysiwygContent tempWysiwygContent = new WysiwygContent();
+                    tempWysiwygContent.setContentId(idToEdit);
+                    tempWysiwygContent.setContentPosition(Integer.parseInt(contentPosition));
+                    tempWysiwygContent.setCategory(currentCategory);
+                    tempWysiwygContent.setWysiwygData(wysiwygValue);
                     if("visible".equalsIgnoreCase(isVisible)){
-                        tempWYSIWYGContent.setIsVisible(true);
+                        tempWysiwygContent.setIsVisible(true);
                     }  else {
-                        tempWYSIWYGContent.setIsVisible(false);
+                        tempWysiwygContent.setIsVisible(false);
                     }
-                    wysiwygContentService.edit(tempWYSIWYGContent);
+                    wysiwygContentService.edit(tempWysiwygContent);
                     rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
                     rd.forward(req, resp);
                     return;

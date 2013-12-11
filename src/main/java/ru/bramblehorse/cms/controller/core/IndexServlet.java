@@ -1,6 +1,5 @@
-package ru.bramblehorse.cms.controller;
+package ru.bramblehorse.cms.controller.core;
 
-import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.context.ContextLoaderListener;
@@ -32,7 +31,7 @@ import java.util.*;
  * Time: 23:54
  * To change this template use File | Settings | File Templates.
  */
-public class MainServlet extends HttpServlet {
+public class IndexServlet extends HttpServlet {
 
     private Logger logger;
     private WebApplicationContext context;
@@ -54,7 +53,7 @@ public class MainServlet extends HttpServlet {
 
         context = ContextLoaderListener.getCurrentWebApplicationContext();
 
-        logger = LoggerFactory.getLogger(MainServlet.class);
+        logger = LoggerFactory.getLogger(IndexServlet.class);
         categoryService = (CategoryService) context.getBean("categoryService");
         linkContentService = (AbstractService<LinkContent>) context.getBean("linkContentService");
 
@@ -228,6 +227,13 @@ public class MainServlet extends HttpServlet {
             req.setAttribute("contentValue", "content");
 
         }
+    }
+
+    private void doFilterCatalog(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
+            IOException {
+
+
+
     }
 
 

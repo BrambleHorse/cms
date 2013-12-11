@@ -1,4 +1,4 @@
-package ru.bramblehorse.cms.controller;
+package ru.bramblehorse.cms.controller.security;
 
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.WebApplicationContext;

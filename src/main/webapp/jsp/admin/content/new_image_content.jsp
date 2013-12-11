@@ -6,9 +6,9 @@
         <fieldset>
             <legend>Загрузить изображение</legend>
 
-            <form action="/image.upload.do" method="post" enctype="multipart/form-data">
+            <form action="/admin.content.image.do" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="categoryId" value="${param.categoryId}">
-                <input type="hidden" name="contentType" value="IMAGE">
+                <input type="hidden" name="action" value="create">
                 <label for="contentPosition">Позиция:</label>
                 <input id="contentPosition" type="text" name="contentPosition">
                 <label for="isVisible">Отображать</label>

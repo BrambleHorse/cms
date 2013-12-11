@@ -2,10 +2,8 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<div class="edit-text-content">
-    <form action="/admin.content.do" method="POST">
-        <input type="hidden" name="action" value="edit">
-        <input type="hidden" name="contentType" value="LINK">
+<div class="edit-link">
+    <form action="/admin.content.link.do" method="post">
         <input type="hidden" name="contentId" value="${content.contentId}">
         <input type="hidden" name="linkImagePath" value="${content.linkImagePath}">
         <input type="hidden" name="linkImageFilePath" value="${content.linkImageFilePath}">

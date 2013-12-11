@@ -31,10 +31,6 @@
                                                 <td><input type="checkbox" name="${filterCriterion.filterCriterionValue}" <c:if test="${requestScope[index] eq true}"> checked="checked"</c:if> value="checked"></td>
                                                 <td>${filterCriterion.filterCriterionValue} </td>
                                                  </tr>
-                                                 <tr>
-                                                     <td>${index}</td>
-                                                     <td>${requestScope[index]}</td>
-                                                 </tr>
                                              </c:forEach>
 
                                     </c:forEach>

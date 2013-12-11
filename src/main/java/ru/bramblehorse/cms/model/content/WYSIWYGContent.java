@@ -15,11 +15,11 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "wysiwyg_content")
 @PrimaryKeyJoinColumn(name = "content_id", referencedColumnName = "content_id")
-public class WYSIWYGContent extends Content {
+public class WysiwygContent extends Content {
     @Column(name = "wysiwyg", columnDefinition = "LONGTEXT")
     private String wysiwygData;
 
-    public WYSIWYGContent(){
+    public WysiwygContent(){
 
         this.type = ContentType.WYSIWYG;
     }

@@ -1,5 +1,7 @@
-package ru.bramblehorse.cms.controller;
+package ru.bramblehorse.cms.controller.content;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.WebApplicationContext;
 import ru.bramblehorse.cms.model.content.Category;
@@ -17,19 +19,21 @@ import java.util.List;
 /**
  * Created with IntelliJ IDEA.
  * User: bramblehorse
- * Date: 15.10.13
- * Time: 0:07
+ * Date: 10.12.13
+ * Time: 12:55
  * To change this template use File | Settings | File Templates.
  */
-public class CategoryAdminServlet extends HttpServlet {
+public class ContentCategoryAdminServlet extends HttpServlet {
 
     private WebApplicationContext context;
+    private Logger logger;
     private CategoryService categoryService;
 
     @Override
     public void init() throws ServletException {
 
         context = ContextLoaderListener.getCurrentWebApplicationContext();
+        logger = LoggerFactory.getLogger(ContentCategoryAdminServlet.class);
         categoryService = (CategoryService) context.getBean("categoryService");
     }
 
@@ -109,14 +113,14 @@ public class CategoryAdminServlet extends HttpServlet {
         String categoryId = req.getParameter("categoryId");
         Category currentCategory = categoryService.getById(Integer.parseInt(categoryId));
         if(!currentCategory.hasChildren()) {
-        List<Category> categoryList = categoryService.getRootCategories();
-        Collections.sort(categoryList);
-        req.setAttribute("categoryList", categoryList);
+            List<Category> categoryList = categoryService.getRootCategories();
+            Collections.sort(categoryList);
+            req.setAttribute("categoryList", categoryList);
         }
         req.setAttribute("currentCategory", currentCategory);
         Category currentParentCategory = currentCategory.getParentCategory();
         if(currentParentCategory != null){
-        req.setAttribute("parentCategoryId", currentCategory.getParentCategory().getId());
+            req.setAttribute("parentCategoryId", currentCategory.getParentCategory().getId());
         }
         req.setAttribute("adminAction","edit_category");
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
@@ -149,7 +153,7 @@ public class CategoryAdminServlet extends HttpServlet {
         try {
             categoryPositionValue = Integer.parseInt(categoryPosition);
             if("null".equals(parentCategory)){
-               categoryParentValue = null;
+                categoryParentValue = null;
             }   else {
                 categoryParentValue = Integer.parseInt(parentCategory);
             }

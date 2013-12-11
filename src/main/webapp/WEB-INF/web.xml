@@ -35,6 +35,11 @@
         <url-pattern>/admin.settings.do</url-pattern>
         <url-pattern>/admin.accounts.do</url-pattern>
         <url-pattern>/admin.catalog.do</url-pattern>
+        <url-pattern>/admin.content.link.do</url-pattern>
+        <url-pattern>/admin.content.wysiwyg.do</url-pattern>
+        <url-pattern>/admin.content.image.do</url-pattern>
+        <url-pattern>/admin.content.table.do</url-pattern>
+        <url-pattern>/admin.content.text.do</url-pattern>
     </filter-mapping>
     <filter>
         <filter-name>hibernateFilter</filter-name>
@@ -57,11 +62,16 @@
         <url-pattern>/admin.settings.do</url-pattern>
         <url-pattern>/admin.accounts.do</url-pattern>
         <url-pattern>/admin.catalog.do</url-pattern>
+        <url-pattern>/admin.content.link.do</url-pattern>
+        <url-pattern>/admin.content.wysiwyg.do</url-pattern>
+        <url-pattern>/admin.content.image.do</url-pattern>
+        <url-pattern>/admin.content.table.do</url-pattern>
+        <url-pattern>/admin.content.text.do</url-pattern>
     </filter-mapping>
 
     <servlet>
         <servlet-name>mainServlet</servlet-name>
-        <servlet-class>ru.bramblehorse.cms.controller.MainServlet</servlet-class>
+        <servlet-class>ru.bramblehorse.cms.controller.core.IndexServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>mainServlet</servlet-name>
@@ -69,7 +79,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>adminServlet</servlet-name>
-        <servlet-class>ru.bramblehorse.cms.controller.AdminServlet</servlet-class>
+        <servlet-class>ru.bramblehorse.cms.controller.core.IndexAdminServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>adminServlet</servlet-name>
@@ -77,7 +87,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>categoryAdminServlet</servlet-name>
-        <servlet-class>ru.bramblehorse.cms.controller.CategoryAdminServlet</servlet-class>
+        <servlet-class>ru.bramblehorse.cms.controller.content.ContentCategoryAdminServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>categoryAdminServlet</servlet-name>
@@ -85,7 +95,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>contentAdminServlet</servlet-name>
-        <servlet-class>ru.bramblehorse.cms.controller.ContentAdminServlet</servlet-class>
+        <servlet-class>ru.bramblehorse.cms.controller.content.ContentAdminServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>contentAdminServlet</servlet-name>
@@ -109,7 +119,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>settingsAdminServlet</servlet-name>
-        <servlet-class>ru.bramblehorse.cms.controller.SettingsAdminServlet</servlet-class>
+        <servlet-class>ru.bramblehorse.cms.controller.core.SettingsAdminServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>settingsAdminServlet</servlet-name>
@@ -117,7 +127,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>securityAdminServlet</servlet-name>
-        <servlet-class>ru.bramblehorse.cms.controller.SecurityAdminServlet</servlet-class>
+        <servlet-class>ru.bramblehorse.cms.controller.security.SecurityAdminServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>securityAdminServlet</servlet-name>
@@ -125,11 +135,58 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>catalogAdminServlet</servlet-name>
-        <servlet-class>ru.bramblehorse.cms.controller.CatalogAdminServlet</servlet-class>
+        <servlet-class>ru.bramblehorse.cms.controller.commerce.CatalogAdminServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>catalogAdminServlet</servlet-name>
         <url-pattern>/admin.catalog.do</url-pattern>
+    </servlet-mapping>
+
+   <!-- Admin content servlets -->
+
+    <servlet>
+        <servlet-name>contentTextAdminServlet</servlet-name>
+        <servlet-class>ru.bramblehorse.cms.controller.content.ContentTextAdminServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>contentTextAdminServlet</servlet-name>
+        <url-pattern>/admin.content.text.do</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>contentTableAdminServlet</servlet-name>
+        <servlet-class>ru.bramblehorse.cms.controller.content.ContentTableAdminServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>contentTableAdminServlet</servlet-name>
+        <url-pattern>/admin.content.table.do</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>contentImageAdminServlet</servlet-name>
+        <servlet-class>ru.bramblehorse.cms.controller.content.ContentImageAdminServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>contentImageAdminServlet</servlet-name>
+        <url-pattern>/admin.content.image.do</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>contentWysiwygAdminServlet</servlet-name>
+        <servlet-class>ru.bramblehorse.cms.controller.content.ContentWysiwygAdminServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>contentWysiwygAdminServlet</servlet-name>
+        <url-pattern>/admin.content.wysiwyg.do</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>contentLinkAdminServlet</servlet-name>
+        <servlet-class>ru.bramblehorse.cms.controller.content.ContentLinkAdminServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>contentLinkAdminServlet</servlet-name>
+        <url-pattern>/admin.content.link.do</url-pattern>
     </servlet-mapping>
 
     <session-config>

@@ -1,4 +1,4 @@
-package ru.bramblehorse.cms.controller;
+package ru.bramblehorse.cms.controller.core;
 
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.WebApplicationContext;
@@ -21,7 +21,7 @@ import java.util.List;
  * Time: 23:52
  * To change this template use File | Settings | File Templates.
  */
-public class AdminServlet extends HttpServlet {
+public class IndexAdminServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

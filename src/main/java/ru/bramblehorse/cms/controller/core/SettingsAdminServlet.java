@@ -1,4 +1,4 @@
-package ru.bramblehorse.cms.controller;
+package ru.bramblehorse.cms.controller.core;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

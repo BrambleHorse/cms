@@ -1,4 +1,16 @@
-package ru.bramblehorse.cms.controller;
+package ru.bramblehorse.cms.controller.commerce;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.context.ContextLoaderListener;
+import org.springframework.web.context.WebApplicationContext;
+import ru.bramblehorse.cms.controller.core.IndexServlet;
+import ru.bramblehorse.cms.model.commerce.Brand;
+import ru.bramblehorse.cms.model.commerce.CatalogCategory;
+import ru.bramblehorse.cms.model.commerce.CatalogCategoryFilter;
+import ru.bramblehorse.cms.model.commerce.FilterCriterion;
+import ru.bramblehorse.cms.service.AbstractService;
+import ru.bramblehorse.cms.service.ItemService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -6,6 +18,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -16,8 +29,26 @@ import java.io.IOException;
  */
 public class CatalogAdminServlet extends HttpServlet {
 
+    private Logger logger;
+    private WebApplicationContext context;
+
+    private AbstractService<CatalogCategory> catalogCategoryService;
+    private AbstractService<CatalogCategoryFilter> catalogCategoryFilterService;
+    private AbstractService<FilterCriterion> filterCriterionService;
+    private ItemService itemService;
+    private AbstractService<Brand> brandService;
+
     @Override
     public void init() throws ServletException {
+
+        context = ContextLoaderListener.getCurrentWebApplicationContext();
+        logger = LoggerFactory.getLogger(IndexServlet.class);
+
+        catalogCategoryService = (AbstractService<CatalogCategory>) context.getBean("catalogCategoryService");
+        catalogCategoryFilterService = (AbstractService<CatalogCategoryFilter>) context.getBean("catalogCategoryFilterService");
+        filterCriterionService = (AbstractService<FilterCriterion>) context.getBean("filterCriterionService");
+        itemService = (ItemService) context.getBean("itemService");
+        brandService = (AbstractService<Brand>) context.getBean("brandService");
 
     }
 
@@ -25,8 +56,25 @@ public class CatalogAdminServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String mode = req.getParameter("mode");
+        String action = req.getParameter("action");
+
         if ("categories".equalsIgnoreCase(mode)) {
 
+            if("create".equalsIgnoreCase(action)){
+
+                processGetCreateCatalogCategory(req,resp);
+                return;
+            }
+
+            if("edit".equalsIgnoreCase(action)){
+
+
+            }
+
+            if("delete".equalsIgnoreCase(action)){
+
+
+            }
             processGetNoActionCategories(req, resp);
             return;
         }
@@ -66,6 +114,9 @@ public class CatalogAdminServlet extends HttpServlet {
 
     private void processGetNoActionCategories(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        List<CatalogCategory> catalogCategoryList = catalogCategoryService.getAll();
+
+        req.setAttribute("catalogCategoryList", catalogCategoryList);
         req.setAttribute("adminAction", "catalog_categories");
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
         rd.forward(req, resp);
@@ -116,6 +167,60 @@ public class CatalogAdminServlet extends HttpServlet {
 
 
     }
+
+
+    private void processGetEditCatalogCategory(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+
+    }
+
+    private void processGetEditBrand(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+
+    }
+
+    private void processGetEditCatalogCategoryFilter(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+
+    }
+
+    private void processGetEditFilterCriterion(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+
+    }
+
+    private void processGetEditItem(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+
+    }
+
+    private void processGetDeleteCatalogCategory(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+
+    }
+
+    private void processGetDeleteBrand(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+
+    }
+
+    private void processGetDeleteCatalogCategoryFilter(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+
+    }
+
+    private void processGetDeleteFilterCriterion(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+
+    }
+
+    private void processGetDeleteItem(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+
+    }
+
+
+
 
 
 }

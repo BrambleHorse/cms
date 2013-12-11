@@ -10,23 +10,23 @@
                     <c:choose>
                     <c:when test="${content.type eq 'TABLE'}">
                         <table class="content-sheet">${content.htmlTable}</table>
-                        <li><a href="/admin.content.do?action=edit&contentType=TABLE&contentId=${content.contentId}&categoryId=${categoryId}">Редактировать</a></li>
-                        <li><a href="/admin.content.do?action=delete&categoryId=${categoryId}&contentId=${content.contentId}&contentType=TABLE">Удалить</a></li>
+                        <li><a href="/admin.content.table.do?action=edit&contentId=${content.contentId}&categoryId=${categoryId}">Редактировать</a></li>
+                        <li><a href="/admin.content.table.do?action=delete&categoryId=${categoryId}&contentId=${content.contentId}">Удалить</a></li>
                     </c:when>
                     <c:when test="${content.type eq 'TEXT'}">
                       <li> <p class="content-text"> ${content.text} </p></li>
-                        <li><a href="/admin.content.do?action=edit&contentType=TEXT&contentId=${content.contentId}&categoryId=${categoryId}">Редактировать</a></li>
-                        <li><a href="/admin.content.do?action=delete&categoryId=${categoryId}&contentId=${content.contentId}&contentType=TEXT">Удалить</a></li>
+                        <li><a href="/admin.content.text.do?action=edit&contentId=${content.contentId}&categoryId=${categoryId}">Редактировать</a></li>
+                        <li><a href="/admin.content.text.do?action=delete&categoryId=${categoryId}&contentId=${content.contentId}">Удалить</a></li>
                     </c:when>
                     <c:when test="${content.type eq 'IMAGE'}">
                         <li><img src="${content.thumbImagePath}" alt="image not found"/></li>
-                        <li><a href="/admin.content.do?action=edit&contentType=IMAGE&contentId=${content.contentId}&categoryId=${categoryId}">Редактировать</a></li>
-                        <li><a href="/admin.content.do?action=delete&categoryId=${categoryId}&contentId=${content.contentId}&contentType=IMAGE&path=${content.imageFilePath}&thumbPath=${content.thumbImageFilePath}">Удалить</a></li>
+                        <li><a href="/admin.content.image.do?action=edit&contentId=${content.contentId}&categoryId=${categoryId}">Редактировать</a></li>
+                        <li><a href="/admin.content.image.do?action=delete&categoryId=${categoryId}&contentId=${content.contentId}&path=${content.imageFilePath}&thumbPath=${content.thumbImageFilePath}">Удалить</a></li>
                     </c:when>
                         <c:when test="${content.type eq 'WYSIWYG'}">
                             ${content.wysiwygData}
-                            <li><a href="/admin.content.do?action=edit&contentType=WYSIWYG&contentId=${content.contentId}&categoryId=${categoryId}">Редактировать</a></li>
-                            <li><a href="/admin.content.do?action=delete&categoryId=${categoryId}&contentId=${content.contentId}&contentType=WYSIWYG">Удалить</a></li>
+                            <li><a href="/admin.content.wysiwyg.do?action=edit&contentId=${content.contentId}&categoryId=${categoryId}">Редактировать</a></li>
+                            <li><a href="/admin.content.wysiwyg.do?action=delete&categoryId=${categoryId}&contentId=${content.contentId}">Удалить</a></li>
                     </c:when>
                      </c:choose>
                     <hr/>

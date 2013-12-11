@@ -12,20 +12,20 @@
                             <td></td>
                         </tr>
                         <tr>
-                            <td><input type="radio" name="contentType" checked="checked" value="WYSIWYG"></td>
+                            <td><input type="radio" name="contentType" checked="checked" value="wysiwyg"></td>
                             <td>Ввод через WYSIWYG редактор</td>
                         </tr>
                         <tr>
-                            <td><input type="radio" name="contentType" value="TEXT"></td>
+                            <td><input type="radio" name="contentType" value="text"></td>
                             <td>Текст</td>
                         </tr>
                         <tr>
-                            <td><input type="radio" name="contentType" value="TABLE"></td>
+                            <td><input type="radio" name="contentType" value="table"></td>
                             <td>Таблица</td>
 
                         </tr>
                         <tr>
-                            <td><input type="radio" name="contentType" value="IMAGE"></td>
+                            <td><input type="radio" name="contentType" value="image"></td>
                             <td>Изображение</td>
                         </tr>
                         <tr>

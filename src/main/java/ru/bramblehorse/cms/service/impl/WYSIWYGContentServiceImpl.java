@@ -1,7 +1,7 @@
 package ru.bramblehorse.cms.service.impl;
 
 import ru.bramblehorse.cms.dao.AbstractDao;
-import ru.bramblehorse.cms.model.content.WYSIWYGContent;
+import ru.bramblehorse.cms.model.content.WysiwygContent;
 import ru.bramblehorse.cms.service.AbstractService;
 
 import java.util.List;
@@ -13,20 +13,20 @@ import java.util.List;
  * Time: 21:08
  * To change this template use File | Settings | File Templates.
  */
-public class WYSIWYGContentServiceImpl implements AbstractService<WYSIWYGContent> {
+public class WysiwygContentServiceImpl implements AbstractService<WysiwygContent> {
 
-    AbstractDao<WYSIWYGContent> wysiwygContentDao;
+    AbstractDao<WysiwygContent> wysiwygContentDao;
 
-    public AbstractDao<WYSIWYGContent> getWysiwygContentDao() {
+    public AbstractDao<WysiwygContent> getWysiwygContentDao() {
         return wysiwygContentDao;
     }
 
-    public void setWysiwygContentDao(AbstractDao<WYSIWYGContent> wysiwygContentDao) {
+    public void setWysiwygContentDao(AbstractDao<WysiwygContent> wysiwygContentDao) {
         this.wysiwygContentDao = wysiwygContentDao;
     }
 
     @Override
-    public void create(WYSIWYGContent entity) {
+    public void create(WysiwygContent entity) {
         wysiwygContentDao.create(entity);
     }
 
@@ -36,17 +36,17 @@ public class WYSIWYGContentServiceImpl implements AbstractService<WYSIWYGContent
     }
 
     @Override
-    public void edit(WYSIWYGContent entity) {
+    public void edit(WysiwygContent entity) {
         wysiwygContentDao.edit(entity);
     }
 
     @Override
-    public WYSIWYGContent getById(Integer id) {
+    public WysiwygContent getById(Integer id) {
         return wysiwygContentDao.getById(id);
     }
 
     @Override
-    public List<WYSIWYGContent> getAll() {
+    public List<WysiwygContent> getAll() {
         return wysiwygContentDao.getAll();
     }
 }
