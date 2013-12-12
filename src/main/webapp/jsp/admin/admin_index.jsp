@@ -61,6 +61,9 @@
     <c:when test="${adminAction eq 'edit_image_content'}">
         <jsp:include page="content/edit_image.jsp"></jsp:include>
     </c:when>
+    <c:when test="${adminAction eq 'edit_image_content_picture'}">
+        <jsp:include page="content/edit_image_content.jsp"></jsp:include>
+    </c:when>
     <c:when test="${adminAction eq 'edit_table_content'}">
         <jsp:include page="content/edit_table_content.jsp"></jsp:include>
     </c:when>

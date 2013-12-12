@@ -101,12 +101,34 @@ public class ContentImageAdminServlet extends HttpServlet {
             IOException {
 
         String contentId = req.getParameter("contentId");
-        ImageContent tempImage = imageContentService.getById(Integer.parseInt(contentId));
+        ImageContent tempImage = null;
+        try {
+
+            tempImage = imageContentService.getById(Integer.parseInt(contentId));
+        }  catch (Exception e){
+            logger.error(e.getMessage());
+        }
+
+
         req.setAttribute("content", tempImage);
-        req.setAttribute("adminAction", "edit_image_content");
-        List<Category> categoryList = categoryService.getAll();
-        Collections.sort(categoryList);
-        req.setAttribute("categoryList", categoryList);
+        if(tempImage.getIsVisible()){
+
+            req.setAttribute("isVisible", "visible");
+        }   else {
+
+            req.setAttribute("isVisible", "not visible");
+        }
+        if("true".equalsIgnoreCase(req.getParameter("new_image"))){
+
+            req.setAttribute("adminAction", "edit_image_content_picture");
+        } else {
+
+            req.setAttribute("adminAction", "edit_image_content");
+            List<Category> categoryList = categoryService.getAll();
+            Collections.sort(categoryList);
+            req.setAttribute("categoryList", categoryList);
+        }
+
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
         rd.forward(req, resp);
     }

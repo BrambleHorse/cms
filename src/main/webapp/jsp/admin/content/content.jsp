@@ -21,6 +21,7 @@
                     <c:when test="${content.type eq 'IMAGE'}">
                         <li><img src="${content.thumbImagePath}" alt="image not found"/></li>
                         <li><a href="/admin.content.image.do?action=edit&contentId=${content.contentId}&categoryId=${categoryId}">Редактировать</a></li>
+                        <li><a href="/admin.content.image.do?action=edit&new_image=true&contentId=${content.contentId}&categoryId=${categoryId}">Загрузить новое изображение</a></li>
                         <li><a href="/admin.content.image.do?action=delete&categoryId=${categoryId}&contentId=${content.contentId}&path=${content.imageFilePath}&thumbPath=${content.thumbImageFilePath}">Удалить</a></li>
                     </c:when>
                         <c:when test="${content.type eq 'WYSIWYG'}">
