@@ -11,6 +11,8 @@
                 <input type="hidden" name="action" value="edit">
                 <input type="hidden" name="contentId" value="${content.contentId}" />
                 <input type="hidden" name="contentPosition" value="${content.contentPosition}" />
+                <input type="hidden" name="oldImageFilePath" value="${content.imageFilePath}">
+                <input type="hidden" name="oldThumbImageFilePath" value="${content.thumbImageFilePath}">
                 <input type="hidden" name="isVisible" value="${isVisible}">
                 <label for="fileName">Укажите файл:</label>
                 <input id="fileName" type="file" name="fileName" size="30" /><br/>

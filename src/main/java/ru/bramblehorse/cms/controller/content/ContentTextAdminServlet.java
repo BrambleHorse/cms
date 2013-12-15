@@ -135,14 +135,49 @@ public class ContentTextAdminServlet extends HttpServlet {
     private void processPostCreateTextContent(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
             IOException {
 
-
+        String categoryId = req.getParameter("categoryId");
+        String contentPosition = req.getParameter("contentPosition");
+        String isVisible = req.getParameter("isVisible");
+        String text = req.getParameter("textValue");
+        Category currentCategory = categoryService.getById(Integer.parseInt(categoryId));
+        TextContent tempTextContent = new TextContent();
+        tempTextContent.setText(text);
+        tempTextContent.setContentPosition(Integer.parseInt(contentPosition));
+        tempTextContent.setCategory(currentCategory);
+        if("visible".equalsIgnoreCase(isVisible)){
+            tempTextContent.setIsVisible(true);
+        }  else {
+            tempTextContent.setIsVisible(false);
+        }
+        textContentService.create(tempTextContent);
+        RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
+        rd.forward(req, resp);
 
     }
 
     private void processPostEditTextContent(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
             IOException {
 
-
+        String categoryId = req.getParameter("categoryId");
+        String contentId = req.getParameter("contentId");
+        String contentPosition = req.getParameter("contentPosition");
+        String isVisible = req.getParameter("isVisible");
+        Category currentCategory = categoryService.getById(Integer.parseInt(categoryId));
+        Integer idToEdit = Integer.parseInt(contentId);
+        String text = req.getParameter("textValue");
+        TextContent tempTextContent = new TextContent();
+        tempTextContent.setContentId(idToEdit);
+        tempTextContent.setText(text);
+        tempTextContent.setContentPosition(Integer.parseInt(contentPosition));
+        tempTextContent.setCategory(currentCategory);
+        if("visible".equalsIgnoreCase(isVisible)){
+            tempTextContent.setIsVisible(true);
+        }  else {
+            tempTextContent.setIsVisible(false);
+        }
+        textContentService.edit(tempTextContent);
+        RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
+        rd.forward(req, resp);
 
     }
 }

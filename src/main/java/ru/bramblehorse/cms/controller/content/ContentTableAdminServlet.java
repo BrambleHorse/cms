@@ -137,14 +137,48 @@ public class ContentTableAdminServlet extends HttpServlet {
     private void processPostCreateTableContent(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
             IOException {
 
-
-
+        String categoryId = req.getParameter("categoryId");
+        String contentPosition = req.getParameter("contentPosition");
+        String isVisible = req.getParameter("isVisible");
+        String htmlTable = req.getParameter("tableValue");
+        Category currentCategory = categoryService.getById(Integer.parseInt(categoryId));
+        TableContent tempTableContent = new TableContent();
+        tempTableContent.setHtmlTable(htmlTable);
+        tempTableContent.setContentPosition(Integer.parseInt(contentPosition));
+        tempTableContent.setCategory(currentCategory);
+        if("visible".equalsIgnoreCase(isVisible)){
+            tempTableContent.setIsVisible(true);
+        }  else {
+            tempTableContent.setIsVisible(false);
+        }
+        tableContentService.create(tempTableContent);
+        RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
+        rd.forward(req, resp);
     }
 
     private void processPostEditTableContent(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
             IOException {
 
-
+        String categoryId = req.getParameter("categoryId");
+        String contentId = req.getParameter("contentId");
+        String contentPosition = req.getParameter("contentPosition");
+        String isVisible = req.getParameter("isVisible");
+        String htmlTable = req.getParameter("tableValue");
+        Category currentCategory = categoryService.getById(Integer.parseInt(categoryId));
+        Integer idToEdit = Integer.parseInt(contentId);
+        TableContent tempTableContent = new TableContent();
+        tempTableContent.setContentId(idToEdit);
+        tempTableContent.setHtmlTable(htmlTable);
+        tempTableContent.setContentPosition(Integer.parseInt(contentPosition));
+        tempTableContent.setCategory(currentCategory);
+        if("visible".equalsIgnoreCase(isVisible)){
+            tempTableContent.setIsVisible(true);
+        }  else {
+            tempTableContent.setIsVisible(false);
+        }
+        tableContentService.edit(tempTableContent);
+        RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
+        rd.forward(req, resp);
 
     }
 }

@@ -16,9 +16,9 @@
             <ul>
              <li><img src="${link.linkImagePath}"/></li>
              <li>${link.linkValue}</li>
-             <li><a href="/admin.content.do?action=edit&contentId=${link.contentId}&contentType=LINK">Редактировать</a></li>
-             <li><a href="/admin.content.do?contentId=${link.contentId}&contentType=LINK&action=edit&editImage=true">Изменить иконку ссылки</a></li>
-             <li><a href="/admin.content.do?action=delete&contentId=${link.contentId}&contentType=LINK&linkImageFilePath=${link.linkImageFilePath}">Удалить</a></li>
+             <li><a href="/admin.content.link.do?action=edit&contentId=${link.contentId}">Редактировать</a></li>
+             <li><a href="/admin.content.link.do?action=edit&contentId=${link.contentId}&editImage=true">Изменить иконку ссылки</a></li>
+             <li><a href="/admin.content.link.do?action=delete&contentId=${link.contentId}&linkImageFilePath=${link.linkImageFilePath}">Удалить</a></li>
             </ul>
             <hr/>
         </c:forEach>

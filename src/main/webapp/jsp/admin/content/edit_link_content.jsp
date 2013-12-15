@@ -9,7 +9,17 @@
             <input type="hidden" name="action" value="edit" />
             <input type="hidden" name="contentId" value="${content.contentId}" />
             <input type="hidden" name="contentPosition" value="${content.contentPosition}" />
+            <input type="hidden" name="isVisible"
+            <c:choose>
+                <c:when test="${content.isVisible eq true}">
+                    value="visible"
+                </c:when>
+                <c:otherwise>
+                    value="not visible"
+                </c:otherwise>
+            </c:choose> />
             <input type="hidden" name="linkValue" value="${content.linkValue}" />
+            <input type="hidden" name="oldLinkImageFilePath" value="${content.linkImageFilePath}">
             <label for="fileName">Укажите файл:</label>
             <input id="fileName" type="file" name="fileName" size="30" /><br/>
             <input type="submit" value="Загрузить" />

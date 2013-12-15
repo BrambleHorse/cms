@@ -12,6 +12,7 @@ import org.springframework.web.context.WebApplicationContext;
 import ru.bramblehorse.cms.model.content.Category;
 import ru.bramblehorse.cms.model.content.LinkContent;
 import ru.bramblehorse.cms.service.AbstractService;
+import ru.bramblehorse.cms.util.ImageFilesUtil;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -81,14 +82,14 @@ public class ContentLinkAdminServlet extends HttpServlet {
         if (isMultipart) {
 
             processPostMultipartLinkContent(req, resp);
+            return;
 
         } else {
 
             processPostLinkContent(req, resp);
+            return;
         }
 
-        RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
-        rd.forward(req, resp);
     }
 
     private void processGetCreateLinkContent(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
@@ -129,15 +130,9 @@ public class ContentLinkAdminServlet extends HttpServlet {
 
             logger.error(e.getMessage());
         }
-
         String linkImagePathToDelete = req.getParameter("linkImageFilePath");
-        File linkFileToDelete = new File(linkImagePathToDelete);
-        if (linkFileToDelete.exists()) {
-            linkFileToDelete.delete();
-            logger.info("Link image file deleted . .");
-        } else {
-
-            logger.info("No link image file exists, nothing to delete . .");
+        if(linkImagePathToDelete != null){
+           ImageFilesUtil.deleteOrphanImage(linkImagePathToDelete);
         }
         linkContentService.delete(idToDelete);
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
@@ -155,6 +150,7 @@ public class ContentLinkAdminServlet extends HttpServlet {
         String linkValue = null;
         String isVisible = null;
         String action = null;
+        String oldLinkImageFilePath = null;
 
         // Create a factory for disk-based file items
         FileItemFactory factory = new DiskFileItemFactory();
@@ -194,6 +190,9 @@ public class ContentLinkAdminServlet extends HttpServlet {
                     if ("isVisible".equalsIgnoreCase(item.getFieldName())) {
                         isVisible = item.getString();
                     }
+                    if("oldLinkImageFilePath".equalsIgnoreCase(item.getFieldName())){
+                        oldLinkImageFilePath = item.getString();
+                    }
                 }
             }
 
@@ -213,6 +212,10 @@ public class ContentLinkAdminServlet extends HttpServlet {
                 linkContentService.create(tempLinkContent);
             }
             if("edit".equalsIgnoreCase(action)){
+
+                if(oldLinkImageFilePath != null){
+                    ImageFilesUtil.deleteOrphanImage(oldLinkImageFilePath);
+                }
 
                 Integer idToEdit = Integer.parseInt(contentId);
                 tempLinkContent.setContentId(idToEdit);
@@ -261,4 +264,5 @@ public class ContentLinkAdminServlet extends HttpServlet {
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
         rd.forward(req, resp);
     }
+
 }

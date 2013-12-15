@@ -13,6 +13,7 @@ import org.springframework.web.context.WebApplicationContext;
 import ru.bramblehorse.cms.model.content.Category;
 import ru.bramblehorse.cms.model.content.ImageContent;
 import ru.bramblehorse.cms.service.AbstractService;
+import ru.bramblehorse.cms.util.ImageFilesUtil;
 
 import javax.imageio.ImageIO;
 import javax.servlet.RequestDispatcher;
@@ -82,10 +83,12 @@ public class ContentImageAdminServlet extends HttpServlet {
 
             req.setCharacterEncoding("UTF-8");
             processPostMultipartImageContent(req, resp);
+            return;
 
         } else {
 
             processPostImageContent(req, resp);
+            return;
         }
     }
 
@@ -146,23 +149,10 @@ public class ContentImageAdminServlet extends HttpServlet {
 
             logger.error(e.getMessage());
         }
-
         String pathToDelete = req.getParameter("path");
         String thumbPathToDelete = req.getParameter("thumbPath");
-        File fileToDelete = new File(pathToDelete);
-        File thumbFileToDelete = new File(thumbPathToDelete);
-        if (fileToDelete.exists()) {
-            fileToDelete.delete();
-            logger.info("Image file deleted . .");
-        } else {
-            logger.info("No image file exists, nothing to delete . .");
-        }
-        if (thumbFileToDelete.exists()) {
-            thumbFileToDelete.delete();
-            logger.info("Thumb image file deleted . .");
-        } else {
-            logger.info("No thumb image file exists, nothing to delete . .");
-        }
+        ImageFilesUtil.deleteOrphanImage(pathToDelete);
+        ImageFilesUtil.deleteOrphanImage(thumbPathToDelete);
         if (idToDelete != null) {
 
             imageContentService.delete(idToDelete);
@@ -185,6 +175,8 @@ public class ContentImageAdminServlet extends HttpServlet {
         String imageFilePath = null;
         String thumbImageFilePath = null;
         String isVisible = null;
+        String oldImageFilePath = null;
+        String oldThumbImageFilePath = null;
 
         // Create a factory for disk-based file items
         FileItemFactory factory = new DiskFileItemFactory();
@@ -203,7 +195,7 @@ public class ContentImageAdminServlet extends HttpServlet {
                     String root = getServletContext().getRealPath("/");
                     File path = new File(root + "/upload");
                     if (!path.exists()) {
-                        boolean status = path.mkdirs();
+                       path.mkdirs();
                     }
                     File uploadedFile = new File(path + "/" + fileName);
                     item.write(uploadedFile);
@@ -234,6 +226,12 @@ public class ContentImageAdminServlet extends HttpServlet {
                     }
                     if ("isVisible".equalsIgnoreCase(item.getFieldName())) {
                         isVisible = item.getString();
+                    }
+                    if("oldImageFilePath".equalsIgnoreCase(item.getFieldName())){
+                         oldImageFilePath = item.getString();
+                    }
+                    if("oldThumbImageFilePath".equalsIgnoreCase(item.getFieldName())){
+                         oldThumbImageFilePath = item.getString();
                     }
                 }
             }
@@ -276,6 +274,9 @@ public class ContentImageAdminServlet extends HttpServlet {
         if ("edit".equalsIgnoreCase(action)) {
 
             Integer imageContentId = null;
+
+            ImageFilesUtil.deleteOrphanImage(oldImageFilePath);
+            ImageFilesUtil.deleteOrphanImage(oldThumbImageFilePath);
 
             try{
 

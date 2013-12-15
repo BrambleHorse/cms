@@ -5,10 +5,11 @@
 <div class="new-link-content">
     <fieldset>
         <legend>Загрузить иконку для ссылки</legend>
-        <form action="/link.upload.do" method="post" enctype="multipart/form-data">
+        <form action="/admin.content.link.do" method="post" enctype="multipart/form-data">
             <label for="contentPosition">Ссылка:</label>
+            <input type="hidden" value="create">
             <input id="linkValue" type="text" name="linkValue">
-            <label for="contentPosition">Позиция::</label>
+            <label for="contentPosition">Позиция:</label>
             <input id="contentPosition" type="text" name="contentPosition">
             <label for="isVisible">Отображать</label>
             <input type="checkbox" id="isVisible" name="isVisible" checked="true" value="visible">

@@ -142,14 +142,48 @@ public class ContentWysiwygAdminServlet extends HttpServlet {
     private void processPostCreateWysiwygContent(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
             IOException {
 
-
+        String categoryId = req.getParameter("categoryId");
+        String contentPosition = req.getParameter("contentPosition");
+        String isVisible = req.getParameter("isVisible");
+        Category currentCategory = categoryService.getById(Integer.parseInt(categoryId));
+        String wysiwyg = req.getParameter("wysiwygValue");
+        WysiwygContent tempWysiwygContent = new WysiwygContent();
+        tempWysiwygContent.setWysiwygData(wysiwyg);
+        tempWysiwygContent.setContentPosition(Integer.parseInt(contentPosition));
+        tempWysiwygContent.setCategory(currentCategory);
+        if("visible".equalsIgnoreCase(isVisible)){
+            tempWysiwygContent.setIsVisible(true);
+        }  else {
+            tempWysiwygContent.setIsVisible(false);
+        }
+        wysiwygContentService.create(tempWysiwygContent);
+        RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
+        rd.forward(req, resp);
 
     }
 
     private void processPostEditWysiwygContent(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
             IOException {
 
-
-
+        String categoryId = req.getParameter("categoryId");
+        String contentId = req.getParameter("contentId");
+        String contentPosition = req.getParameter("contentPosition");
+        String isVisible = req.getParameter("isVisible");
+        Category currentCategory = categoryService.getById(Integer.parseInt(categoryId));
+        Integer idToEdit = Integer.parseInt(contentId);
+        String wysiwygValue = req.getParameter("wysiwygValue");
+        WysiwygContent tempWysiwygContent = new WysiwygContent();
+        tempWysiwygContent.setContentId(idToEdit);
+        tempWysiwygContent.setContentPosition(Integer.parseInt(contentPosition));
+        tempWysiwygContent.setCategory(currentCategory);
+        tempWysiwygContent.setWysiwygData(wysiwygValue);
+        if("visible".equalsIgnoreCase(isVisible)){
+            tempWysiwygContent.setIsVisible(true);
+        }  else {
+            tempWysiwygContent.setIsVisible(false);
+        }
+        wysiwygContentService.edit(tempWysiwygContent);
+        RequestDispatcher  rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
+        rd.forward(req, resp);
     }
 }
