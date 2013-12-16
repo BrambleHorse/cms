@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.WebApplicationContext;
+import ru.bramblehorse.cms.facade.CatalogFilterFacade;
 import ru.bramblehorse.cms.model.commerce.*;
 import ru.bramblehorse.cms.model.content.Category;
 import ru.bramblehorse.cms.model.content.Content;
@@ -35,6 +36,7 @@ public class IndexServlet extends HttpServlet {
 
     private Logger logger;
     private WebApplicationContext context;
+    private CatalogFilterFacade catalogFilterFacade;
     private CategoryService categoryService;
     private AbstractService<LinkContent> linkContentService;
 
@@ -54,6 +56,7 @@ public class IndexServlet extends HttpServlet {
         context = ContextLoaderListener.getCurrentWebApplicationContext();
 
         logger = LoggerFactory.getLogger(IndexServlet.class);
+        catalogFilterFacade = (CatalogFilterFacade) context.getBean("catalogFilterFacade");
         categoryService = (CategoryService) context.getBean("categoryService");
         linkContentService = (AbstractService<LinkContent>) context.getBean("linkContentService");
 
@@ -236,54 +239,4 @@ public class IndexServlet extends HttpServlet {
 
     }
 
-
-    private void insertMockValues() {
-
-//        CatalogCategory category1 = new CatalogCategory();
-//        category1.setCatalogCategoryName("category1");
-//        category1.setCatalogCategoryPosition(0);
-//
-//        Item item1 = new Item();
-//        Brand brand1 = new Brand();
-//        brand1.setBrandName("Oras");
-//        brandService.create(brand1);
-//        item1.setItemDescription("item1 desc");
-//        item1.setItemCategory(category1);
-//        item1.setItemName("item1 name");
-//        item1.setItemPrice(33);
-//        item1.setItemBrand(brand1);
-//        List<Item> items = new ArrayList<Item>();
-//        items.add(item1);
-//        category1.setCatalogCategoryItems(items);
-//        catalogCategoryService.create(category1);
-//
-//        CatalogCategoryFilter filter1 = new CatalogCategoryFilter();
-//        filter1.setCatalogCategoryFilterName("Размер");
-//        List<CatalogCategory> catalogCategories = new ArrayList<CatalogCategory>();
-//        catalogCategories.add(category1);
-//        filter1.setCatalogCategories(catalogCategories);
-//        catalogCategoryFilterService.create(filter1);
-//
-//        FilterCriterion criterion1 = new FilterCriterion();
-//        criterion1.setItems(items);
-//        criterion1.setCatalogCategoryFilter(filter1);
-//        criterion1.setFilterCriterionValue("170");
-//        filterCriterionService.create(criterion1);
-
-        CatalogCategory temp = catalogCategoryService.getById(1);
-        Item tempItem = new Item();
-        tempItem.setItemName("A letter");
-        tempItem.setItemDescription("A letter Desc");
-        tempItem.setItemBrand(brandService.getAll().get(0));
-        tempItem.setItemCategory(temp);
-        tempItem.setItemPrice(335);
-        itemService.create(tempItem);
-
-//        FilterCriterion criterion2 = new FilterCriterion();
-//        criterion2.setItems(itemService.getAll());
-//        criterion2.setCatalogCategoryFilter(catalogCategoryFilterService.getAll().get(0));
-//        criterion2.setFilterCriterionValue("190");
-//        filterCriterionService.create(criterion2);
-
-    }
 }

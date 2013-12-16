@@ -30,8 +30,6 @@
         <url-pattern>/admin.do</url-pattern>
         <url-pattern>/admin.categories.do</url-pattern>
         <url-pattern>/admin.content.do</url-pattern>
-        <url-pattern>/image.upload.do</url-pattern>
-        <url-pattern>/link.upload.do</url-pattern>
         <url-pattern>/admin.settings.do</url-pattern>
         <url-pattern>/admin.accounts.do</url-pattern>
         <url-pattern>/admin.catalog.do</url-pattern>
@@ -40,6 +38,11 @@
         <url-pattern>/admin.content.image.do</url-pattern>
         <url-pattern>/admin.content.table.do</url-pattern>
         <url-pattern>/admin.content.text.do</url-pattern>
+        <url-pattern>/admin.catalog.brand.do</url-pattern>
+        <url-pattern>/admin.catalog.category.do</url-pattern>
+        <url-pattern>/admin.catalog.filter.do</url-pattern>
+        <url-pattern>/admin.catalog.filter.criterion.do</url-pattern>
+        <url-pattern>/admin.catalog.item.do</url-pattern>
     </filter-mapping>
     <filter>
         <filter-name>hibernateFilter</filter-name>
@@ -57,8 +60,6 @@
         <url-pattern>/admin.do</url-pattern>
         <url-pattern>/admin.categories.do</url-pattern>
         <url-pattern>/admin.content.do</url-pattern>
-        <url-pattern>/image.upload.do</url-pattern>
-        <url-pattern>/link.upload.do</url-pattern>
         <url-pattern>/admin.settings.do</url-pattern>
         <url-pattern>/admin.accounts.do</url-pattern>
         <url-pattern>/admin.catalog.do</url-pattern>
@@ -67,8 +68,14 @@
         <url-pattern>/admin.content.image.do</url-pattern>
         <url-pattern>/admin.content.table.do</url-pattern>
         <url-pattern>/admin.content.text.do</url-pattern>
+        <url-pattern>/admin.catalog.brand.do</url-pattern>
+        <url-pattern>/admin.catalog.category.do</url-pattern>
+        <url-pattern>/admin.catalog.filter.do</url-pattern>
+        <url-pattern>/admin.catalog.filter.criterion.do</url-pattern>
+        <url-pattern>/admin.catalog.item.do</url-pattern>
     </filter-mapping>
 
+    <!-- Core servlets -->
     <servlet>
         <servlet-name>mainServlet</servlet-name>
         <servlet-class>ru.bramblehorse.cms.controller.core.IndexServlet</servlet-class>
@@ -86,6 +93,16 @@
         <url-pattern>/admin.do</url-pattern>
     </servlet-mapping>
     <servlet>
+        <servlet-name>settingsAdminServlet</servlet-name>
+        <servlet-class>ru.bramblehorse.cms.controller.core.SettingsAdminServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>settingsAdminServlet</servlet-name>
+        <url-pattern>/admin.settings.do</url-pattern>
+    </servlet-mapping>
+
+    <!-- Admin content servlets -->
+    <servlet>
         <servlet-name>categoryAdminServlet</servlet-name>
         <servlet-class>ru.bramblehorse.cms.controller.content.ContentCategoryAdminServlet</servlet-class>
     </servlet>
@@ -101,49 +118,6 @@
         <servlet-name>contentAdminServlet</servlet-name>
         <url-pattern>/admin.content.do</url-pattern>
     </servlet-mapping>
-    <servlet>
-        <servlet-name>imageUploadServlet</servlet-name>
-        <servlet-class>ru.bramblehorse.cms.controller.ImageUploadServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>imageUploadServlet</servlet-name>
-        <url-pattern>/image.upload.do</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>linkUploadServlet</servlet-name>
-        <servlet-class>ru.bramblehorse.cms.controller.LinkUploadServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>linkUploadServlet</servlet-name>
-        <url-pattern>/link.upload.do</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>settingsAdminServlet</servlet-name>
-        <servlet-class>ru.bramblehorse.cms.controller.core.SettingsAdminServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>settingsAdminServlet</servlet-name>
-        <url-pattern>/admin.settings.do</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>securityAdminServlet</servlet-name>
-        <servlet-class>ru.bramblehorse.cms.controller.security.SecurityAdminServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>securityAdminServlet</servlet-name>
-        <url-pattern>/admin.accounts.do</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>catalogAdminServlet</servlet-name>
-        <servlet-class>ru.bramblehorse.cms.controller.commerce.CatalogAdminServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>catalogAdminServlet</servlet-name>
-        <url-pattern>/admin.catalog.do</url-pattern>
-    </servlet-mapping>
-
-   <!-- Admin content servlets -->
-
     <servlet>
         <servlet-name>contentTextAdminServlet</servlet-name>
         <servlet-class>ru.bramblehorse.cms.controller.content.ContentTextAdminServlet</servlet-class>
@@ -189,6 +163,69 @@
         <url-pattern>/admin.content.link.do</url-pattern>
     </servlet-mapping>
 
+    <!-- Admin commerce servlets -->
+
+    <servlet>
+        <servlet-name>catalogAdminServlet</servlet-name>
+        <servlet-class>ru.bramblehorse.cms.controller.commerce.CatalogAdminServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>catalogAdminServlet</servlet-name>
+        <url-pattern>/admin.catalog.do</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>catalogBrandAdminServlet</servlet-name>
+        <servlet-class>ru.bramblehorse.cms.controller.commerce.CatalogBrandAdminServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>catalogBrandAdminServlet</servlet-name>
+        <url-pattern>/admin.catalog.brand.do</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>catalogCategoryAdminServlet</servlet-name>
+        <servlet-class>ru.bramblehorse.cms.controller.commerce.CatalogCategoryAdminServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>catalogCategoryAdminServlet</servlet-name>
+        <url-pattern>/admin.catalog.category.do</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>catalogFilterAdminServlet</servlet-name>
+        <servlet-class>ru.bramblehorse.cms.controller.commerce.CatalogFilterAdminServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>catalogFilterAdminServlet</servlet-name>
+        <url-pattern>/admin.catalog.filter.do</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>catalogFilterCriterionAdminServlet</servlet-name>
+        <servlet-class>ru.bramblehorse.cms.controller.commerce.CatalogFilterCriterionAdminServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>catalogFilterCriterionAdminServlet</servlet-name>
+        <url-pattern>/admin.catalog.filter.criterion.do</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>catalogItemAdminServlet</servlet-name>
+        <servlet-class>ru.bramblehorse.cms.controller.commerce.CatalogItemAdminServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>catalogItemAdminServlet</servlet-name>
+        <url-pattern>/admin.catalog.item.do</url-pattern>
+    </servlet-mapping>
+
+    <!-- Security servlets -->
+
+    <servlet>
+        <servlet-name>securityAdminServlet</servlet-name>
+        <servlet-class>ru.bramblehorse.cms.controller.security.SecurityAdminServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>securityAdminServlet</servlet-name>
+        <url-pattern>/admin.accounts.do</url-pattern>
+    </servlet-mapping>
+
+
     <session-config>
         <session-timeout>30</session-timeout>
     </session-config>
@@ -204,6 +241,11 @@
             <!--<url-pattern>/admin.settings.do</url-pattern>-->
             <!--<url-pattern>/admin.accounts.do</url-pattern>-->
             <!--<url-pattern>/admin.catalog.do</url-pattern>-->
+            <!--<url-pattern>/admin.catalog.brand.do</url-pattern>-->
+            <!--<url-pattern>/admin.catalog.category.do</url-pattern>-->
+            <!--<url-pattern>/admin.catalog.filter.do</url-pattern>-->
+            <!--<url-pattern>/admin.catalog.filter.criterion.do</url-pattern>-->
+            <!--<url-pattern>/admin.catalog.item.do</url-pattern>-->
             <!--<http-method>GET</http-method>-->
             <!--<http-method>POST</http-method>-->
         <!--</web-resource-collection>-->

@@ -29,8 +29,8 @@ import java.util.List;
  */
 public class CatalogAdminServlet extends HttpServlet {
 
-    private Logger logger;
     private WebApplicationContext context;
+    private Logger logger;
 
     private AbstractService<CatalogCategory> catalogCategoryService;
     private AbstractService<CatalogCategoryFilter> catalogCategoryFilterService;
@@ -42,7 +42,7 @@ public class CatalogAdminServlet extends HttpServlet {
     public void init() throws ServletException {
 
         context = ContextLoaderListener.getCurrentWebApplicationContext();
-        logger = LoggerFactory.getLogger(IndexServlet.class);
+        logger = LoggerFactory.getLogger(CatalogAdminServlet.class);
 
         catalogCategoryService = (AbstractService<CatalogCategory>) context.getBean("catalogCategoryService");
         catalogCategoryFilterService = (AbstractService<CatalogCategoryFilter>) context.getBean("catalogCategoryFilterService");
@@ -57,45 +57,6 @@ public class CatalogAdminServlet extends HttpServlet {
 
         String mode = req.getParameter("mode");
         String action = req.getParameter("action");
-
-        if ("categories".equalsIgnoreCase(mode)) {
-
-            if("create".equalsIgnoreCase(action)){
-
-                processGetCreateCatalogCategory(req,resp);
-                return;
-            }
-
-            if("edit".equalsIgnoreCase(action)){
-
-
-            }
-
-            if("delete".equalsIgnoreCase(action)){
-
-
-            }
-            processGetNoActionCategories(req, resp);
-            return;
-        }
-
-        if ("filters".equalsIgnoreCase(mode)) {
-
-            processGetNoActionFilters(req, resp);
-            return;
-        }
-
-        if ("items".equalsIgnoreCase(mode)) {
-
-            processGetNoActionItems(req, resp);
-            return;
-        }
-
-        if ("brands".equalsIgnoreCase(mode)) {
-
-            processGetNoActionBrands(req, resp);
-            return;
-        }
 
         processGetNoActionCatalog(req, resp);
     }
@@ -143,81 +104,7 @@ public class CatalogAdminServlet extends HttpServlet {
         rd.forward(req, resp);
     }
 
-    private void processGetCreateCatalogCategory(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-
-    }
-
-    private void processGetCreateBrand(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-
-    }
-
-    private void processGetCreateCatalogCategoryFilter(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-
-    }
-
-    private void processGetCreateFilterCriterion(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-
-    }
-
-    private void processGetCreateItem(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-
-    }
-
-
-    private void processGetEditCatalogCategory(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-
-    }
-
-    private void processGetEditBrand(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-
-    }
-
-    private void processGetEditCatalogCategoryFilter(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-
-    }
-
-    private void processGetEditFilterCriterion(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-
-    }
-
-    private void processGetEditItem(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-
-    }
-
-    private void processGetDeleteCatalogCategory(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-
-    }
-
-    private void processGetDeleteBrand(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-
-    }
-
-    private void processGetDeleteCatalogCategoryFilter(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-
-    }
-
-    private void processGetDeleteFilterCriterion(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-
-    }
-
-    private void processGetDeleteItem(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-
-    }
 
 
 

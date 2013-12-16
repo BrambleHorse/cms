@@ -37,6 +37,7 @@
 
     <%-- include admin menu pages --%>
 
+    <%-- content --%>
     <c:when test="${adminAction eq 'categories'}">
         <jsp:include page="content/categories.jsp"></jsp:include>
     </c:when>
@@ -46,15 +47,22 @@
     <c:when test="${adminAction eq 'links'}">
         <jsp:include page="content/links.jsp"></jsp:include>
     </c:when>
-    <c:when test="${adminAction eq 'accounts'}">
-        <jsp:include page="${pageContext.request.contextPath}/jsp/security/accounts.jsp"></jsp:include>
+    <%-- commerce --%>
+    <c:when test="${adminAction eq 'brands'}">
+        <jsp:include page="commerce/brands.jsp"></jsp:include>
     </c:when>
     <c:when test="${adminAction eq 'admin_commerce'}">
         <jsp:include page="commerce/admin_commerce.jsp"></jsp:include>
     </c:when>
+    <%-- security --%>
+    <c:when test="${adminAction eq 'accounts'}">
+        <jsp:include page="${pageContext.request.contextPath}/jsp/security/accounts.jsp"></jsp:include>
+    </c:when>
+
 
     <%-- include edit pages --%>
 
+    <%-- content --%>
     <c:when test="${adminAction eq 'edit_category'}">
         <jsp:include page="content/edit_category.jsp"></jsp:include>
     </c:when>
@@ -79,12 +87,18 @@
     <c:when test="${adminAction eq 'edit_link'}">
         <jsp:include page="content/edit_link.jsp"></jsp:include>
     </c:when>
+    <%-- commerce --%>
+    <c:when test="${adminAction eq 'new_brand'}">
+        <jsp:include page="commerce/edit_brand.jsp"></jsp:include>
+    </c:when>
+    <%-- security --%>
     <c:when test="${adminAction eq 'edit_account'}">
         <jsp:include page="${pageContext.request.contextPath}/jsp/security/edit_account.jsp"></jsp:include>
     </c:when>
 
     <%-- include create pages --%>
 
+    <%-- content --%>
     <c:when test="${adminAction eq 'new_category'}">
         <jsp:include page="content/new_category.jsp"></jsp:include>
     </c:when>
@@ -103,6 +117,11 @@
     <c:when test="${adminAction eq 'new_wysiwyg_content'}">
         <jsp:include page="content/new_wysiwyg_content.jsp"></jsp:include>
     </c:when>
+    <%-- commerce --%>
+    <c:when test="${adminAction eq 'new_brand'}">
+        <jsp:include page="commerce/new_brand.jsp"></jsp:include>
+    </c:when>
+    <%--security--%>
     <c:when test="${adminAction eq 'new_account'}">
         <jsp:include page="${pageContext.request.contextPath}/jsp/security/new_account.jsp"></jsp:include>
     </c:when>

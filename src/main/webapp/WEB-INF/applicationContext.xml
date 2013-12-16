@@ -75,4 +75,12 @@
         <property name="tomcatRoleDao" ref="tomcatRoleDao"></property>
     </bean>
 
+    <bean id = "catalogFilterFacade" class="ru.bramblehorse.cms.facade.impl.CatalogFilterFacadeImpl">
+        <property name="itemService" ref="itemService"></property>
+        <property name="catalogCategoryFilterService" ref="catalogCategoryFilterService"></property>
+        <property name="brandService" ref="brandService"></property>
+        <property name="catalogCategoryService" ref="catalogCategoryService"></property>
+        <property name="filterCriterionService" ref="filterCriterionService"></property>
+    </bean>
+
 </beans>
