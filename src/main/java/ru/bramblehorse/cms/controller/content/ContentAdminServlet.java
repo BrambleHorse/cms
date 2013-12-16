@@ -302,6 +302,7 @@ public class ContentAdminServlet extends HttpServlet {
                     return;
                 case LINK:
                     String linkValue = req.getParameter("linkValue");
+
                     String linkImagePath = req.getParameter("linkImagePath");
                     String linkImageFilePath = req.getParameter("linkImageFilePath");
                     LinkContent tempLinkContent = new LinkContent();

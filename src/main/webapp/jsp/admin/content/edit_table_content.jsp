@@ -3,9 +3,8 @@
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
     <div class="edit-table-content">
-        <form action="/admin.content.do" method="POST">
+        <form action="/admin.content.table.do" method="POST">
             <input type="hidden" name="action" value="edit">
-            <input type="hidden" name="contentType" value="TABLE">
             <input type="hidden" name="contentId" value="${content.contentId}">
             <table class="admin-input">
                 <tr>

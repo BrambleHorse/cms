@@ -4,9 +4,8 @@
 
 
 <div class="edit-wysiwyg-content">
-    <form action="/admin.content.do" method="POST">
+    <form action="/admin.content.wysiwyg.do" method="post">
         <input type="hidden" name="action" value="edit">
-        <input type="hidden" name="contentType" value="WYSIWYG">
         <input type="hidden" name="contentId" value="${content.contentId}">
         <table class="admin-input">
             <tr>

@@ -7,7 +7,7 @@
         <legend>Загрузить иконку для ссылки</legend>
         <form action="/admin.content.link.do" method="post" enctype="multipart/form-data">
             <label for="contentPosition">Ссылка:</label>
-            <input type="hidden" value="create">
+            <input type="hidden" name="action" value="create">
             <input id="linkValue" type="text" name="linkValue">
             <label for="contentPosition">Позиция:</label>
             <input id="contentPosition" type="text" name="contentPosition">

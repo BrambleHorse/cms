@@ -5,7 +5,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.WebApplicationContext;
 import ru.bramblehorse.cms.model.content.Category;
+import ru.bramblehorse.cms.model.content.Content;
+import ru.bramblehorse.cms.model.content.ContentType;
+import ru.bramblehorse.cms.model.content.ImageContent;
+import ru.bramblehorse.cms.service.AbstractService;
 import ru.bramblehorse.cms.service.CategoryService;
+import ru.bramblehorse.cms.util.ImageFilesUtil;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -28,6 +33,7 @@ public class ContentCategoryAdminServlet extends HttpServlet {
     private WebApplicationContext context;
     private Logger logger;
     private CategoryService categoryService;
+    private AbstractService<ImageContent> imageContentService;
 
     @Override
     public void init() throws ServletException {
@@ -35,6 +41,7 @@ public class ContentCategoryAdminServlet extends HttpServlet {
         context = ContextLoaderListener.getCurrentWebApplicationContext();
         logger = LoggerFactory.getLogger(ContentCategoryAdminServlet.class);
         categoryService = (CategoryService) context.getBean("categoryService");
+        imageContentService = (AbstractService<ImageContent>) context.getBean("imageContentService");
     }
 
     @Override
@@ -130,9 +137,20 @@ public class ContentCategoryAdminServlet extends HttpServlet {
     private void processGetDeleteCategory(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String categoryId = req.getParameter("categoryId");
+        Integer idToDelete;
         if (categoryId != null) {
-            Integer idToDelete = Integer.parseInt(categoryId);
-            categoryService.delete(idToDelete);
+            idToDelete = Integer.parseInt(categoryId);
+            List<Content> relatedContentList = categoryService.getById(idToDelete).getContent();
+            for(Content c : relatedContentList){
+                if(ContentType.IMAGE.equals(c.getType())){
+
+                    ImageContent imageContentToDelete = (ImageContent)c;
+                    ImageFilesUtil.deleteOrphanImage(imageContentToDelete.getImageFilePath());
+                    ImageFilesUtil.deleteOrphanImage(imageContentToDelete.getThumbImageFilePath());
+                }
+            }
+
+                    categoryService.delete(idToDelete);
         }
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
         rd.forward(req, resp);
