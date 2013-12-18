@@ -16,7 +16,7 @@
                             <c:choose>
                                 <c:when test="${filtersLength > 0}">
                                     <form action="/index.do" method="post">
-                                        <input type="hidden" name="catalogCategoryId" value="${param.catalogCategoryId}">
+                                        <input type="hidden" name="catalogCategoryId" value="${catalogCategoryId}">
                                      <table>
                                     <c:forEach items="${filtersList}" var="catalogCategoryFilter">
 

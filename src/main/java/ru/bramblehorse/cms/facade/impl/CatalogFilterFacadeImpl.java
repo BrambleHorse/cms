@@ -67,38 +67,51 @@ public class CatalogFilterFacadeImpl implements CatalogFilterFacade {
     }
 
     @Override
-    public List<Item> getItemsList(HttpServletRequest req, Integer categoryId, List<Integer> brandIdList,
-                                   List<Integer> filterIdList) throws ServletException, IOException {
+    public List<Item> getItemsList(HttpServletRequest req, CatalogCategory category)
+            throws ServletException, IOException {
 
-        if(categoryId == null){
+        boolean isAllFilterCriteriaUnchecked = true;
+        if (category == null) {
 
-           return null;
+            return null;
         }
-        List<Item> resultItemList = itemService.getAllCatalogCategoryItems(catalogCategoryService.getById(categoryId));
-        if(brandIdList == null && filterIdList == null){
+        List<Brand> brandList = brandService.getAll();
+        List<CatalogCategoryFilter> filterList = category.getCatalogCategoryFilters();
+        List<Item> resultItemList = category.getCatalogCategoryItems();
+        if (filterList == null) {
 
             return resultItemList;
-        }
-        if(filterIdList != null){
 
-            for (Integer id : filterIdList){
-                List<Item>filterRelatedItemList = new ArrayList<Item>();
-                List<FilterCriterion> criteria = catalogCategoryFilterService.getById(id).getFilterCriterions();
-                for(FilterCriterion criterion : criteria){
+        } else {
 
-                    if("checked".equalsIgnoreCase(req.getParameter(criterion.getFilterCriterionValue()))){
+            for (CatalogCategoryFilter filter : filterList) {
+                List<Item> filterRelatedItemList = new ArrayList<Item>();
+                List<FilterCriterion> criteria = filter.getFilterCriterions();
+                for (FilterCriterion criterion : criteria) {
+
+                    if ("checked".equalsIgnoreCase(req.getParameter(criterion.getFilterCriterionValue()))) {
 
                         filterRelatedItemList.addAll(criterion.getItems());
+                        isAllFilterCriteriaUnchecked = false;
+                        req.setAttribute("criterion" + criterion.getFilterCriterionId(), true);
                     }
                 }
-                resultItemList.retainAll(filterRelatedItemList);
+                if(!isAllFilterCriteriaUnchecked){
+
+                    resultItemList.retainAll(filterRelatedItemList);
+                }
+
             }
         }
-        if(brandIdList != null){
+        if (brandList != null) {
 
-            for(Integer id : brandIdList){
+            for (Brand brand : brandList) {
 
-                resultItemList.retainAll(brandService.getById(id).getRelatedItems());
+                if ("checked".equalsIgnoreCase(req.getParameter(brand.getBrandName()))) {
+
+
+                    req.setAttribute("brand" + brand.getBrandId(), true);
+                }
             }
         }
 

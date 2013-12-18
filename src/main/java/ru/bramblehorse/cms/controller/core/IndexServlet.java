@@ -177,38 +177,13 @@ public class IndexServlet extends HttpServlet {
 
             if ("POST".equals(req.getMethod())) {
 
+                List<Item> totalItems = catalogFilterFacade.getItemsList(req, currentCatalogCategory);
+                if(totalItems.isEmpty()) logger.info("ITEMS IS EMPTY!!");
+                for(Item i : totalItems){
 
-                for (CatalogCategoryFilter filter : filtersList) {
-
-                    List<FilterCriterion> criteriaList = filter.getFilterCriterions();
-                    if (criteriaList != null) {
-
-                        for (FilterCriterion criterion : criteriaList) {
-                            if ("checked".equalsIgnoreCase(req.getParameter(criterion.getFilterCriterionValue()))) {
-
-
-                                req.setAttribute("criterion" + criterion.getFilterCriterionId(), true);
-                                List<Item> temp = criterion.getItems();
-                                for (Item i : temp) {
-
-                                    if (i.getItemCategory().getCatalogCategoryId().equals(currentCatalogCategory.getCatalogCategoryId())) {
-
-                                        itemsSet.add(i);
-                                    }
-                                }
-                            }
-
-                        }
-                    }
+                    itemsSet.add(i);
                 }
-                if (itemsSet.isEmpty()) {
 
-                    List<Item> allItems = currentCatalogCategory.getCatalogCategoryItems();
-                    for(Item i : allItems){
-
-                        itemsSet.add(i);
-                    }
-                }
 
 
             } else {
