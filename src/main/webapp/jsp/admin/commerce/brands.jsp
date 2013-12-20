@@ -4,10 +4,12 @@
 
 <div class="manage-brands">
     <h3><li><a href="/admin.catalog.brand.do?action=create">Добавить новый бренд</a></li></h3>
-    <c:set var="brandsLength" value="${fn:length(brandsList)}"/>
-    <c:if test="${brandsLength > 0}">
-        <c:forEach items="${brandsList}" var="brand">
-
+    <c:set var="brandLength" value="${fn:length(brandList)}"/>
+    <c:if test="${brandLength > 0}">
+        <c:forEach items="${brandList}" var="brand">
+            <li>${brand.brandName}</li>
+            <li><a href="/admin.catalog.brand.do?action=edit&brandId=${brand.brandId}">Редактировать</a></li>
+            <li><a href="/admin.catalog.brand.do?action=delete&brandId=${brand.brandId}">Удалить</a></li>
             <hr/>
         </c:forEach>
     </c:if>

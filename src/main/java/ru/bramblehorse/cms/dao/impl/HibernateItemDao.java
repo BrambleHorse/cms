@@ -4,6 +4,7 @@ import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
+import org.springframework.transaction.annotation.Transactional;
 import ru.bramblehorse.cms.dao.AbstractDao;
 import ru.bramblehorse.cms.dao.ItemDao;
 import ru.bramblehorse.cms.model.commerce.CatalogCategory;
@@ -19,17 +20,20 @@ import java.util.List;
  * Time: 1:23
  * To change this template use File | Settings | File Templates.
  */
+@Transactional
 public class HibernateItemDao implements ItemDao {
 
     @Autowired
     HibernateTemplate ht;
 
+    @Transactional
     @Override
     public void create(Item entity) {
 
         ht.save(entity);
     }
 
+    @Transactional
     @Override
     public void delete(Integer id) {
 
@@ -37,24 +41,28 @@ public class HibernateItemDao implements ItemDao {
         ht.delete(temp);
     }
 
+    @Transactional
     @Override
     public void edit(Item entity) {
 
         ht.update(entity);
     }
 
+    @Transactional
     @Override
     public Item getById(Integer id) {
 
         return ht.load(Item.class, id);
     }
 
+    @Transactional
     @Override
     public List<Item> getAll() {
 
         return ht.loadAll(Item.class);
     }
 
+    @Transactional
     @Override
     public List<Item> getAllCatalogCategoryItems(CatalogCategory catalogCategory, List<CatalogCategoryFilter> filters) {
 

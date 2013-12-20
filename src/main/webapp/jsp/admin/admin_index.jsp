@@ -88,7 +88,7 @@
         <jsp:include page="content/edit_link.jsp"></jsp:include>
     </c:when>
     <%-- commerce --%>
-    <c:when test="${adminAction eq 'new_brand'}">
+    <c:when test="${adminAction eq 'edit_brand'}">
         <jsp:include page="commerce/edit_brand.jsp"></jsp:include>
     </c:when>
     <%-- security --%>

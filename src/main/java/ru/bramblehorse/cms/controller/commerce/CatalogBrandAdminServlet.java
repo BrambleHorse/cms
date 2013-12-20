@@ -71,6 +71,7 @@ public class CatalogBrandAdminServlet extends HttpServlet {
         if("edit".equalsIgnoreCase(action)){
 
            processPostEditBrand(req, resp);
+            return;
         }
 
     }
@@ -86,25 +87,72 @@ public class CatalogBrandAdminServlet extends HttpServlet {
     private void processGetEditBrand(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
             IOException {
 
+        String brandId = req.getParameter("brandId");
+        Integer idToEdit = null;
+        try {
 
+            idToEdit = Integer.parseInt(brandId);
+        } catch (Exception e){
+
+            logger.error(e.getMessage());
+        }
+        Brand brand = brandService.getById(idToEdit);
+        req.setAttribute("brand", brand);
+        req.setAttribute("adminAction", "edit_brand");
+        RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
+        rd.forward(req, resp);
     }
 
     private void processGetDeleteBrand(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
             IOException {
 
+        Integer idToDelete = null;
+        try {
 
+            idToDelete = Integer.parseInt(req.getParameter("brandId"));
+        }   catch (Exception e) {
+
+            logger.error(e.getMessage());
+        }
+
+        if(idToDelete != null) {
+
+            brandService.delete(idToDelete);
+        }
+        RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
+        rd.forward(req, resp);
     }
 
     private void processPostCreateBrand(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
             IOException {
 
+        String brandName = req.getParameter("brandName");
+        Brand brand = new Brand();
+        brand.setBrandName(brandName);
+        brandService.create(brand);
+        RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
+        rd.forward(req, resp);
 
     }
 
     private void processPostEditBrand(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
             IOException {
 
+        Integer idToEdit = null;
+        String brandName = req.getParameter("brandName");
+        try {
 
+            idToEdit = Integer.parseInt(req.getParameter("brandId"));
+        }   catch (Exception e) {
+
+            logger.error(e.getMessage());
+        }
+        Brand brand = new Brand();
+        brand.setBrandId(idToEdit);
+        brand.setBrandName(brandName);
+        brandService.edit(brand);
+        RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
+        rd.forward(req, resp);
     }
 
 }

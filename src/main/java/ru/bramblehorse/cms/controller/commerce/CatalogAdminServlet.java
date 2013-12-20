@@ -56,8 +56,12 @@ public class CatalogAdminServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String mode = req.getParameter("mode");
-        String action = req.getParameter("action");
 
+        if("brands".equalsIgnoreCase(mode)){
+
+            processGetNoActionBrands(req, resp);
+            return;
+        }
         processGetNoActionCatalog(req, resp);
     }
 
@@ -99,7 +103,9 @@ public class CatalogAdminServlet extends HttpServlet {
 
     private void processGetNoActionBrands(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        req.setAttribute("adminAction", "catalog_brands");
+        List<Brand> brandList = brandService.getAll();
+        req.setAttribute("brandList", brandList);
+        req.setAttribute("adminAction", "brands");
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
         rd.forward(req, resp);
     }
