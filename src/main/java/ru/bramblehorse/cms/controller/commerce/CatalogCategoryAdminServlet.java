@@ -87,11 +87,11 @@ public class CatalogCategoryAdminServlet extends HttpServlet {
     private void processGetEditCatalogCategory(HttpServletRequest req, HttpServletResponse resp) throws
             ServletException, IOException {
 
-        String brandId = req.getParameter("catalogCategoryId");
+        String catalogCategoryId = req.getParameter("catalogCategoryId");
         Integer idToEdit = null;
         try {
 
-            idToEdit = Integer.parseInt(brandId);
+            idToEdit = Integer.parseInt(catalogCategoryId);
         } catch (Exception e){
 
             logger.error(e.getMessage());
@@ -127,13 +127,44 @@ public class CatalogCategoryAdminServlet extends HttpServlet {
     private void processPostCreateCatalogCategory(HttpServletRequest req, HttpServletResponse resp) throws
             ServletException, IOException {
 
+        String catalogCategoryName = req.getParameter("catalogCategoryName");
+        Integer catalogCategoryPosition = null;
+        CatalogCategory catalogCategory = new CatalogCategory();
+        catalogCategory.setCatalogCategoryName(catalogCategoryName);
+        try {
 
+            catalogCategoryPosition = Integer.parseInt(req.getParameter("catalogCategoryPosition"));
+        }   catch (Exception e) {
+
+            logger.error(e.getMessage());
+        }
+        catalogCategory.setCatalogCategoryPosition(catalogCategoryPosition);
+        catalogCategoryService.create(catalogCategory);
+        RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
+        rd.forward(req, resp);
     }
 
     private void processPostEditCatalogCategory(HttpServletRequest req, HttpServletResponse resp) throws
             ServletException, IOException {
 
+        String catalogCategoryName = req.getParameter("catalogCategoryName");
+        Integer idToEdit = null;
+        Integer catalogCategoryPosition = null;
+        try {
 
+            idToEdit = Integer.parseInt(req.getParameter("catalogCategoryId"));
+            catalogCategoryPosition = Integer.parseInt(req.getParameter("catalogCategoryPosition"));
+        }   catch (Exception e) {
+
+            logger.error(e.getMessage());
+        }
+        CatalogCategory catalogCategory = new CatalogCategory();
+        catalogCategory.setCatalogCategoryId(idToEdit);
+        catalogCategory.setCatalogCategoryName(catalogCategoryName);
+        catalogCategory.setCatalogCategoryPosition(catalogCategoryPosition);
+        catalogCategoryService.edit(catalogCategory);
+        RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
+        rd.forward(req, resp);
     }
 
 }

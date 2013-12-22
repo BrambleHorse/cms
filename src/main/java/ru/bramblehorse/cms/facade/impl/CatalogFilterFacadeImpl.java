@@ -86,7 +86,7 @@ public class CatalogFilterFacadeImpl implements CatalogFilterFacade {
 
             for (CatalogCategoryFilter filter : filterList) {
                 List<Item> filterRelatedItemList = new ArrayList<Item>();
-                List<FilterCriterion> criteria = filter.getFilterCriterions();
+                List<FilterCriterion> criteria = filter.getFilterCriteria();
                 for (FilterCriterion criterion : criteria) {
 
                     if ("checked".equalsIgnoreCase(req.getParameter(criterion.getFilterCriterionValue()))) {

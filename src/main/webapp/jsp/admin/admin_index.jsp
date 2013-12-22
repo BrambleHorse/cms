@@ -48,11 +48,17 @@
         <jsp:include page="content/links.jsp"></jsp:include>
     </c:when>
     <%-- commerce --%>
+    <c:when test="${adminAction eq 'admin_commerce'}">
+        <jsp:include page="commerce/admin_commerce.jsp"></jsp:include>
+    </c:when>
     <c:when test="${adminAction eq 'brands'}">
         <jsp:include page="commerce/brands.jsp"></jsp:include>
     </c:when>
-    <c:when test="${adminAction eq 'admin_commerce'}">
-        <jsp:include page="commerce/admin_commerce.jsp"></jsp:include>
+    <c:when test="${adminAction eq 'catalog_categories'}">
+        <jsp:include page="commerce/catalog_categories.jsp"></jsp:include>
+    </c:when>
+    <c:when test="${adminAction eq 'catalog_category_filters'}">
+        <jsp:include page="commerce/catalog_category_filters.jsp"></jsp:include>
     </c:when>
     <%-- security --%>
     <c:when test="${adminAction eq 'accounts'}">
@@ -91,6 +97,12 @@
     <c:when test="${adminAction eq 'edit_brand'}">
         <jsp:include page="commerce/edit_brand.jsp"></jsp:include>
     </c:when>
+    <c:when test="${adminAction eq 'edit_catalog_category'}">
+        <jsp:include page="commerce/edit_catalog_category.jsp"></jsp:include>
+    </c:when>
+    <c:when test="${adminAction eq 'edit_catalog_category_filter'}">
+        <jsp:include page="commerce/edit_catalog_category_filter.jsp"></jsp:include>
+    </c:when>
     <%-- security --%>
     <c:when test="${adminAction eq 'edit_account'}">
         <jsp:include page="${pageContext.request.contextPath}/jsp/security/edit_account.jsp"></jsp:include>
@@ -120,6 +132,12 @@
     <%-- commerce --%>
     <c:when test="${adminAction eq 'new_brand'}">
         <jsp:include page="commerce/new_brand.jsp"></jsp:include>
+    </c:when>
+    <c:when test="${adminAction eq 'new_catalog_category'}">
+        <jsp:include page="commerce/new_catalog_category.jsp"></jsp:include>
+    </c:when>
+    <c:when test="${adminAction eq 'new_catalog_category_filter'}">
+        <jsp:include page="commerce/new_catalog_category_filter.jsp"></jsp:include>
     </c:when>
     <%--security--%>
     <c:when test="${adminAction eq 'new_account'}">

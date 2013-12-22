@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -45,7 +46,8 @@ public class CatalogAdminServlet extends HttpServlet {
         logger = LoggerFactory.getLogger(CatalogAdminServlet.class);
 
         catalogCategoryService = (AbstractService<CatalogCategory>) context.getBean("catalogCategoryService");
-        catalogCategoryFilterService = (AbstractService<CatalogCategoryFilter>) context.getBean("catalogCategoryFilterService");
+        catalogCategoryFilterService =
+                (AbstractService<CatalogCategoryFilter>) context.getBean("catalogCategoryFilterService");
         filterCriterionService = (AbstractService<FilterCriterion>) context.getBean("filterCriterionService");
         itemService = (ItemService) context.getBean("itemService");
         brandService = (AbstractService<Brand>) context.getBean("brandService");
@@ -57,11 +59,31 @@ public class CatalogAdminServlet extends HttpServlet {
 
         String mode = req.getParameter("mode");
 
-        if("brands".equalsIgnoreCase(mode)){
+        if ("brands".equalsIgnoreCase(mode)) {
 
             processGetNoActionBrands(req, resp);
             return;
         }
+        if ("categories".equalsIgnoreCase(mode)) {
+
+            processGetNoActionCategories(req, resp);
+            return;
+        }
+        if ("filters".equalsIgnoreCase(mode)) {
+
+            processGetNoActionFilters(req, resp);
+            return;
+        }
+        if ("criteria".equalsIgnoreCase(mode)) {
+
+            processGetNoActionFilterCriteria(req, resp);
+        }
+        if ("items".equalsIgnoreCase(mode)) {
+
+            processGetNoActionItems(req, resp);
+            return;
+        }
+
         processGetNoActionCatalog(req, resp);
     }
 
@@ -70,38 +92,73 @@ public class CatalogAdminServlet extends HttpServlet {
 
     }
 
-    private void processGetNoActionCatalog(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    private void processGetNoActionCatalog(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
+            IOException {
 
         req.setAttribute("adminAction", "admin_commerce");
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
         rd.forward(req, resp);
     }
 
-    private void processGetNoActionCategories(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    private void processGetNoActionCategories(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
+            IOException {
 
         List<CatalogCategory> catalogCategoryList = catalogCategoryService.getAll();
-
+        Collections.sort(catalogCategoryList);
         req.setAttribute("catalogCategoryList", catalogCategoryList);
         req.setAttribute("adminAction", "catalog_categories");
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
         rd.forward(req, resp);
     }
 
-    private void processGetNoActionFilters(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    private void processGetNoActionFilters(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
+            IOException {
 
-        req.setAttribute("adminAction", "catalog_filters");
+        Integer catalogCategoryId = null;
+        try {
+
+            catalogCategoryId = Integer.parseInt(req.getParameter("catalogCategoryId"));
+
+        } catch (Exception e) {
+
+            logger.error(e.getMessage());
+        }
+        List<CatalogCategoryFilter> catalogCategoryFilterList =
+                catalogCategoryService.getById(catalogCategoryId).getCatalogCategoryFilters();
+        req.setAttribute("catalogCategoryFilterList", catalogCategoryFilterList);
+        req.setAttribute("adminAction", "catalog_category_filters");
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
         rd.forward(req, resp);
     }
 
-    private void processGetNoActionItems(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    private void processGetNoActionFilterCriteria(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+
+        Integer catalogCategoryFilterId = null;
+        try {
+
+            catalogCategoryFilterId = Integer.parseInt(req.getParameter("catalogCategoryFilterId"));
+        } catch (Exception e) {
+
+            logger.error(e.getMessage());
+        }
+        List<FilterCriterion> filterCriterionList = catalogCategoryFilterService.getById(catalogCategoryFilterId).getFilterCriteria();
+        req.setAttribute("filterCriterionList", filterCriterionList);
+        req.setAttribute("adminAction", "filter_criteria");
+        RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
+        rd.forward(req, resp);
+    }
+
+    private void processGetNoActionItems(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
+            IOException {
 
         req.setAttribute("adminAction", "catalog_items");
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
         rd.forward(req, resp);
     }
 
-    private void processGetNoActionBrands(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    private void processGetNoActionBrands(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
+            IOException {
 
         List<Brand> brandList = brandService.getAll();
         req.setAttribute("brandList", brandList);
@@ -109,11 +166,5 @@ public class CatalogAdminServlet extends HttpServlet {
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
         rd.forward(req, resp);
     }
-
-
-
-
-
-
 
 }

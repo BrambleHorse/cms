@@ -4,9 +4,8 @@
 
 <div class="admin-commerce-content">
     <ul>
-        <li><a href="/admin.catalog.do?mode=categories">Управление категориями каталога</a></li>
-        <li><a href="/admin.catalog.do?mode=items">Управление товарами</a></li>
-        <li><a href="/admin.catalog.do?mode=filters">Управление фильтрами каталога</a></li>
+        <li><a href="/admin.catalog.do?mode=categories">Управление категориями и фильтрами каталога</a></li>
         <li><a href="/admin.catalog.do?mode=brands">Управление брендами</a></li>
+        <li><a href="/admin.catalog.do?mode=items">Управление товарами</a></li>
     </ul>
 </div>

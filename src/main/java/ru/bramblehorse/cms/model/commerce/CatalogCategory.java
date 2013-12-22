@@ -28,10 +28,7 @@ public class CatalogCategory implements Comparable {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "itemCategory")
     private List<Item> catalogCategoryItems;
 
-    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-    @JoinTable(name = "catalog_filters_categories",
-            joinColumns = @JoinColumn(name = "catalog_category_id"),
-            inverseJoinColumns = @JoinColumn(name = "filter_id"))
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "filterCatalogCategory")
     private List<CatalogCategoryFilter> catalogCategoryFilters;
 
     public Integer getCatalogCategoryId() {

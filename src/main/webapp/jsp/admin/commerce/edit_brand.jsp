@@ -8,7 +8,7 @@
         <input type="hidden" name="brandId" value="${brand.brandId}">
         <table class="admin-input">
                 <td>Название бренда:</td>
-            <td><input type="text" name="brandName">${brand.brandName}</td>
+            <td><input type="text" name="brandName" value="${brand.brandName}"></td>
             </tr>
             <tr>
                 <td></td>

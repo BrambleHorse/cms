@@ -12,7 +12,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "catalog_category_filters")
-public class CatalogCategoryFilter {
+public class CatalogCategoryFilter implements Comparable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,14 +22,15 @@ public class CatalogCategoryFilter {
     @Column(name = "filter_name")
     private String catalogCategoryFilterName;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "catalogCategoryFilter")
-    private List<FilterCriterion> filterCriterions;
+    @Column(name = "filter_position")
+    private Integer catalogCategoryFilterPosition;
 
-    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-    @JoinTable(name="catalog_filters_categories",
-            joinColumns = @JoinColumn(name = "filter_id"),
-            inverseJoinColumns = @JoinColumn(name="catalog_category_id"))
-    private List<CatalogCategory> catalogCategories;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "catalogCategoryFilter")
+    private List<FilterCriterion> filterCriteria;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "catalog_category_id")
+    private CatalogCategory filterCatalogCategory;
 
     public Integer getCatalogCategoryFilterId() {
         return catalogCategoryFilterId;
@@ -47,20 +48,39 @@ public class CatalogCategoryFilter {
         this.catalogCategoryFilterName = catalogCategoryFilterName;
     }
 
-    public List<CatalogCategory> getCatalogCategories() {
-        return catalogCategories;
+    public Integer getCatalogCategoryFilterPosition() {
+        return catalogCategoryFilterPosition;
     }
 
-    public void setCatalogCategories(List<CatalogCategory> catalogCategories) {
-        this.catalogCategories = catalogCategories;
+    public void setCatalogCategoryFilterPosition(Integer catalogCategoryFilterPosition) {
+        this.catalogCategoryFilterPosition = catalogCategoryFilterPosition;
     }
 
-    public List<FilterCriterion> getFilterCriterions() {
-        return filterCriterions;
+    public CatalogCategory getFilterCatalogCategory() {
+        return filterCatalogCategory;
     }
 
-    public void setFilterCriterions(List<FilterCriterion> filterCriterions) {
-        this.filterCriterions = filterCriterions;
+    public void setFilterCatalogCategory(CatalogCategory filterCatalogCategory) {
+        this.filterCatalogCategory = filterCatalogCategory;
+    }
+
+    public List<FilterCriterion> getFilterCriteria() {
+        return filterCriteria;
+    }
+
+    public void setFilterCriteria(List<FilterCriterion> filterCriteria) {
+        this.filterCriteria = filterCriteria;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        if (o == null)
+            throw new NullPointerException("Passed null to ru.bramblehorse.cms.model.catalog.CatalogCategoryFilter#compareTo(Object)");
+        if (!(o instanceof CatalogCategoryFilter))
+            throw new ClassCastException("ru.bramblehorse.cms.model.catalog.CatalogCategoryFilter#compareTo(Object)");
+        if (((CatalogCategoryFilter) o).getCatalogCategoryFilterPosition() < this.getCatalogCategoryFilterPosition()) return 1;
+        if (((CatalogCategoryFilter) o).getCatalogCategoryFilterPosition() > this.getCatalogCategoryFilterPosition()) return -1;
+        return 0;
     }
 
     @Override

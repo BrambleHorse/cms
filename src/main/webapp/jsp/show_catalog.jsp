@@ -25,7 +25,7 @@
                                         <td></td>
                                     </tr>
 
-                                             <c:forEach items="${catalogCategoryFilter.filterCriterions}" var="filterCriterion">
+                                             <c:forEach items="${catalogCategoryFilter.filterCriteria}" var="filterCriterion">
                                                  <tr>
                                                      <c:set var="index">criterion${filterCriterion.filterCriterionId}</c:set>
                                                 <td><input type="checkbox" name="${filterCriterion.filterCriterionValue}" <c:if test="${requestScope[index] eq true}"> checked="checked"</c:if> value="checked"></td>

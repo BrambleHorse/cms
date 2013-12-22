@@ -75,7 +75,6 @@ public class IndexServlet extends HttpServlet {
         } catch (IOException e) {
             e.printStackTrace();
         }
-//        insertMockValues();
     }
 
     @Override
@@ -152,7 +151,6 @@ public class IndexServlet extends HttpServlet {
 
         String catalogCategoryId = req.getParameter("catalogCategoryId");
 
-
         CatalogCategory currentCatalogCategory = null;
         List<CatalogCategory> catalogCategoriesList = catalogCategoryService.getAll();
         Set<Item> itemsSet = new TreeSet<Item>();
@@ -183,9 +181,6 @@ public class IndexServlet extends HttpServlet {
 
                     itemsSet.add(i);
                 }
-
-
-
             } else {
 
                 List<Item> allItems = currentCatalogCategory.getCatalogCategoryItems();
@@ -193,9 +188,7 @@ public class IndexServlet extends HttpServlet {
 
                     itemsSet.add(i);
                 }
-
             }
-
             req.setAttribute("itemsSet", itemsSet);
             req.setAttribute("filtersList", filtersList);
             req.setAttribute("contentValue", "catalog");
@@ -203,15 +196,7 @@ public class IndexServlet extends HttpServlet {
         } else {
 
             req.setAttribute("contentValue", "content");
-
         }
-    }
-
-    private void doFilterCatalog(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
-            IOException {
-
-
-
     }
 
 }
