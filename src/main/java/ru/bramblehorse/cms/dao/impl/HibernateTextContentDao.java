@@ -22,8 +22,9 @@ public class HibernateTextContentDao implements AbstractDao<TextContent> {
     HibernateTemplate ht;
     @Transactional
     @Override
-    public void create(TextContent entity) {
-        ht.save(entity);
+    public Integer create(TextContent entity) {
+
+        return (Integer)ht.save(entity);
     }
     @Transactional
     @Override

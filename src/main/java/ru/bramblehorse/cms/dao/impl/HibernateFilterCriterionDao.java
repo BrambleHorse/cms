@@ -22,9 +22,9 @@ public class HibernateFilterCriterionDao implements AbstractDao<FilterCriterion>
 
     @Transactional
     @Override
-    public void create(FilterCriterion entity) {
+    public Integer create(FilterCriterion entity) {
 
-        ht.save(entity);
+        return (Integer)ht.save(entity);
     }
 
     @Transactional

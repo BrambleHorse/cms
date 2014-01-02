@@ -22,8 +22,9 @@ public class HibernateLinkContentDao implements AbstractDao<LinkContent> {
     HibernateTemplate ht;
     @Transactional
     @Override
-    public void create(LinkContent entity) {
-        ht.save(entity);
+    public Integer create(LinkContent entity) {
+
+       return (Integer)ht.save(entity);
     }
     @Transactional
     @Override

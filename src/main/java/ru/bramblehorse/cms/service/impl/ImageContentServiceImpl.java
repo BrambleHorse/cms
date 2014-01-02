@@ -25,8 +25,8 @@ public class ImageContentServiceImpl implements AbstractService<ImageContent> {
     }
 
     @Override
-    public void create(ImageContent entity) {
-        imageContentDao.create(entity);
+    public Integer create(ImageContent entity) {
+        return imageContentDao.create(entity);
     }
 
     @Override

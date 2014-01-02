@@ -10,7 +10,7 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public interface AbstractService<T> {
-    public void create(T entity);
+    public Integer create(T entity);
     public void delete(Integer id);
     public void edit(T entity);
     public T getById(Integer id);

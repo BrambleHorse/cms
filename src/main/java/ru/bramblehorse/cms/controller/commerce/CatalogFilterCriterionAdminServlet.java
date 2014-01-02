@@ -33,7 +33,7 @@ public class CatalogFilterCriterionAdminServlet extends HttpServlet {
     public void init() throws ServletException {
 
         context = ContextLoaderListener.getCurrentWebApplicationContext();
-        logger = LoggerFactory.getLogger(CatalogCategoryAdminServlet.class);
+        logger = LoggerFactory.getLogger(CatalogFilterCriterionAdminServlet.class);
         filterCriterionService = (AbstractService<FilterCriterion>) context.getBean("filterCriterionService");
         catalogCategoryFilterService = (AbstractService<CatalogCategoryFilter>) context.getBean("catalogCategoryFilterService");
     }
@@ -89,24 +89,84 @@ public class CatalogFilterCriterionAdminServlet extends HttpServlet {
     private void processGetEditFilterCriterion(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
+        Integer idToEdit = null;
+        try {
 
+            idToEdit = Integer.parseInt(req.getParameter("filterCriterionId"));
+        } catch (Exception e){
+
+            logger.error(e.getMessage());
+        }
+        FilterCriterion filterCriterion = filterCriterionService.getById(idToEdit);
+        req.setAttribute("filterCriterion", filterCriterion);
+        req.setAttribute("adminAction", "edit_filter_criterion");
+        RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
+        rd.forward(req, resp);
     }
 
     private void processGetDeleteFilterCriterion(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
+        Integer idToDelete = null;
+        try {
+
+            idToDelete = Integer.parseInt(req.getParameter("filterCriterionId"));
+        }   catch (Exception e) {
+
+            logger.error(e.getMessage());
+        }
+
+        if(idToDelete != null) {
+
+            filterCriterionService.delete(idToDelete);
+        }
+        RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
+        rd.forward(req, resp);
 
     }
 
     private void processPostCreateFilterCriterion(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
+        String filterCriterionValue = req.getParameter("filterCriterionValue");
+        Integer catalogCategoryFilterId = null;
+        FilterCriterion filterCriterion = new FilterCriterion();
+        try {
+
+           catalogCategoryFilterId = Integer.parseInt(req.getParameter("catalogCategoryFilterId"));
+        }   catch (Exception e) {
+
+            logger.error(e.getMessage());
+        }
+        filterCriterion.setFilterCriterionValue(filterCriterionValue);
+        filterCriterion.setCatalogCategoryFilter(catalogCategoryFilterService.getById(catalogCategoryFilterId));
+        filterCriterionService.create(filterCriterion);
+        RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
+        rd.forward(req, resp);
 
     }
 
     private void processPostEditFilterCriterion(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
+        String filterCriterionValue = req.getParameter("filterCriterionValue");
+        Integer idToEdit = null;
+        Integer catalogCategoryFilterId = null;
+        try {
+
+            idToEdit = Integer.parseInt(req.getParameter("filterCriterionId"));
+            catalogCategoryFilterId = Integer.parseInt(req.getParameter("catalogCategoryFilterId"));
+        }   catch (Exception e) {
+
+            logger.error(e.getMessage());
+        }
+        FilterCriterion filterCriterion = new FilterCriterion();
+        filterCriterion.setFilterCriterionId(idToEdit);
+        filterCriterion.setFilterCriterionValue(filterCriterionValue);
+        filterCriterion.setCatalogCategoryFilter(catalogCategoryFilterService.getById(catalogCategoryFilterId));
+        filterCriterionService.edit(filterCriterion);
+        RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
+        rd.forward(req, resp);
 
     }
 }

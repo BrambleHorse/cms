@@ -22,9 +22,9 @@ public class HibernateCatalogCategoryDao implements AbstractDao<CatalogCategory>
 
     @Transactional
     @Override
-    public void create(CatalogCategory entity) {
+    public Integer create(CatalogCategory entity) {
 
-        ht.save(entity);
+      return  (Integer)ht.save(entity);
     }
 
     @Transactional

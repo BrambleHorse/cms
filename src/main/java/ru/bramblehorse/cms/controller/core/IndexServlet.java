@@ -13,7 +13,6 @@ import ru.bramblehorse.cms.model.security.Account;
 import ru.bramblehorse.cms.model.security.TomcatRole;
 import ru.bramblehorse.cms.service.AbstractService;
 import ru.bramblehorse.cms.service.CategoryService;
-import ru.bramblehorse.cms.service.ItemService;
 import ru.bramblehorse.cms.service.SecurityService;
 
 
@@ -43,7 +42,7 @@ public class IndexServlet extends HttpServlet {
     private AbstractService<CatalogCategory> catalogCategoryService;
     private AbstractService<CatalogCategoryFilter> catalogCategoryFilterService;
     private AbstractService<FilterCriterion> filterCriterionService;
-    private ItemService itemService;
+    private AbstractService<Item> itemService;
     private AbstractService<Brand> brandService;
 
     private SecurityService<Account> accountService;
@@ -63,7 +62,7 @@ public class IndexServlet extends HttpServlet {
         catalogCategoryService = (AbstractService<CatalogCategory>) context.getBean("catalogCategoryService");
         catalogCategoryFilterService = (AbstractService<CatalogCategoryFilter>) context.getBean("catalogCategoryFilterService");
         filterCriterionService = (AbstractService<FilterCriterion>) context.getBean("filterCriterionService");
-        itemService = (ItemService) context.getBean("itemService");
+        itemService = (AbstractService<Item>) context.getBean("itemService");
         brandService = (AbstractService<Brand>) context.getBean("brandService");
 
         accountService = (SecurityService<Account>) context.getBean("accountService");
@@ -197,6 +196,17 @@ public class IndexServlet extends HttpServlet {
 
             req.setAttribute("contentValue", "content");
         }
+    }
+
+    private void insertMockValues(){
+
+        Item grohe1 = new Item();
+        Item grohe2 = new Item();
+        Item grohe3 = new Item();
+
+        Item oras1 = new Item();
+        Item oras2 = new Item();
+        Item oras3 = new Item();
     }
 
 }

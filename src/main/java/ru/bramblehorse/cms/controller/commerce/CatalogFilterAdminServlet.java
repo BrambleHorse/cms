@@ -35,7 +35,7 @@ public class CatalogFilterAdminServlet extends HttpServlet {
     public void init() throws ServletException {
 
         context = ContextLoaderListener.getCurrentWebApplicationContext();
-        logger = LoggerFactory.getLogger(CatalogCategoryAdminServlet.class);
+        logger = LoggerFactory.getLogger(CatalogFilterAdminServlet.class);
         catalogCategoryFilterService = (AbstractService<CatalogCategoryFilter>) context.getBean("catalogCategoryFilterService");
         catalogCategoryService = (AbstractService<CatalogCategory>)context.getBean("catalogCategoryService");
 
@@ -177,6 +177,5 @@ public class CatalogFilterAdminServlet extends HttpServlet {
         catalogCategoryFilterService.edit(catalogCategoryFilter);
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
         rd.forward(req, resp);
-
     }
 }

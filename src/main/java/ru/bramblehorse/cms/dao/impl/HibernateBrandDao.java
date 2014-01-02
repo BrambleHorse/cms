@@ -23,9 +23,9 @@ public class HibernateBrandDao implements AbstractDao<Brand> {
 
     @Transactional
     @Override
-    public void create(Brand entity) {
+    public Integer create(Brand entity) {
 
-        ht.save(entity);
+        return  (Integer)ht.save(entity);
     }
 
     @Transactional

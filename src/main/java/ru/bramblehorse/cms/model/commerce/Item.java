@@ -22,7 +22,7 @@ public class Item implements Comparable {
     @Column(name = "item_name")
     private String itemName;
 
-    @Column(name = "item_description")
+    @Column(name = "item_description",columnDefinition = "LONGTEXT")
     private String itemDescription;
 
     @Column(name="item_price")

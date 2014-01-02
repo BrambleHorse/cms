@@ -25,8 +25,8 @@ public class TableContentServiceImpl implements AbstractService<TableContent> {
     }
 
     @Override
-    public void create(TableContent entity) {
-        tableContentDao.create(entity);
+    public Integer create(TableContent entity) {
+        return tableContentDao.create(entity);
     }
 
     @Override

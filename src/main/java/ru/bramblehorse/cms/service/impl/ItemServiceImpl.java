@@ -1,11 +1,8 @@
 package ru.bramblehorse.cms.service.impl;
 
 import ru.bramblehorse.cms.dao.AbstractDao;
-import ru.bramblehorse.cms.dao.ItemDao;
-import ru.bramblehorse.cms.model.commerce.CatalogCategory;
 import ru.bramblehorse.cms.model.commerce.Item;
 import ru.bramblehorse.cms.service.AbstractService;
-import ru.bramblehorse.cms.service.ItemService;
 
 import java.util.List;
 
@@ -16,22 +13,22 @@ import java.util.List;
  * Time: 1:27
  * To change this template use File | Settings | File Templates.
  */
-public class ItemServiceImpl implements ItemService {
+public class ItemServiceImpl implements AbstractService<Item> {
 
-    ItemDao itemDao;
+    AbstractDao<Item> itemDao;
 
-    public ItemDao getItemDao() {
+    public AbstractDao<Item> getItemDao() {
         return itemDao;
     }
 
-    public void setItemDao(ItemDao itemDao) {
+    public void setItemDao(AbstractDao<Item> itemDao) {
         this.itemDao = itemDao;
     }
 
     @Override
-    public void create(Item entity) {
+    public Integer create(Item entity) {
 
-        itemDao.create(entity);
+        return itemDao.create(entity);
     }
 
     @Override
@@ -56,11 +53,5 @@ public class ItemServiceImpl implements ItemService {
     public List<Item> getAll() {
 
         return itemDao.getAll();
-    }
-
-    @Override
-    public List<Item> getAllCatalogCategoryItems(CatalogCategory catalogCategory) {
-
-        return itemDao.getAllCatalogCategoryItems(catalogCategory, null);
     }
 }

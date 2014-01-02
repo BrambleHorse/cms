@@ -26,8 +26,8 @@ public class WysiwygContentServiceImpl implements AbstractService<WysiwygContent
     }
 
     @Override
-    public void create(WysiwygContent entity) {
-        wysiwygContentDao.create(entity);
+    public Integer create(WysiwygContent entity) {
+        return wysiwygContentDao.create(entity);
     }
 
     @Override

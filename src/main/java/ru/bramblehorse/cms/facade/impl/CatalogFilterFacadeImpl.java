@@ -3,7 +3,6 @@ package ru.bramblehorse.cms.facade.impl;
 import ru.bramblehorse.cms.facade.CatalogFilterFacade;
 import ru.bramblehorse.cms.model.commerce.*;
 import ru.bramblehorse.cms.service.AbstractService;
-import ru.bramblehorse.cms.service.ItemService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +22,7 @@ public class CatalogFilterFacadeImpl implements CatalogFilterFacade {
     AbstractService<CatalogCategory> catalogCategoryService;
     AbstractService<CatalogCategoryFilter> catalogCategoryFilterService;
     AbstractService<FilterCriterion> filterCriterionService;
-    ItemService itemService;
+    AbstractService<Item> itemService;
     AbstractService<Brand> brandService;
 
     public AbstractService<CatalogCategory> getCatalogCategoryService() {
@@ -50,11 +49,11 @@ public class CatalogFilterFacadeImpl implements CatalogFilterFacade {
         this.filterCriterionService = filterCriterionService;
     }
 
-    public ItemService getItemService() {
+    public AbstractService<Item> getItemService() {
         return itemService;
     }
 
-    public void setItemService(ItemService itemService) {
+    public void setItemService(AbstractService<Item> itemService) {
         this.itemService = itemService;
     }
 

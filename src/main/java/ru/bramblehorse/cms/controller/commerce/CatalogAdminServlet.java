@@ -4,13 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.WebApplicationContext;
-import ru.bramblehorse.cms.controller.core.IndexServlet;
-import ru.bramblehorse.cms.model.commerce.Brand;
-import ru.bramblehorse.cms.model.commerce.CatalogCategory;
-import ru.bramblehorse.cms.model.commerce.CatalogCategoryFilter;
-import ru.bramblehorse.cms.model.commerce.FilterCriterion;
+import ru.bramblehorse.cms.model.commerce.*;
 import ru.bramblehorse.cms.service.AbstractService;
-import ru.bramblehorse.cms.service.ItemService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -36,7 +31,7 @@ public class CatalogAdminServlet extends HttpServlet {
     private AbstractService<CatalogCategory> catalogCategoryService;
     private AbstractService<CatalogCategoryFilter> catalogCategoryFilterService;
     private AbstractService<FilterCriterion> filterCriterionService;
-    private ItemService itemService;
+    private AbstractService<Item> itemService;
     private AbstractService<Brand> brandService;
 
     @Override
@@ -49,7 +44,7 @@ public class CatalogAdminServlet extends HttpServlet {
         catalogCategoryFilterService =
                 (AbstractService<CatalogCategoryFilter>) context.getBean("catalogCategoryFilterService");
         filterCriterionService = (AbstractService<FilterCriterion>) context.getBean("filterCriterionService");
-        itemService = (ItemService) context.getBean("itemService");
+        itemService = (AbstractService<Item>) context.getBean("itemService");
         brandService = (AbstractService<Brand>) context.getBean("brandService");
 
     }
@@ -77,6 +72,7 @@ public class CatalogAdminServlet extends HttpServlet {
         if ("criteria".equalsIgnoreCase(mode)) {
 
             processGetNoActionFilterCriteria(req, resp);
+            return;
         }
         if ("items".equalsIgnoreCase(mode)) {
 
@@ -152,7 +148,8 @@ public class CatalogAdminServlet extends HttpServlet {
     private void processGetNoActionItems(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
             IOException {
 
-        req.setAttribute("adminAction", "catalog_items");
+
+        req.setAttribute("adminAction", "items");
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
         rd.forward(req, resp);
     }

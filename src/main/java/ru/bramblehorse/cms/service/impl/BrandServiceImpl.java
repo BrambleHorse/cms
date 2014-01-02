@@ -26,9 +26,9 @@ public class BrandServiceImpl implements AbstractService<Brand> {
     }
 
     @Override
-    public void create(Brand entity) {
+    public Integer create(Brand entity) {
 
-        brandDao.create(entity);
+        return brandDao.create(entity);
     }
 
     @Override

@@ -1,13 +1,9 @@
 package ru.bramblehorse.cms.dao.impl;
 
-import org.hibernate.Criteria;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.transaction.annotation.Transactional;
 import ru.bramblehorse.cms.dao.AbstractDao;
-import ru.bramblehorse.cms.dao.CatalogCategoryFilterDao;
-import ru.bramblehorse.cms.model.commerce.CatalogCategory;
 import ru.bramblehorse.cms.model.commerce.CatalogCategoryFilter;
 
 import java.util.List;
@@ -19,16 +15,16 @@ import java.util.List;
  * Time: 22:41
  * To change this template use File | Settings | File Templates.
  */
-public class HibernateCatalogCategoryFilterDao implements CatalogCategoryFilterDao {
+public class HibernateCatalogCategoryFilterDao implements AbstractDao<CatalogCategoryFilter> {
 
     @Autowired
     HibernateTemplate ht;
 
     @Transactional
     @Override
-    public void create(CatalogCategoryFilter entity) {
+    public Integer create(CatalogCategoryFilter entity) {
 
-        ht.save(entity);
+        return (Integer)ht.save(entity);
     }
 
     @Transactional

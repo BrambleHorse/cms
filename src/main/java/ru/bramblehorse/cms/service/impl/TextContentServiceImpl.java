@@ -25,8 +25,8 @@ public class TextContentServiceImpl implements AbstractService<TextContent> {
     }
 
     @Override
-    public void create(TextContent entity) {
-        textContentDao.create(entity);
+    public Integer create(TextContent entity) {
+        return textContentDao.create(entity);
     }
 
     @Override

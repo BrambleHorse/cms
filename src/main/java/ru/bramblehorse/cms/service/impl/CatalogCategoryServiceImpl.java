@@ -26,9 +26,9 @@ public class CatalogCategoryServiceImpl implements AbstractService<CatalogCatego
     }
 
     @Override
-    public void create(CatalogCategory entity) {
+    public Integer create(CatalogCategory entity) {
 
-        catalogCategoryDao.create(entity);
+       return catalogCategoryDao.create(entity);
     }
 
     @Override

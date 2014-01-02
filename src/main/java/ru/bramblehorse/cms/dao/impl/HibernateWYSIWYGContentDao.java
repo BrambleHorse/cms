@@ -21,8 +21,9 @@ public class HibernateWysiwygContentDao implements AbstractDao<WysiwygContent> {
     HibernateTemplate ht;
     @Transactional
     @Override
-    public void create(WysiwygContent entity) {
-        ht.save(entity);
+    public Integer create(WysiwygContent entity) {
+
+       return (Integer)ht.save(entity);
     }
     @Transactional
     @Override

@@ -9,6 +9,7 @@
         <c:forEach items="${catalogCategoryList}" var="catalogCategory">
             <li>${catalogCategory.catalogCategoryName}</li>
             <li><a href="/admin.catalog.do?mode=filters&catalogCategoryId=${catalogCategory.catalogCategoryId}">Управление фильтрами категории</a></li>
+            <li><a href="/admin.catalog.do?mode=items&catalogCategoryId=${catalogCategory.catalogCategoryId}">Управление товарами категории</a></li>
             <li><a href="/admin.catalog.category.do?action=edit&catalogCategoryId=${catalogCategory.catalogCategoryId}">Редактировать</a></li>
             <li><a href="/admin.catalog.category.do?action=delete&catalogCategoryId=${catalogCategory.catalogCategoryId}">Удалить</a></li>
             <hr/>

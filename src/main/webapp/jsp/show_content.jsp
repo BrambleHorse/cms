@@ -20,6 +20,7 @@
                                 <p class="content-text"> ${content.text} </p>
                             </c:when>
                             <c:when test="${content.type eq 'IMAGE'}">
+                                <p>${content.imagePath}</p>
                                 <img src="${content.imagePath}"/>
                             </c:when>
                             <c:when test="${content.type eq 'WYSIWYG'}">
@@ -55,7 +56,7 @@
                         <li> <img src="${catalogItem.itemImagePath}" alt="no image"/> </li>
                         <li>Производитель: ${catalogItem.itemBrand.brandName}</li>
                         <li> <b>Цена: ${catalogItem.itemPrice} </b></li>
-
+                        <li>Описание: ${catalogItem.itemDescription}</li>
                        </ul>
 
                     </c:forEach>

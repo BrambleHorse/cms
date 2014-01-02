@@ -25,8 +25,8 @@ public class HibernateCategoryDao implements CategoryDao {
 
     @Transactional
     @Override
-    public void create(Category entity) {
-        ht.save(entity);
+    public Integer create(Category entity) {
+        return (Integer)ht.save(entity);
     }
     @Transactional
     @Override

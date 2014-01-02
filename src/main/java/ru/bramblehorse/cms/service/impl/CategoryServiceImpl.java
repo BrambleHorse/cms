@@ -28,8 +28,8 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void create(Category entity) {
-        categoryDao.create(entity);
+    public Integer create(Category entity) {
+        return categoryDao.create(entity);
     }
 
     @Override

@@ -60,6 +60,12 @@
     <c:when test="${adminAction eq 'catalog_category_filters'}">
         <jsp:include page="commerce/catalog_category_filters.jsp"></jsp:include>
     </c:when>
+    <c:when test="${adminAction eq 'filter_criteria'}">
+        <jsp:include page="commerce/filter_criterions.jsp"></jsp:include>
+    </c:when>
+    <c:when test="${adminAction eq 'items'}">
+        <jsp:include page="commerce/items.jsp"></jsp:include>
+    </c:when>
     <%-- security --%>
     <c:when test="${adminAction eq 'accounts'}">
         <jsp:include page="${pageContext.request.contextPath}/jsp/security/accounts.jsp"></jsp:include>
@@ -103,6 +109,12 @@
     <c:when test="${adminAction eq 'edit_catalog_category_filter'}">
         <jsp:include page="commerce/edit_catalog_category_filter.jsp"></jsp:include>
     </c:when>
+    <c:when test="${adminAction eq 'edit_filter_criterion'}">
+        <jsp:include page="commerce/edit_filter_criterion.jsp"></jsp:include>
+    </c:when>
+    <c:when test="${adminAction eq 'edit_item'}">
+        <jsp:include page="commerce/edit_item.jsp"></jsp:include>
+    </c:when>
     <%-- security --%>
     <c:when test="${adminAction eq 'edit_account'}">
         <jsp:include page="${pageContext.request.contextPath}/jsp/security/edit_account.jsp"></jsp:include>
@@ -138,6 +150,15 @@
     </c:when>
     <c:when test="${adminAction eq 'new_catalog_category_filter'}">
         <jsp:include page="commerce/new_catalog_category_filter.jsp"></jsp:include>
+    </c:when>
+    <c:when test="${adminAction eq 'new_filter_criterion'}">
+        <jsp:include page="commerce/new_filter_criterion.jsp"></jsp:include>
+    </c:when>
+    <c:when test="${adminAction eq 'new_item_description'}">
+        <jsp:include page="commerce/new_item_description.jsp"></jsp:include>
+    </c:when>
+    <c:when test="${adminAction eq 'new_item_image'}">
+        <jsp:include page="commerce/new_item_image.jsp"></jsp:include>
     </c:when>
     <%--security--%>
     <c:when test="${adminAction eq 'new_account'}">

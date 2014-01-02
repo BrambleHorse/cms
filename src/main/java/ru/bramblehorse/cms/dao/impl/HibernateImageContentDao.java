@@ -21,8 +21,9 @@ public class HibernateImageContentDao implements AbstractDao<ImageContent> {
     HibernateTemplate ht;
     @Transactional
     @Override
-    public void create(ImageContent entity) {
-        ht.save(entity);
+    public Integer create(ImageContent entity) {
+
+       return (Integer)ht.save(entity);
     }
     @Transactional
     @Override

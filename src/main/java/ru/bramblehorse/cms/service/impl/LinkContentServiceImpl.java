@@ -26,8 +26,8 @@ public class LinkContentServiceImpl implements AbstractService<LinkContent> {
     }
 
     @Override
-    public void create(LinkContent entity) {
-       linkContentDao.create(entity);
+    public Integer create(LinkContent entity) {
+       return linkContentDao.create(entity);
     }
 
     @Override

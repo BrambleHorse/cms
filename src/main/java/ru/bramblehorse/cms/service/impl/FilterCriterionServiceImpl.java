@@ -26,9 +26,9 @@ public class FilterCriterionServiceImpl implements AbstractService<FilterCriteri
     }
 
     @Override
-    public void create(FilterCriterion entity) {
+    public Integer create(FilterCriterion entity) {
 
-        filterCriterionDao.create(entity);
+       return filterCriterionDao.create(entity);
     }
 
     @Override
