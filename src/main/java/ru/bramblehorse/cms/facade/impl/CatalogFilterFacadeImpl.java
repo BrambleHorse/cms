@@ -70,6 +70,7 @@ public class CatalogFilterFacadeImpl implements CatalogFilterFacade {
             throws ServletException, IOException {
 
         boolean isAllFilterCriteriaUnchecked = true;
+        boolean isAllBrandsUnchecked = true;
         if (category == null) {
 
             return null;
@@ -103,14 +104,19 @@ public class CatalogFilterFacadeImpl implements CatalogFilterFacade {
             }
         }
         if (brandList != null) {
-
+            List<Item> brandRelatedItemList = new ArrayList<Item>();
             for (Brand brand : brandList) {
 
                 if ("checked".equalsIgnoreCase(req.getParameter(brand.getBrandName()))) {
 
-
+                    brandRelatedItemList.addAll(brand.getRelatedItems());
+                    isAllBrandsUnchecked = false;
                     req.setAttribute("brand" + brand.getBrandId(), true);
                 }
+            }
+            if(!isAllBrandsUnchecked){
+
+                resultItemList.retainAll(brandRelatedItemList);
             }
         }
 

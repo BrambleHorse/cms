@@ -30,7 +30,7 @@
             <value>
                 hibernate.dialect=org.hibernate.dialect.MySQL5InnoDBDialect
                 hibernate.show_sql=true
-                <!--hibernate.hbm2ddl.auto=create-->
+                hibernate.hbm2ddl.auto=create
             </value>
         </property>
     </bean>

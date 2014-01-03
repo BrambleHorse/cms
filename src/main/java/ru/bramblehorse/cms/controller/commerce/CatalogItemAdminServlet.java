@@ -45,8 +45,8 @@ public class CatalogItemAdminServlet extends HttpServlet {
     private AbstractService<FilterCriterion> filterCriterionService;
     private AbstractService<Brand> brandService;
 
-    private final int THUMB_IMAGE_WIDTH = 150;
-    private final int THUMB_IMAGE_HEIGHT = 150;
+    private final int THUMB_IMAGE_WIDTH = 200;
+    private final int THUMB_IMAGE_HEIGHT = 200;
 
 
     @Override
@@ -232,7 +232,7 @@ public class CatalogItemAdminServlet extends HttpServlet {
         String itemName = req.getParameter("itemName");
         String itemDescription = req.getParameter("itemDescription");
         String itemPrice = req.getParameter("itemPrice");
-        String brandId = req.getParameter("brandId");
+        String brandParam = req.getParameter("brandId");
 
         Item item = null;
         if("create".equalsIgnoreCase(action)){
@@ -247,7 +247,20 @@ public class CatalogItemAdminServlet extends HttpServlet {
         item.setItemCategory(catalogCategoryService.getById(Integer.parseInt(catalogCategoryId)));
         item.setItemDescription(itemDescription);
         item.setItemPrice(Integer.parseInt(itemPrice));
-        item.setItemBrand(brandService.getById(Integer.parseInt(brandId)));
+        Integer brandId;
+        try{
+             brandId = Integer.parseInt(brandParam);
+        }   catch (NumberFormatException e){
+            brandId = null;
+            logger.error(e.getMessage());
+        }
+        if(brandId != null){
+
+            item.setItemBrand(brandService.getById(brandId));
+        }   else {
+
+            item.setItemBrand(null);
+        }
         List<FilterCriterion> criteria = new ArrayList<FilterCriterion>();
         for(FilterCriterion criterion : filterCriterionService.getAll()){
 

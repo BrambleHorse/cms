@@ -141,8 +141,7 @@ public class CatalogFilterCriterionAdminServlet extends HttpServlet {
         filterCriterion.setFilterCriterionValue(filterCriterionValue);
         filterCriterion.setCatalogCategoryFilter(catalogCategoryFilterService.getById(catalogCategoryFilterId));
         filterCriterionService.create(filterCriterion);
-        RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
-        rd.forward(req, resp);
+        resp.sendRedirect("/admin.catalog.do?mode=criteria&catalogCategoryFilterId=" + catalogCategoryFilterId);
 
     }
 
@@ -161,9 +160,9 @@ public class CatalogFilterCriterionAdminServlet extends HttpServlet {
             logger.error(e.getMessage());
         }
         FilterCriterion filterCriterion = filterCriterionService.getById(idToEdit);
+        Integer catalogCategoryFilterId = filterCriterion.getCatalogCategoryFilter().getCatalogCategoryFilterId();
         filterCriterion.setFilterCriterionValue(filterCriterionValue);
         filterCriterionService.edit(filterCriterion);
-        RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
-        rd.forward(req, resp);
+        resp.sendRedirect("/admin.catalog.do?mode=criteria&catalogCategoryFilterId=" + catalogCategoryFilterId);
     }
 }
