@@ -98,8 +98,8 @@ public class CatalogFilterFacadeImpl implements CatalogFilterFacade {
                 if(!isAllFilterCriteriaUnchecked){
 
                     resultItemList.retainAll(filterRelatedItemList);
+                    isAllFilterCriteriaUnchecked = true;
                 }
-
             }
         }
         if (brandList != null) {

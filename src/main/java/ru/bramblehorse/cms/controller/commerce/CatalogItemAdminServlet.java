@@ -218,7 +218,8 @@ public class CatalogItemAdminServlet extends HttpServlet {
         item.setItemThumbImagePath(thumbImagePath);
         item.setItemThumbImageFilePath(thumbImageFilePath);
         itemService.edit(item);
-        resp.sendRedirect("/admin.do");
+        resp.sendRedirect("/admin.catalog.do?mode=items&catalogCategoryId=" +
+                item.getItemCategory().getCatalogCategoryId());
 
     }
 
@@ -250,11 +251,23 @@ public class CatalogItemAdminServlet extends HttpServlet {
         List<FilterCriterion> criteria = new ArrayList<FilterCriterion>();
         for(FilterCriterion criterion : filterCriterionService.getAll()){
 
-            if(criterion.getFilterCriterionId().equals
-                    (Integer.parseInt(req.getParameter(criterion.getFilterCriterionValue())))){
+            String filterCriterionParam = req.getParameter(criterion.getFilterCriterionValue());
+            Integer filterCriterionId = null;
+            try {
+                if(filterCriterionParam != null){
+
+                    filterCriterionId = Integer.parseInt(filterCriterionParam);
+                }
+            }  catch (NumberFormatException e) {
+
+                logger.error(e.getMessage());
+            }   catch (Exception e) {
+
+                logger.error(e.getMessage());
+            }
+            if(criterion.getFilterCriterionId().equals(filterCriterionId)){
 
                 criteria.add(criterion);
-                logger.info("ADDED CRITERION . .");
             }
         }
         item.setFilterCriteria(criteria);

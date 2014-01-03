@@ -149,24 +149,21 @@ public class CatalogFilterCriterionAdminServlet extends HttpServlet {
     private void processPostEditFilterCriterion(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
+        String filterCriterionId = req.getParameter("filterCriterionId");
         String filterCriterionValue = req.getParameter("filterCriterionValue");
         Integer idToEdit = null;
-        Integer catalogCategoryFilterId = null;
         try {
 
-            idToEdit = Integer.parseInt(req.getParameter("filterCriterionId"));
-            catalogCategoryFilterId = Integer.parseInt(req.getParameter("catalogCategoryFilterId"));
-        }   catch (Exception e) {
+            idToEdit = Integer.parseInt(filterCriterionId);
+
+        }  catch (Exception e) {
 
             logger.error(e.getMessage());
         }
-        FilterCriterion filterCriterion = new FilterCriterion();
-        filterCriterion.setFilterCriterionId(idToEdit);
+        FilterCriterion filterCriterion = filterCriterionService.getById(idToEdit);
         filterCriterion.setFilterCriterionValue(filterCriterionValue);
-        filterCriterion.setCatalogCategoryFilter(catalogCategoryFilterService.getById(catalogCategoryFilterId));
         filterCriterionService.edit(filterCriterion);
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
         rd.forward(req, resp);
-
     }
 }
