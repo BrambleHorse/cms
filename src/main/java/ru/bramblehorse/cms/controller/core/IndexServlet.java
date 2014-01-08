@@ -42,12 +42,13 @@ public class IndexServlet extends HttpServlet {
     private AbstractService<CatalogCategory> catalogCategoryService;
     private AbstractService<CatalogCategoryFilter> catalogCategoryFilterService;
     private AbstractService<FilterCriterion> filterCriterionService;
-    private AbstractService<Item> itemService;
     private AbstractService<Brand> brandService;
 
     private SecurityService<Account> accountService;
     private SecurityService<TomcatRole> tomcatRoleService;
     private Properties settings;
+
+    private static final int DEFAULT_NUMBER_OF_RECORDS = 25;
 
     @Override
     public void init() throws ServletException {
@@ -62,7 +63,6 @@ public class IndexServlet extends HttpServlet {
         catalogCategoryService = (AbstractService<CatalogCategory>) context.getBean("catalogCategoryService");
         catalogCategoryFilterService = (AbstractService<CatalogCategoryFilter>) context.getBean("catalogCategoryFilterService");
         filterCriterionService = (AbstractService<FilterCriterion>) context.getBean("filterCriterionService");
-        itemService = (AbstractService<Item>) context.getBean("itemService");
         brandService = (AbstractService<Brand>) context.getBean("brandService");
 
         accountService = (SecurityService<Account>) context.getBean("accountService");
@@ -166,27 +166,30 @@ public class IndexServlet extends HttpServlet {
 
             } catch (Exception e) {
 
-
+                logger.error(e.getMessage());
             }
 
             filtersList = currentCatalogCategory.getCatalogCategoryFilters();
+            Integer offset = null;
+            Integer numberOfRecords = null;
+            try {
+                offset = Integer.parseInt(req.getParameter("offset"));
+            } catch (Exception e) {
+                offset = 0;
+                logger.error(e.getMessage());
+            }
+            try {
+                numberOfRecords = Integer.parseInt(req.getParameter("numberOfRecords"));
+            } catch (Exception e) {
+                numberOfRecords = DEFAULT_NUMBER_OF_RECORDS;
+                logger.error(e.getMessage());
+            }
 
+            List<Item> totalItems = catalogFilterFacade.processItemsList(req, resp, offset, numberOfRecords,
+                    currentCatalogCategory);
+            for (Item i : totalItems) {
 
-            if ("POST".equals(req.getMethod())) {
-
-                List<Item> totalItems = catalogFilterFacade.getItemsList(req, currentCatalogCategory);
-                if(totalItems.isEmpty()) logger.info("ITEMS IS EMPTY!!");
-                for(Item i : totalItems){
-
-                    itemsSet.add(i);
-                }
-            } else {
-
-                List<Item> allItems = currentCatalogCategory.getCatalogCategoryItems();
-                for(Item i : allItems){
-
-                    itemsSet.add(i);
-                }
+                itemsSet.add(i);
             }
             req.setAttribute("itemsSet", itemsSet);
             req.setAttribute("filtersList", filtersList);
@@ -198,15 +201,5 @@ public class IndexServlet extends HttpServlet {
         }
     }
 
-    private void insertMockValues(){
-
-        Item grohe1 = new Item();
-        Item grohe2 = new Item();
-        Item grohe3 = new Item();
-
-        Item oras1 = new Item();
-        Item oras2 = new Item();
-        Item oras3 = new Item();
-    }
 
 }

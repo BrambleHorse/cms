@@ -31,7 +31,7 @@ public class CatalogAdminServlet extends HttpServlet {
     private AbstractService<CatalogCategory> catalogCategoryService;
     private AbstractService<CatalogCategoryFilter> catalogCategoryFilterService;
     private AbstractService<FilterCriterion> filterCriterionService;
-    private AbstractService<Item> itemService;
+
     private AbstractService<Brand> brandService;
 
     @Override
@@ -44,7 +44,7 @@ public class CatalogAdminServlet extends HttpServlet {
         catalogCategoryFilterService =
                 (AbstractService<CatalogCategoryFilter>) context.getBean("catalogCategoryFilterService");
         filterCriterionService = (AbstractService<FilterCriterion>) context.getBean("filterCriterionService");
-        itemService = (AbstractService<Item>) context.getBean("itemService");
+
         brandService = (AbstractService<Brand>) context.getBean("brandService");
 
     }
@@ -148,7 +148,17 @@ public class CatalogAdminServlet extends HttpServlet {
     private void processGetNoActionItems(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
             IOException {
 
+        Integer catalogCategoryId = null;
+        try {
 
+            catalogCategoryId = Integer.parseInt(req.getParameter("catalogCategoryId"));
+        }  catch (Exception e) {
+            logger.error(e.getMessage());
+        }
+        if(catalogCategoryId != null){
+
+            req.setAttribute("itemList", catalogCategoryService.getById(catalogCategoryId).getCatalogCategoryItems());
+        }
         req.setAttribute("adminAction", "items");
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
         rd.forward(req, resp);

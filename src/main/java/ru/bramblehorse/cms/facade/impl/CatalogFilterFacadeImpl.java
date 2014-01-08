@@ -3,9 +3,11 @@ package ru.bramblehorse.cms.facade.impl;
 import ru.bramblehorse.cms.facade.CatalogFilterFacade;
 import ru.bramblehorse.cms.model.commerce.*;
 import ru.bramblehorse.cms.service.AbstractService;
+import ru.bramblehorse.cms.service.ItemService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +24,7 @@ public class CatalogFilterFacadeImpl implements CatalogFilterFacade {
     AbstractService<CatalogCategory> catalogCategoryService;
     AbstractService<CatalogCategoryFilter> catalogCategoryFilterService;
     AbstractService<FilterCriterion> filterCriterionService;
-    AbstractService<Item> itemService;
+    ItemService itemService;
     AbstractService<Brand> brandService;
 
     public AbstractService<CatalogCategory> getCatalogCategoryService() {
@@ -49,11 +51,11 @@ public class CatalogFilterFacadeImpl implements CatalogFilterFacade {
         this.filterCriterionService = filterCriterionService;
     }
 
-    public AbstractService<Item> getItemService() {
+    public ItemService getItemService() {
         return itemService;
     }
 
-    public void setItemService(AbstractService<Item> itemService) {
+    public void setItemService(ItemService itemService) {
         this.itemService = itemService;
     }
 
@@ -66,60 +68,54 @@ public class CatalogFilterFacadeImpl implements CatalogFilterFacade {
     }
 
     @Override
-    public List<Item> getItemsList(HttpServletRequest req, CatalogCategory category)
+    public List<Item> processItemsList(HttpServletRequest req, HttpServletResponse resp, Integer offset,
+                                       Integer numberOfRecords, CatalogCategory category)
             throws ServletException, IOException {
 
-        boolean isAllFilterCriteriaUnchecked = true;
-        boolean isAllBrandsUnchecked = true;
         if (category == null) {
 
             return null;
         }
-        List<Brand> brandList = brandService.getAll();
+        List<Brand> brandList = new ArrayList<Brand>();
         List<CatalogCategoryFilter> filterList = category.getCatalogCategoryFilters();
-        List<Item> resultItemList = category.getCatalogCategoryItems();
-        if (filterList == null) {
+        List<FilterCriterion> checkedCriteriaList = new ArrayList<FilterCriterion>();
+        for (Item item : category.getCatalogCategoryItems()) {
 
-            return resultItemList;
+            if (!brandList.contains(item.getItemBrand()))
+                brandList.add(item.getItemBrand());
+
+        }
+        if (filterList == null && brandList.isEmpty()) {
+
+            return category.getCatalogCategoryItems();
 
         } else {
 
             for (CatalogCategoryFilter filter : filterList) {
-                List<Item> filterRelatedItemList = new ArrayList<Item>();
-                List<FilterCriterion> criteria = filter.getFilterCriteria();
-                for (FilterCriterion criterion : criteria) {
+
+                for (FilterCriterion criterion : filter.getFilterCriteria()) {
 
                     if ("checked".equalsIgnoreCase(req.getParameter(criterion.getFilterCriterionValue()))) {
 
-                        filterRelatedItemList.addAll(criterion.getItems());
-                        isAllFilterCriteriaUnchecked = false;
+                        checkedCriteriaList.add(criterion);
                         req.setAttribute("criterion" + criterion.getFilterCriterionId(), true);
                     }
                 }
-                if(!isAllFilterCriteriaUnchecked){
-
-                    resultItemList.retainAll(filterRelatedItemList);
-                    isAllFilterCriteriaUnchecked = true;
-                }
-            }
-        }
-        if (brandList != null) {
-            List<Item> brandRelatedItemList = new ArrayList<Item>();
-            for (Brand brand : brandList) {
-
-                if ("checked".equalsIgnoreCase(req.getParameter(brand.getBrandName()))) {
-
-                    brandRelatedItemList.addAll(brand.getRelatedItems());
-                    isAllBrandsUnchecked = false;
-                    req.setAttribute("brand" + brand.getBrandId(), true);
-                }
-            }
-            if(!isAllBrandsUnchecked){
-
-                resultItemList.retainAll(brandRelatedItemList);
             }
         }
 
-        return resultItemList;
+        List<Brand> checkedBrandList = new ArrayList<Brand>();
+        for (Brand brand : brandList) {
+
+            if ("checked".equalsIgnoreCase(req.getParameter(brand.getBrandName()))) {
+
+                checkedBrandList.add(brand);
+                req.setAttribute("brand" + brand.getBrandId(), true);
+            }
+        }
+
+        req.setAttribute("brandList", brandList);
+        return itemService.getItems(offset, numberOfRecords, checkedCriteriaList, checkedBrandList);
+
     }
 }

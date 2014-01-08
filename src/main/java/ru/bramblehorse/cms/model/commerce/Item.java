@@ -48,7 +48,11 @@ public class Item implements Comparable {
     @JoinColumn(name = "catalog_category_id")
     private CatalogCategory itemCategory;
 
-
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @JoinTable(name = "items_criteria",
+            joinColumns = @JoinColumn(name = "item_id"),
+            inverseJoinColumns = @JoinColumn(name = "filter_criterion_id"))
+    private List<FilterCriterion> filterCriteria;
 
     public Integer getItemId() {
         return itemId;
@@ -131,11 +135,6 @@ public class Item implements Comparable {
         this.itemCategory = itemCategory;
     }
 
-   @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-   @JoinTable(name = "items_criteria",
-           joinColumns = @JoinColumn(name = "item_id"),
-           inverseJoinColumns = @JoinColumn(name = "filter_criterion_id"))
-   private List<FilterCriterion> filterCriteria;
 
     public List<FilterCriterion> getFilterCriteria() {
 

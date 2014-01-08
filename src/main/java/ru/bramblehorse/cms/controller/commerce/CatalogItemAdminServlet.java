@@ -12,6 +12,7 @@ import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.WebApplicationContext;
 import ru.bramblehorse.cms.model.commerce.*;
 import ru.bramblehorse.cms.service.AbstractService;
+import ru.bramblehorse.cms.service.ItemService;
 import ru.bramblehorse.cms.util.ImageFilesUtil;
 
 import javax.imageio.ImageIO;
@@ -39,7 +40,7 @@ public class CatalogItemAdminServlet extends HttpServlet {
 
     private WebApplicationContext context;
     private Logger logger;
-    private AbstractService<Item> itemService;
+    private ItemService itemService;
     private AbstractService<CatalogCategory> catalogCategoryService;
     private AbstractService<CatalogCategoryFilter> catalogCategoryFilterService;
     private AbstractService<FilterCriterion> filterCriterionService;
@@ -55,7 +56,7 @@ public class CatalogItemAdminServlet extends HttpServlet {
         context = ContextLoaderListener.getCurrentWebApplicationContext();
         logger = LoggerFactory.getLogger(CatalogItemAdminServlet.class);
 
-        itemService = (AbstractService<Item>) context.getBean("itemService");
+        itemService = (ItemService) context.getBean("itemService");
         catalogCategoryService = (AbstractService<CatalogCategory>) context.getBean("catalogCategoryService");
         catalogCategoryFilterService = (AbstractService<CatalogCategoryFilter>) context.getBean("catalogCategoryFilterService");
         filterCriterionService = (AbstractService<FilterCriterion>) context.getBean("filterCriterionService");
@@ -103,7 +104,7 @@ public class CatalogItemAdminServlet extends HttpServlet {
     private void processGetCreateItem(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
             IOException {
 
-        req.setAttribute("filterList", catalogCategoryFilterService.getAll());
+        req.setAttribute("filterList", catalogCategoryService.getById(Integer.parseInt(req.getParameter("catalogCategoryId"))).getCatalogCategoryFilters());
         req.setAttribute("brandList", brandService.getAll());
         req.setAttribute("adminAction", "new_item_description");
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");

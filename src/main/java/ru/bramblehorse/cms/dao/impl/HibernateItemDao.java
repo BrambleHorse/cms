@@ -1,9 +1,14 @@
 package ru.bramblehorse.cms.dao.impl;
 
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.transaction.annotation.Transactional;
 import ru.bramblehorse.cms.dao.AbstractDao;
+import ru.bramblehorse.cms.dao.ItemDao;
+import ru.bramblehorse.cms.model.commerce.Brand;
+import ru.bramblehorse.cms.model.commerce.FilterCriterion;
 import ru.bramblehorse.cms.model.commerce.Item;
 
 import java.io.Serializable;
@@ -17,7 +22,7 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 @Transactional
-public class HibernateItemDao implements AbstractDao<Item> {
+public class HibernateItemDao implements ItemDao {
 
     @Autowired
     HibernateTemplate ht;
@@ -58,4 +63,20 @@ public class HibernateItemDao implements AbstractDao<Item> {
         return ht.loadAll(Item.class);
     }
 
+    @Override
+    public List<Item> getItems(int offset, int numberOfRecords, List<FilterCriterion> filterCriteria, List<Brand> brands) {
+
+        Criteria criteria = ht.getSessionFactory().getCurrentSession().createCriteria(Item.class);
+        for(FilterCriterion criterion : filterCriteria){
+
+            criteria.add(Restrictions.eq("filter_criterion_id", criterion.getFilterCriterionId()));
+        }
+        for(Brand brand : brands) {
+
+            criteria.add(Restrictions.eq("brand_id", brand.getBrandId()));
+        }
+        criteria.setFirstResult(offset);
+        criteria.setMaxResults(numberOfRecords);
+        return criteria.list();
+    }
 }

@@ -35,6 +35,17 @@
 
                                     </c:forEach>
                                          <tr>
+                                             <td>Бренд </td>
+                                             <td></td>
+                                         </tr>
+                                    <c:forEach items="${brandList}" var="brand">
+                                        <tr>
+                                            <c:set var="brandIndex">brand${brand.brandId}</c:set>
+                                            <td><input type="checkbox" name="${brand.brandName}" <c:if test="${requestScope[brandIndex] eq true}"> checked="checked"</c:if> value="checked"></td>
+                                            <td>${brand.brandName} </td>
+                                        </tr>
+                                    </c:forEach>
+                                         <tr>
                                              <td><input type="submit" value="Показать"></td>
                                              <td></td>
                                          </tr>

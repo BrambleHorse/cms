@@ -4,6 +4,7 @@ import ru.bramblehorse.cms.model.commerce.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
@@ -16,6 +17,7 @@ import java.util.List;
  */
 public interface CatalogFilterFacade {
 
-    public List<Item> getItemsList(HttpServletRequest req, CatalogCategory category)
+    public List<Item> processItemsList(HttpServletRequest req, HttpServletResponse resp, Integer offset,
+                                       Integer numberOfRecords, CatalogCategory category)
             throws ServletException, IOException;
 }

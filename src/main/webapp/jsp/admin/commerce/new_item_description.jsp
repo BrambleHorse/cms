@@ -41,6 +41,10 @@
             <c:set var="brandLength" value="${fn:length(brandList)}"/>
             <c:choose>
                 <c:when test="${brandLength > 0}">
+                    <tr>
+                        <td>Бренд</td>
+                        <td></td>
+                    </tr>
                     <c:forEach items="${brandList}" var="brand">
                          <tr>
                              <td></td>
