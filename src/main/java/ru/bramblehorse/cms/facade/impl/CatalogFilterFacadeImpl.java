@@ -115,7 +115,7 @@ public class CatalogFilterFacadeImpl implements CatalogFilterFacade {
         }
 
         req.setAttribute("brandList", brandList);
-        return itemService.getItems(offset, numberOfRecords, checkedCriteriaList, checkedBrandList);
+        return itemService.getItems(offset, numberOfRecords, category, checkedCriteriaList, checkedBrandList);
 
     }
 }

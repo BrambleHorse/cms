@@ -3,6 +3,7 @@ package ru.bramblehorse.cms.service.impl;
 import ru.bramblehorse.cms.dao.AbstractDao;
 import ru.bramblehorse.cms.dao.ItemDao;
 import ru.bramblehorse.cms.model.commerce.Brand;
+import ru.bramblehorse.cms.model.commerce.CatalogCategory;
 import ru.bramblehorse.cms.model.commerce.FilterCriterion;
 import ru.bramblehorse.cms.model.commerce.Item;
 import ru.bramblehorse.cms.service.AbstractService;
@@ -60,8 +61,9 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<Item> getItems(int offset, int numberOfRecords, List<FilterCriterion> criteria, List<Brand> brands) {
+    public List<Item> getItems(int offset, int numberOfRecords, CatalogCategory catalogCategory,
+                               List<FilterCriterion> criteria, List<Brand> brands) {
 
-        return itemDao.getItems(offset, numberOfRecords, criteria, brands);
+        return itemDao.getItems(offset, numberOfRecords, catalogCategory, criteria, brands);
     }
 }
