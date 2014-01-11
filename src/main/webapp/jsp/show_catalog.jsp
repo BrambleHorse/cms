@@ -63,4 +63,11 @@
             </c:otherwise>
         </c:choose>
     </ul>
+    <ul>
+        <c:forEach items="${catalogPagesList}" var="pageNumber">
+           <li> <a href="${pageContext.request.contextPath}/index.do?catalogCategoryId=${catalogCategoryId}&offset=${pageNumber}">${pageNumber}</a></li>
+
+        </c:forEach>
+    </ul>
+
 </div>

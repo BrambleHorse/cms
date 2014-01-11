@@ -61,9 +61,8 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<Item> getItems(int offset, int numberOfRecords, CatalogCategory catalogCategory,
-                               List<FilterCriterion> criteria, List<Brand> brands) {
+    public List<Item> getItems(CatalogCategory catalogCategory, List<Brand> brands) {
 
-        return itemDao.getItems(offset, numberOfRecords, catalogCategory, criteria, brands);
+        return itemDao.getItems(catalogCategory, brands);
     }
 }

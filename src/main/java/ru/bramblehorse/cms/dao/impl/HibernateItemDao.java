@@ -67,26 +67,13 @@ public class HibernateItemDao implements ItemDao {
     }
 
     @Override
-    public List<Item> getItems(int offset, int numberOfRecords, CatalogCategory catalogCategory,
-                               List<FilterCriterion> currentFilterCriteria, List<Brand> brands) {
-
+    public List<Item> getItems(CatalogCategory catalogCategory, List<Brand> brands) {
 
         Criteria criteria = ht.getSessionFactory().getCurrentSession().createCriteria(Item.class);
         criteria.add(Restrictions.eq("itemCategory.catalogCategoryId", catalogCategory.getCatalogCategoryId()));
         if(!brands.isEmpty()){
             criteria.add(Restrictions.in("itemBrand",brands));
         }
-        List<Integer>currentFilterCriteriaId = new ArrayList<Integer>();
-        for(FilterCriterion criterion : currentFilterCriteria){
-            currentFilterCriteriaId.add(criterion.getFilterCriterionId());
-        }
-        if(!currentFilterCriteriaId.isEmpty()){
-            criteria.createAlias("filterCriteria", "f");
-
-
-        }
-        criteria.setFirstResult(offset);
-        criteria.setMaxResults(numberOfRecords);
         return criteria.list();
     }
 }

@@ -38,7 +38,6 @@ public class CatalogFilterAdminServlet extends HttpServlet {
         logger = LoggerFactory.getLogger(CatalogFilterAdminServlet.class);
         catalogCategoryFilterService = (AbstractService<CatalogCategoryFilter>) context.getBean("catalogCategoryFilterService");
         catalogCategoryService = (AbstractService<CatalogCategory>)context.getBean("catalogCategoryService");
-
     }
 
     @Override

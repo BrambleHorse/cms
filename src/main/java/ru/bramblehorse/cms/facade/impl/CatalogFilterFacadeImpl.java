@@ -1,5 +1,6 @@
 package ru.bramblehorse.cms.facade.impl;
 
+import org.slf4j.Logger;
 import ru.bramblehorse.cms.facade.CatalogFilterFacade;
 import ru.bramblehorse.cms.model.commerce.*;
 import ru.bramblehorse.cms.service.AbstractService;
@@ -10,7 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created with IntelliJ IDEA.
@@ -26,6 +29,7 @@ public class CatalogFilterFacadeImpl implements CatalogFilterFacade {
     AbstractService<FilterCriterion> filterCriterionService;
     ItemService itemService;
     AbstractService<Brand> brandService;
+    private int DEFAULT_NUMBER_OF_RECORDS = 25;
 
     public AbstractService<CatalogCategory> getCatalogCategoryService() {
         return catalogCategoryService;
@@ -68,8 +72,7 @@ public class CatalogFilterFacadeImpl implements CatalogFilterFacade {
     }
 
     @Override
-    public List<Item> processItemsList(HttpServletRequest req, HttpServletResponse resp, Integer offset,
-                                       Integer numberOfRecords, CatalogCategory category)
+    public List<Item> processItemsList(HttpServletRequest req, HttpServletResponse resp, CatalogCategory category)
             throws ServletException, IOException {
 
         if (category == null) {
@@ -78,7 +81,6 @@ public class CatalogFilterFacadeImpl implements CatalogFilterFacade {
         }
         List<Brand> brandList = new ArrayList<Brand>();
         List<CatalogCategoryFilter> filterList = category.getCatalogCategoryFilters();
-        List<FilterCriterion> checkedCriteriaList = new ArrayList<FilterCriterion>();
         for (Item item : category.getCatalogCategoryItems()) {
 
             if (!brandList.contains(item.getItemBrand()))
@@ -89,19 +91,6 @@ public class CatalogFilterFacadeImpl implements CatalogFilterFacade {
 
             return category.getCatalogCategoryItems();
 
-        } else {
-
-            for (CatalogCategoryFilter filter : filterList) {
-
-                for (FilterCriterion criterion : filter.getFilterCriteria()) {
-
-                    if ("checked".equalsIgnoreCase(req.getParameter(criterion.getFilterCriterionValue()))) {
-
-                        checkedCriteriaList.add(criterion);
-                        req.setAttribute("criterion" + criterion.getFilterCriterionId(), true);
-                    }
-                }
-            }
         }
 
         List<Brand> checkedBrandList = new ArrayList<Brand>();
@@ -113,9 +102,25 @@ public class CatalogFilterFacadeImpl implements CatalogFilterFacade {
                 req.setAttribute("brand" + brand.getBrandId(), true);
             }
         }
+        List<Item> resultList  = itemService.getItems(category, checkedBrandList);
+        for (CatalogCategoryFilter filter : filterList) {
 
+            boolean isCriteriaUnchecked = true;
+            List<Item>filterRelatedItems = new ArrayList<Item>();
+            for (FilterCriterion criterion : filter.getFilterCriteria()) {
+
+                if ("checked".equalsIgnoreCase(req.getParameter(criterion.getFilterCriterionValue()))) {
+
+                    filterRelatedItems.addAll(criterion.getItems());
+                    req.setAttribute("criterion" + criterion.getFilterCriterionId(), true);
+                    isCriteriaUnchecked = false;
+                }
+            }
+            if(!isCriteriaUnchecked){
+                resultList.retainAll(filterRelatedItems);
+            }
+        }
         req.setAttribute("brandList", brandList);
-        return itemService.getItems(offset, numberOfRecords, category, checkedCriteriaList, checkedBrandList);
-
+        return resultList;
     }
 }

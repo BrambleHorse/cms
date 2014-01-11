@@ -29,7 +29,7 @@ public class Category implements Comparable {
     private List<Content> content;
 
     public boolean getIsVisible() {
-        return isVisible;
+       return isVisible;
     }
 
     public void setIsVisible(boolean isVisible) {

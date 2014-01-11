@@ -26,10 +26,7 @@ public class FilterCriterion {
     @JoinColumn(name = "filter_id")
     private CatalogCategoryFilter catalogCategoryFilter;
 
-    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-    @JoinTable(name = "items_criteria",
-            joinColumns = @JoinColumn(name = "filter_criterion_id"),
-            inverseJoinColumns = @JoinColumn(name = "item_id"))
+    @ManyToMany(mappedBy = "filterCriteria")
     private List<Item> items;
 
     public Integer getFilterCriterionId() {

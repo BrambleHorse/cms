@@ -48,7 +48,7 @@ public class IndexServlet extends HttpServlet {
     private SecurityService<TomcatRole> tomcatRoleService;
     private Properties settings;
 
-    private static final int DEFAULT_NUMBER_OF_RECORDS = 25;
+    private static final int DEFAULT_NUMBER_OF_RECORDS = 5;
 
     @Override
     public void init() throws ServletException {
@@ -157,18 +157,13 @@ public class IndexServlet extends HttpServlet {
         Collections.sort(catalogCategoriesList);
         req.setAttribute("catalogCategoriesList", catalogCategoriesList);
         req.setAttribute("catalogCategoryId", catalogCategoryId);
-
         if (catalogCategoryId != null) {
 
             try {
-
                 currentCatalogCategory = catalogCategoryService.getById(Integer.parseInt(catalogCategoryId));
-
             } catch (Exception e) {
-
                 logger.error(e.getMessage());
             }
-
             filtersList = currentCatalogCategory.getCatalogCategoryFilters();
             Integer offset = null;
             Integer numberOfRecords = null;
@@ -180,21 +175,28 @@ public class IndexServlet extends HttpServlet {
             }
             try {
                 numberOfRecords = Integer.parseInt(req.getParameter("numberOfRecords"));
+                if(numberOfRecords < 1) numberOfRecords = DEFAULT_NUMBER_OF_RECORDS;
             } catch (Exception e) {
                 numberOfRecords = DEFAULT_NUMBER_OF_RECORDS;
                 logger.error(e.getMessage());
             }
-
-            List<Item> totalItems = catalogFilterFacade.processItemsList(req, resp, offset, numberOfRecords,
-                    currentCatalogCategory);
-            for (Item i : totalItems) {
-
-                itemsSet.add(i);
+            List<Item> totalItems = catalogFilterFacade.processItemsList(req, resp, currentCatalogCategory);
+            Integer pageCount = totalItems.size()/numberOfRecords + 1;
+            List<Integer> catalogPagesList = new ArrayList<Integer>();
+            for(int i = 1; i <= pageCount; i++){
+                catalogPagesList.add(i);
+            }
+            if(offset > 0) offset -= 1;
+            for(int i = offset * numberOfRecords, j = 0; i < totalItems.size() && j < numberOfRecords; ++i){
+                itemsSet.add(totalItems.get(i));
+            }
+            req.setAttribute("currentCatalogPage", offset);
+            if(pageCount > 1){
+                req.setAttribute("catalogPagesList", catalogPagesList);
             }
             req.setAttribute("itemsSet", itemsSet);
             req.setAttribute("filtersList", filtersList);
             req.setAttribute("contentValue", "catalog");
-
         } else {
 
             req.setAttribute("contentValue", "content");

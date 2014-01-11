@@ -16,6 +16,5 @@ import java.util.List;
  */
 public interface ItemDao extends AbstractDao<Item> {
 
-    public List<Item> getItems(int offset, int numberOfRecords,CatalogCategory catalogCategory,
-                               List<FilterCriterion> criteria, List<Brand> brands);
+    public List<Item> getItems(CatalogCategory catalogCategory, List<Brand> brands);
 }

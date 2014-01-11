@@ -130,8 +130,13 @@ public class CatalogItemAdminServlet extends HttpServlet {
         }
         String pathToDelete = req.getParameter("path");
         String thumbPathToDelete = req.getParameter("thumbPath");
-        ImageFilesUtil.deleteOrphanImage(pathToDelete);
-        ImageFilesUtil.deleteOrphanImage(thumbPathToDelete);
+        if(pathToDelete != null){
+            ImageFilesUtil.deleteOrphanImage(pathToDelete);
+        }
+        if(thumbPathToDelete != null){
+            ImageFilesUtil.deleteOrphanImage(thumbPathToDelete);
+        }
+
         if (idToDelete != null) {
 
             itemService.delete(idToDelete);
