@@ -79,22 +79,20 @@ public class CatalogFilterFacadeImpl implements CatalogFilterFacade {
 
             return null;
         }
-        List<Brand> brandList = new ArrayList<Brand>();
+        Set<Brand> brandSet = new HashSet<Brand>();
         List<CatalogCategoryFilter> filterList = category.getCatalogCategoryFilters();
         for (Item item : category.getCatalogCategoryItems()) {
 
-            if (!brandList.contains(item.getItemBrand()))
-                brandList.add(item.getItemBrand());
-
+                brandSet.add(item.getItemBrand());
         }
-        if (filterList == null && brandList.isEmpty()) {
+        if (filterList == null && brandSet.isEmpty()) {
 
             return category.getCatalogCategoryItems();
 
         }
 
         List<Brand> checkedBrandList = new ArrayList<Brand>();
-        for (Brand brand : brandList) {
+        for (Brand brand : brandSet) {
 
             if ("checked".equalsIgnoreCase(req.getParameter(brand.getBrandName()))) {
 
@@ -120,7 +118,7 @@ public class CatalogFilterFacadeImpl implements CatalogFilterFacade {
                 resultList.retainAll(filterRelatedItems);
             }
         }
-        req.setAttribute("brandList", brandList);
+        req.setAttribute("brandSet", brandSet);
         return resultList;
     }
 }

@@ -170,7 +170,7 @@ public class IndexServlet extends HttpServlet {
             try {
                 offset = Integer.parseInt(req.getParameter("offset"));
             } catch (Exception e) {
-                offset = 0;
+                offset = 1;
                 logger.error(e.getMessage());
             }
             try {
@@ -187,8 +187,8 @@ public class IndexServlet extends HttpServlet {
                 catalogPagesList.add(i);
             }
             if(offset > 0) offset -= 1;
-            for(int i = offset * numberOfRecords, j = 0; i < totalItems.size() && j < numberOfRecords; ++i){
-                itemsSet.add(totalItems.get(i));
+            for(int i = offset * numberOfRecords, j = 0; i < totalItems.size() && j < numberOfRecords; j++){
+                itemsSet.add(totalItems.get(i++));
             }
             req.setAttribute("currentCatalogPage", offset);
             if(pageCount > 1){
@@ -202,6 +202,4 @@ public class IndexServlet extends HttpServlet {
             req.setAttribute("contentValue", "content");
         }
     }
-
-
 }

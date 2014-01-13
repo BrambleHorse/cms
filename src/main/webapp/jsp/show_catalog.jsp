@@ -15,7 +15,7 @@
                             <c:set var="filtersLength" value="${fn:length(filtersList)}"/>
                             <c:choose>
                                 <c:when test="${filtersLength > 0}">
-                                    <form action="/index.do" method="post">
+                                    <form action="/index.do" id="catalog-options-form" method="post">
                                         <input type="hidden" name="catalogCategoryId" value="${catalogCategoryId}">
                                      <table>
                                     <c:forEach items="${filtersList}" var="catalogCategoryFilter">
@@ -38,7 +38,7 @@
                                              <td>Бренд </td>
                                              <td></td>
                                          </tr>
-                                    <c:forEach items="${brandList}" var="brand">
+                                    <c:forEach items="${brandSet}" var="brand">
                                         <tr>
                                             <c:set var="brandIndex">brand${brand.brandId}</c:set>
                                             <td><input type="checkbox" name="${brand.brandName}" <c:if test="${requestScope[brandIndex] eq true}"> checked="checked"</c:if> value="checked"></td>
@@ -63,11 +63,11 @@
             </c:otherwise>
         </c:choose>
     </ul>
+    <%-- pagination ul element--%>
     <ul>
         <c:forEach items="${catalogPagesList}" var="pageNumber">
-           <li> <a href="${pageContext.request.contextPath}/index.do?catalogCategoryId=${catalogCategoryId}&offset=${pageNumber}">${pageNumber}</a></li>
-
+           <li><a href="javascript:;" onclick="var frm = document.getElementById('catalog-options-form'); var inp = document.createElement('input');inp.type = 'hidden';inp.name='offset';inp.value='${pageNumber}';frm.appendChild(inp);frm.submit();">${pageNumber}</a></li>
         </c:forEach>
     </ul>
-
+    <%-- /pagination ul element--%>
 </div>
