@@ -10,7 +10,7 @@
         <c:forEach items="${itemList}" var="item">
             <li>${item.itemName}</li>
             <li><a href="/admin.catalog.item.do?action=edit&itemId=${item.itemId}">Редактировать</a></li>
-            <li><a href="/admin.catalog.item.do?action=delete&itemId=${item.itemId}">Удалить</a></li>
+            <li><a href="/admin.catalog.item.do?action=delete&itemId=${item.itemId}&path=${item.itemImageFilePath}&thumbPath=${item.itemThumbImageFilePath}">Удалить</a></li>
             <hr/>
         </c:forEach>
     </c:if>

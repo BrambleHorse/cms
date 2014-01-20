@@ -113,7 +113,7 @@
         <jsp:include page="commerce/edit_filter_criterion.jsp"></jsp:include>
     </c:when>
     <c:when test="${adminAction eq 'edit_item'}">
-        <jsp:include page="commerce/edit_item.jsp"></jsp:include>
+        <jsp:include page="commerce/edit_item_description.jsp"></jsp:include>
     </c:when>
     <%-- security --%>
     <c:when test="${adminAction eq 'edit_account'}">

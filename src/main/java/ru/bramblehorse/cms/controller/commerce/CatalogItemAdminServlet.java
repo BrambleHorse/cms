@@ -130,10 +130,10 @@ public class CatalogItemAdminServlet extends HttpServlet {
         }
         String pathToDelete = req.getParameter("path");
         String thumbPathToDelete = req.getParameter("thumbPath");
-        if(pathToDelete != null){
+        if (pathToDelete != null) {
             ImageFilesUtil.deleteOrphanImage(pathToDelete);
         }
-        if(thumbPathToDelete != null){
+        if (thumbPathToDelete != null) {
             ImageFilesUtil.deleteOrphanImage(thumbPathToDelete);
         }
 
@@ -162,6 +162,9 @@ public class CatalogItemAdminServlet extends HttpServlet {
         FileItemFactory factory = new DiskFileItemFactory();
         // Create a new file upload handler
         ServletFileUpload upload = new ServletFileUpload(factory);
+        FileItem mainImage = null;
+
+
         try {
             // Parse the request
             List<FileItem> items = upload.parseRequest(req);
@@ -169,32 +172,13 @@ public class CatalogItemAdminServlet extends HttpServlet {
             while (iterator.hasNext()) {
                 FileItem item = (FileItem) iterator.next();
                 if (!item.isFormField()) {
-
-                    String fileName = new Date().getTime() + item.getName().substring(item.getName().length() - 4, item.getName().length());
-                    String thumbFileName = fileName.substring(0, fileName.length() - 4) + "_thumb" + fileName.substring(fileName.length() - 4, fileName.length());
-                    String root = getServletContext().getRealPath("/");
-                    File path = new File(root + "/commerce");
-                    if (!path.exists()) {
-                        path.mkdirs();
-                    }
-                    File uploadedFile = new File(path + "/" + fileName);
-                    item.write(uploadedFile);
-                    BufferedImage bi = ImageIO.read(uploadedFile);
-                    BufferedImage thumbnail =
-                            Scalr.resize(bi, Scalr.Method.SPEED, Scalr.Mode.FIT_TO_WIDTH,
-                                    THUMB_IMAGE_HEIGHT, THUMB_IMAGE_WIDTH, Scalr.OP_ANTIALIAS);
-                    File thumbFile = new File(path + "/" + thumbFileName);
-                    ImageIO.write(thumbnail, "jpg", thumbFile);
-                    imageFilePath = uploadedFile.getAbsolutePath();
-                    thumbImageFilePath = thumbFile.getAbsolutePath();
-                    imagePath = "/commerce/" + fileName;
-                    thumbImagePath = "/commerce/" + thumbFileName;
+                    mainImage = item;
                 } else {
 
-                    if("itemId".equalsIgnoreCase(item.getFieldName())) {
+                    if ("itemId".equalsIgnoreCase(item.getFieldName())) {
                         idToSetImage = Integer.parseInt(item.getString());
                     }
-                    if("action".equalsIgnoreCase(item.getFieldName())) {
+                    if ("action".equalsIgnoreCase(item.getFieldName())) {
                         action = item.getString();
                     }
                     if ("oldImageFilePath".equalsIgnoreCase(item.getFieldName())) {
@@ -213,20 +197,47 @@ public class CatalogItemAdminServlet extends HttpServlet {
             logger.error(e.getMessage());
         }
 
-        if("edit".equalsIgnoreCase(action)){
+        if ("edit".equalsIgnoreCase(action)) {
 
             ImageFilesUtil.deleteOrphanImage(oldImageFilePath);
             ImageFilesUtil.deleteOrphanImage(oldThumbImageFilePath);
         }
         Item item = itemService.getById(idToSetImage);
-        item.setItemImagePath(imagePath);
-        item.setItemImageFilePath(imageFilePath);
-        item.setItemThumbImagePath(thumbImagePath);
-        item.setItemThumbImageFilePath(thumbImageFilePath);
-        itemService.edit(item);
+        if (item != null) {
+            try {
+                String fileName = new Date().getTime() + mainImage.getName().substring(mainImage.getName().length() - 4,
+                        mainImage.getName().length());
+                String thumbFileName = fileName.substring(0, fileName.length() - 4) + "_thumb" +
+                        fileName.substring(fileName.length() - 4, fileName.length());
+                String root = getServletContext().getRealPath("/");
+                File path = new File(root + "/commerce/" + "category" + item.getItemCategory().getCatalogCategoryId());
+                if (!path.exists()) {
+                    path.mkdirs();
+                }
+                File uploadedFile = new File(path + "/" + fileName);
+                mainImage.write(uploadedFile);
+                BufferedImage bi = ImageIO.read(uploadedFile);
+                BufferedImage thumbnail =
+                        Scalr.resize(bi, Scalr.Method.SPEED, Scalr.Mode.FIT_TO_WIDTH,
+                                THUMB_IMAGE_HEIGHT, THUMB_IMAGE_WIDTH, Scalr.OP_ANTIALIAS);
+                File thumbFile = new File(path + "/" + thumbFileName);
+                ImageIO.write(thumbnail, "jpg", thumbFile);
+                imageFilePath = uploadedFile.getAbsolutePath();
+                thumbImageFilePath = thumbFile.getAbsolutePath();
+                imagePath = "/commerce/" + "category" + item.getItemCategory().getCatalogCategoryId() + "/" + fileName;
+                thumbImagePath = "/commerce/" + "category" + item.getItemCategory().getCatalogCategoryId() + "/"  +
+                         thumbFileName;
+            } catch (Exception e) {
+                logger.error(e.getMessage());
+            }
+            item.setItemImagePath(imagePath);
+            item.setItemImageFilePath(imageFilePath);
+            item.setItemThumbImagePath(thumbImagePath);
+            item.setItemThumbImageFilePath(thumbImageFilePath);
+            itemService.edit(item);
+        }
         resp.sendRedirect("/admin.catalog.do?mode=items&catalogCategoryId=" +
                 item.getItemCategory().getCatalogCategoryId());
-
     }
 
     private void processPostItem(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
@@ -241,11 +252,11 @@ public class CatalogItemAdminServlet extends HttpServlet {
         String brandParam = req.getParameter("brandId");
 
         Item item = null;
-        if("create".equalsIgnoreCase(action)){
+        if ("create".equalsIgnoreCase(action)) {
 
             item = new Item();
         }
-        if("edit".equalsIgnoreCase(action)){
+        if ("edit".equalsIgnoreCase(action)) {
 
             item = itemService.getById(Integer.parseInt(itemId));
         }
@@ -254,53 +265,53 @@ public class CatalogItemAdminServlet extends HttpServlet {
         item.setItemDescription(itemDescription);
         item.setItemPrice(Integer.parseInt(itemPrice));
         Integer brandId;
-        try{
-             brandId = Integer.parseInt(brandParam);
-        }   catch (NumberFormatException e){
+        try {
+            brandId = Integer.parseInt(brandParam);
+        } catch (NumberFormatException e) {
             brandId = null;
             logger.error(e.getMessage());
         }
-        if(brandId != null){
+        if (brandId != null) {
 
             item.setItemBrand(brandService.getById(brandId));
-        }   else {
+        } else {
 
             item.setItemBrand(null);
         }
         List<FilterCriterion> criteria = new ArrayList<FilterCriterion>();
-        for(FilterCriterion criterion : filterCriterionService.getAll()){
+        for (FilterCriterion criterion : filterCriterionService.getAll()) {
 
             String filterCriterionParam = req.getParameter(criterion.getFilterCriterionValue());
             Integer filterCriterionId = null;
             try {
-                if(filterCriterionParam != null){
+                if (filterCriterionParam != null) {
 
                     filterCriterionId = Integer.parseInt(filterCriterionParam);
                 }
-            }  catch (NumberFormatException e) {
+            } catch (NumberFormatException e) {
 
                 logger.error(e.getMessage());
-            }   catch (Exception e) {
+            } catch (Exception e) {
 
                 logger.error(e.getMessage());
             }
-            if(criterion.getFilterCriterionId().equals(filterCriterionId)){
+            if (criterion.getFilterCriterionId().equals(filterCriterionId)) {
 
                 criteria.add(criterion);
             }
         }
         item.setFilterCriteria(criteria);
         RequestDispatcher rd;
-        if("create".equalsIgnoreCase(action)){
+        if ("create".equalsIgnoreCase(action)) {
 
             Integer createdItemId = itemService.create(item);
             req.setAttribute("itemId", createdItemId);
             req.setAttribute("adminAction", "new_item_image");
             rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
-            rd.forward(req,resp);
+            rd.forward(req, resp);
             return;
         }
-        if("edit".equalsIgnoreCase(action)){
+        if ("edit".equalsIgnoreCase(action)) {
 
             itemService.edit(item);
             req.setAttribute("itemId", item.getItemId());
