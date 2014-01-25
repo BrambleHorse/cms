@@ -49,7 +49,7 @@
                          <tr>
                              <td></td>
                              <td>
-                        <input type="checkbox" id="brand" name="brandId"  value="${brand.brandId}">
+                        <input type="radio" id="brand" name="brandId"  value="${brand.brandId}">
                         <p>${brand.brandName}</p>
                              </td>
                          </tr>

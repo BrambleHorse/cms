@@ -9,10 +9,11 @@
     <c:if test="${itemLength > 0}">
         <c:forEach items="${itemList}" var="item">
             <li>${item.itemName}</li>
-            <li><a href="/admin.catalog.item.do?action=edit&itemId=${item.itemId}">Редактировать</a></li>
+            <li><a href="/admin.catalog.item.do?action=edit&editMode=description&itemId=${item.itemId}">
+                Редактировать описание</a></li>
+            <li><a href="/admin.catalog.item.do?action=edit&editMode=image&itemId=${item.itemId}">Загрузить новое изображение</a></li>
             <li><a href="/admin.catalog.item.do?action=delete&itemId=${item.itemId}&path=${item.itemImageFilePath}&thumbPath=${item.itemThumbImageFilePath}">Удалить</a></li>
             <hr/>
         </c:forEach>
     </c:if>
-
 </div>

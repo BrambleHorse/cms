@@ -114,7 +114,27 @@ public class CatalogItemAdminServlet extends HttpServlet {
     private void processGetEditItem(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
             IOException {
 
-
+        Integer idToEdit = null;
+        Item itemToEdit = null;
+        try{
+           idToEdit = Integer.parseInt(req.getParameter("itemId"));
+        } catch (Exception e){
+            logger.error(e.getMessage());
+        }
+        if(idToEdit != null){
+            itemToEdit = itemService.getById(idToEdit);
+            req.setAttribute("item", itemToEdit);
+        }
+        if("image".equalsIgnoreCase(req.getParameter("editMode"))){
+            req.setAttribute("adminAction", "edit_item_image");
+        }
+        if("description".equalsIgnoreCase(req.getParameter("editMode"))){
+            req.setAttribute("brandList", brandService.getAll());
+            req.setAttribute("filterList", itemToEdit.getItemCategory().getCatalogCategoryFilters());
+            req.setAttribute("adminAction", "edit_item_description");
+        }
+        RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
+        rd.forward(req, resp);
     }
 
     private void processGetDeleteItem(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
@@ -141,7 +161,6 @@ public class CatalogItemAdminServlet extends HttpServlet {
 
             itemService.delete(idToDelete);
         }
-
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/jsp/admin/admin_index.jsp");
         rd.forward(req, resp);
     }
@@ -163,7 +182,6 @@ public class CatalogItemAdminServlet extends HttpServlet {
         // Create a new file upload handler
         ServletFileUpload upload = new ServletFileUpload(factory);
         FileItem mainImage = null;
-
 
         try {
             // Parse the request
