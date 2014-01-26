@@ -3,13 +3,13 @@
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
     <div class="new-text-content">
-        <form action="/admin.content.text.do" method="post">
+        <form id="admin-form" action="/admin.content.text.do" method="post">
             <input type="hidden" name="action" value="create">
             <input type="hidden" name="categoryId" value="${param.categoryId}">
             <table class="admin-input">
                 <tr>
                     <td>Позиция:</td>
-                    <td><input type="text" name="contentPosition"></td>
+                    <td><input type="text" name="contentPosition" class="number-input"></td>
                 </tr>
                 <tr>
                     <td>Текст:</td>

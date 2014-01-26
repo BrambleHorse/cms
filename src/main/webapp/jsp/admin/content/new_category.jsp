@@ -3,14 +3,14 @@
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
     <div class="new-category">
-        <form action="/admin.categories.do" method="POST">
+        <form id="admin-form" action="/admin.categories.do" method="POST">
             <input type="hidden" name="action" value="create">
             <table class="admin-input">
                 <tr>
                     <td>Название категории:</td>
-                    <td><input type="text" name="title"></td>
+                    <td><input type="text" name="title" class="text-input"></td>
                     <td>Позиция:</td>
-                    <td><input type="text" name="categoryPosition"></td>
+                    <td><input type="text" name="categoryPosition" class="number-input"></td>
                 </tr>
                 <tr>
                     <td>Укажите родительскую категорию:</td>

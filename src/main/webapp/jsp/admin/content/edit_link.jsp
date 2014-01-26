@@ -3,18 +3,18 @@
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <div class="edit-link">
-    <form action="/admin.content.link.do" method="post">
+    <form id="admin-form" action="/admin.content.link.do" method="post">
         <input type="hidden" name="contentId" value="${content.contentId}">
         <input type="hidden" name="linkImagePath" value="${content.linkImagePath}">
         <input type="hidden" name="linkImageFilePath" value="${content.linkImageFilePath}">
         <table class="admin-input">
             <tr>
                 <td>Позиция:</td>
-                <td><input type="text" name="contentPosition" value="${content.contentPosition}"></td>
+                <td><input type="text" name="contentPosition" class="number-input" value="${content.contentPosition}"></td>
             </tr>
             <tr>
                 <td>Ссылка:</td>
-                <td><input type="text" name="linkValue" value="${content.linkValue}"></td>
+                <td><input type="text" name="linkValue" class="text-input" value="${content.linkValue}"></td>
             </tr>
             <tr>
                 <td>Отображать</td>

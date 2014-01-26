@@ -3,14 +3,14 @@
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
     <div class="edit-category">
-        <form action="/admin.categories.do?action=edit" method="POST">
+        <form id="admin-form" action="/admin.categories.do?action=edit" method="POST">
             <table class="admin-input">
                 <tr>
                     <input type="hidden" name="categoryId" value="${currentCategory.id}"/>
                     <td>Название категории:</td>
-                    <td><input type="text" name="title" value="${currentCategory.name}"></td>
+                    <td><input type="text" name="title" class="text-input" value="${currentCategory.name}"></td>
                     <td>Позиция:</td>
-                    <td><input type="text" name="categoryPosition" value="${currentCategory.categoryPosition}"></td>
+                    <td><input type="text" name="categoryPosition" class="number-input" value="${currentCategory.categoryPosition}"></td>
                 </tr>
                 <c:set var="categoryLength" value="${fn:length(categoryList)}"/>
                 <c:choose>

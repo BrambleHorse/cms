@@ -3,12 +3,12 @@
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <div class="new-brand">
-    <form action="/admin.catalog.brand.do" method="post">
+    <form id="admin-form" action="/admin.catalog.brand.do" method="post">
         <input type="hidden" name="action" value="create">
         <table class="admin-input">
             <tr>
                 <td>Название бренда:</td>
-                <td><input type="text" name="brandName"></td>
+                <td><input type="text" name="brandName" class="text-input"></td>
             </tr>
             <tr>
                 <td></td>

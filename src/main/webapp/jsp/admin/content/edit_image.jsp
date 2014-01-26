@@ -3,7 +3,7 @@
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
     <div class="edit-image">
-        <form action="/admin.content.image.do" method="POST">
+        <form id="admin-form" action="/admin.content.image.do" method="POST">
             <input type="hidden" name="contentId" value="${content.contentId}">
             <input type="hidden" name="imageName" value="${content.imageName}">
             <input type="hidden" name="imagePath" value="${content.imagePath}">
@@ -35,7 +35,7 @@
                 </c:choose>
                 <tr>
                     <td>Позиция:</td>
-                    <td><input type="text" name="contentPosition" value="${content.contentPosition}"></td>
+                    <td><input type="text" name="contentPosition" class="number-input" value="${content.contentPosition}"></td>
                 </tr>
                 <tr>
                     <td>Отображать</td>

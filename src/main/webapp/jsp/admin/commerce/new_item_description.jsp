@@ -3,13 +3,13 @@
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <div class="new-image-description">
-    <form action="/admin.catalog.item.do" method="post">
+    <form id="admin-form" action="/admin.catalog.item.do" method="post">
         <input type="hidden" name="catalogCategoryId" value="${param.catalogCategoryId}">
         <input type="hidden" name="action" value="create">
         <table class="admin-input">
             <tr>
                 <td>Наименование товара:</td>
-                <td><input type="text" name="itemName"></td>
+                <td><input type="text" name="itemName" class="text-input"></td>
             </tr>
             <tr>
                 <td>Описание товара:</td>
@@ -17,7 +17,7 @@
             </tr>
             <tr>
                 <td>Цена товара:</td>
-                <td><input type="text" name="itemPrice"></td>
+                <td><input type="text" name="itemPrice" class="number-input"></td>
             </tr>
             <c:set var="filterLength" value="${fn:length(filterList)}"/>
             <c:choose>

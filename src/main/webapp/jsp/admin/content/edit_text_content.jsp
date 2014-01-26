@@ -3,7 +3,7 @@
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
     <div class="edit-text-content">
-        <form action="/admin.content.text.do" method="post">
+        <form id="admin-form" action="javascript:void(0);" method="post" onsubmit="ajax()">
             <input type="hidden" name="action" value="edit">
             <input type="hidden" name="contentId" value="${content.contentId}">
             <table class="admin-input">
@@ -27,11 +27,11 @@
                 </c:choose>
                 <tr>
                     <td>Позиция:</td>
-                    <td><input type="text" name="contentPosition" value="${content.contentPosition}"></td>
+                    <td><input type="text" name="contentPosition" class="number-input" value="${content.contentPosition}"></td>
                 </tr>
                 <tr>
                     <td>Текст:</td>
-                    <td><textarea name="textValue" rows="12" cols="60">${content.text}</textarea></td>
+                    <td><textarea name="textValue" rows="12" cols="60" class="text-input">${content.text}</textarea></td>
                 </tr>
                 <tr>
                     <td>Отображать</td>
@@ -39,7 +39,7 @@
                 </tr>
                 <tr>
                     <td></td>
-                    <td><input type="submit" value="Сохранить"></td>
+                    <td><input type="submit" name="send" class="send" value="Сохранить"></td>
                 </tr>
             </table>
         </form>

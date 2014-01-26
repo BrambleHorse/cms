@@ -4,7 +4,7 @@
 
 
 <div class="edit-wysiwyg-content">
-    <form action="/admin.content.wysiwyg.do" method="post">
+    <form id="admin-form" action="/admin.content.wysiwyg.do" method="post">
         <input type="hidden" name="action" value="edit">
         <input type="hidden" name="contentId" value="${content.contentId}">
         <table class="admin-input">
@@ -28,7 +28,7 @@
             </c:choose>
             <tr>
                 <td>Позиция:</td>
-                <td><input type="text" name="contentPosition" value="${content.contentPosition}"></td>
+                <td><input type="text" name="contentPosition" class="number-input" value="${content.contentPosition}"></td>
             </tr>
             <tr>
                 <td></td>

@@ -7,6 +7,9 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp/css/styles.css">
+    <script type="text/javascript" src="${pageContext.request.contextPath}/jsp/js/jquery1.10.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/jsp/js/jquery.form.validation.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/jsp/js/site.js"></script>
     <title>Admin page</title>
     <c:if test="${(adminAction eq 'new_wysiwyg_content') || (adminAction eq 'edit_wysiwyg_content')}">
         <script type="text/javascript" src="${pageContext.request.contextPath}/jsp/tinymce/tinymce.min.js"></script>

@@ -5,12 +5,12 @@
 <div class="new-link-content">
     <fieldset>
         <legend>Загрузить иконку для ссылки</legend>
-        <form action="/admin.content.link.do" method="post" enctype="multipart/form-data">
+        <form id="admin-form" action="/admin.content.link.do" method="post" enctype="multipart/form-data">
             <label for="contentPosition">Ссылка:</label>
             <input type="hidden" name="action" value="create">
             <input id="linkValue" type="text" name="linkValue">
             <label for="contentPosition">Позиция:</label>
-            <input id="contentPosition" type="text" name="contentPosition">
+            <input id="contentPosition" type="text" name="contentPosition" class="number-input">
             <label for="isVisible">Отображать</label>
             <input type="checkbox" id="isVisible" name="isVisible" checked="true" value="visible">
             <label for="fileName">Укажите файл:</label>

@@ -6,11 +6,11 @@
         <fieldset>
             <legend>Загрузить изображение</legend>
 
-            <form action="/admin.content.image.do" method="post" enctype="multipart/form-data">
+            <form id="admin-form" action="/admin.content.image.do" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="categoryId" value="${param.categoryId}">
                 <input type="hidden" name="action" value="create">
                 <label for="contentPosition">Позиция:</label>
-                <input id="contentPosition" type="text" name="contentPosition">
+                <input id="contentPosition" type="text" name="contentPosition" class="number-input">
                 <label for="isVisible">Отображать</label>
                 <input type="checkbox" id="isVisible" name="isVisible" checked="true" value="visible">
                 <label for="fileName">Укажите файл:</label>

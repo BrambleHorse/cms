@@ -3,17 +3,17 @@
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <div class="new-catalog-category-filter">
-    <form action="/admin.catalog.filter.do" method="post">
+    <form id="admin-form" action="/admin.catalog.filter.do" method="post">
         <input type="hidden" name="action" value="create">
         <input type="hidden" name="catalogCategoryId" value="${param.catalogCategoryId}">
         <table class="admin-input">
 
                 <td>Название фильтра:</td>
-                <td><input type="text" name="catalogCategoryFilterName"></td>
+                <td><input type="text" name="catalogCategoryFilterName" class="text-input"></td>
             </tr>
             <tr>
                 <td>Позиция:</td>
-                <td><input type="text" name="catalogCategoryFilterPosition"></td>
+                <td><input type="text" name="catalogCategoryFilterPosition" class="number-input"></td>
             </tr>
             <tr>
                 <td></td>
