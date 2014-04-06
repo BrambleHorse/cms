@@ -2,6 +2,8 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
+<script type="text/javascript" src="${pageContext.request.contextPath}/jsp/js/validation/text.content.validation.js"></script>
+
     <div class="edit-text-content">
         <form id="admin-form" action="javascript:void(0);" method="post" onsubmit="ajax()">
             <input type="hidden" name="action" value="edit">

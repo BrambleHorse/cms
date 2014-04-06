@@ -10,7 +10,6 @@ import ru.bramblehorse.cms.model.content.Category;
 import ru.bramblehorse.cms.model.content.Content;
 import ru.bramblehorse.cms.model.content.LinkContent;
 import ru.bramblehorse.cms.model.security.Account;
-import ru.bramblehorse.cms.model.security.TomcatRole;
 import ru.bramblehorse.cms.service.AbstractService;
 import ru.bramblehorse.cms.service.CategoryService;
 import ru.bramblehorse.cms.service.SecurityService;
@@ -45,7 +44,7 @@ public class IndexServlet extends HttpServlet {
     private AbstractService<Brand> brandService;
 
     private SecurityService<Account> accountService;
-    private SecurityService<TomcatRole> tomcatRoleService;
+//    private SecurityService<TomcatRole> tomcatRoleService;
     private Properties settings;
 
     private static final int DEFAULT_NUMBER_OF_RECORDS = 5;
@@ -66,7 +65,7 @@ public class IndexServlet extends HttpServlet {
         brandService = (AbstractService<Brand>) context.getBean("brandService");
 
         accountService = (SecurityService<Account>) context.getBean("accountService");
-        tomcatRoleService = (SecurityService<TomcatRole>) context.getBean("tomcatRoleService");
+//        tomcatRoleService = (SecurityService<TomcatRole>) context.getBean("tomcatRoleService");
 
         settings = new Properties();
         try {

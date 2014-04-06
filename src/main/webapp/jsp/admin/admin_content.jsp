@@ -3,10 +3,17 @@
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <div class="admin-content">
-    <ul>
-        <li><a href="/admin.categories.do">Управление категориями и контентом</a></li>
-        <li><a href="/admin.content.do?mode=links">Управление ссылками</a></li>
-        <li><a href="/admin.catalog.do">Управление каталогом товаров</a></li>
-        <li><a href="/admin.accounts.do">Управление учетными записями администраторов</a></li>
-    </ul>
+
+            <a href="/admin.categories.do" class="btn btn-default">
+                Управление категориями и контентом</a> <br><br>
+
+            <a href="/admin.content.do?mode=links" class="btn btn-default">
+                Управление ссылками</a> <br><br>
+
+            <a href="/admin.catalog.do" class="btn btn-default">
+                Управление каталогом товаров</a> <br><br>
+
+            <a href="/admin.accounts.do" class="btn btn-default">
+                Управление учетными записями администраторов</a>
+
 </div>

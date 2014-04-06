@@ -2,8 +2,10 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
+<script type="text/javascript" src="${pageContext.request.contextPath}/jsp/js/validation/category.content.validation.js"></script>
+
     <div class="new-category">
-        <form id="admin-form" action="/admin.categories.do" method="POST">
+        <form id="admin-content-category-form" action="javascript:void(0);" method="post" onsubmit="ajax()">
             <input type="hidden" name="action" value="create">
             <table class="admin-input">
                 <tr>

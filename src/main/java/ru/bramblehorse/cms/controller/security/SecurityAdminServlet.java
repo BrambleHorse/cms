@@ -17,12 +17,12 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Created with IntelliJ IDEA.
- * User: bramblehorse
- * Date: 18.11.13
- * Time: 23:00
- * To change this template use File | Settings | File Templates.
- */
+* Created with IntelliJ IDEA.
+* User: bramblehorse
+* Date: 18.11.13
+* Time: 23:00
+* To change this template use File | Settings | File Templates.
+*/
 public class SecurityAdminServlet extends HttpServlet {
 
     private WebApplicationContext context;

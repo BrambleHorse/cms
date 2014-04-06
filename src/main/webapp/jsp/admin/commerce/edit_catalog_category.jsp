@@ -2,8 +2,10 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
+<script type="text/javascript" src="${pageContext.request.contextPath}/jsp/js/validation/category.commerce.validation.js"></script>
+
 <div class="edit-catalog-category">
-    <form id="admin-form" action="/admin.catalog.category.do" method="post">
+    <form id="admin-catalog-category-form" action="/admin.catalog.category.do" method="post">
         <input type="hidden" name="action" value="edit">
         <input type="hidden" name="catalogCategoryId" value="${catalogCategory.catalogCategoryId}">
         <table class="admin-input">

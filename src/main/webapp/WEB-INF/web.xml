@@ -262,8 +262,8 @@
     <!--<login-config>-->
         <!--<auth-method>FORM</auth-method>-->
         <!--<form-login-config>-->
-            <!--<form-login-page>/jsp/security/login.jsp</form-login-page>-->
-            <!--<form-error-page>/jsp/security/login_error.jsp</form-error-page>-->
+            <!--<form-login-page>/jsp/admin/login.jsp</form-login-page>-->
+            <!--<form-error-page>/jsp/admin/login_error.jsp</form-error-page>-->
         <!--</form-login-config>-->
     <!--</login-config>-->
 

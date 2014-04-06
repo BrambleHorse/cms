@@ -2,8 +2,8 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<div class="admin-header">
-    Admin page header:<br/>
-   <h1>Добро пожаловать в административную панель!</h1>
-
+<div class="header">
+    <div class="logo">
+        <img src="${pageContext.request.contextPath}/jsp/admin/images/logo2.png" alt="">
+    </div>
 </div>
